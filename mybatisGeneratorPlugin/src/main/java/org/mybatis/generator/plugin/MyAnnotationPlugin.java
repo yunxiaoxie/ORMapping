@@ -2,6 +2,7 @@ package org.mybatis.generator.plugin;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -21,14 +22,20 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 /**
- * 生成实体类时，对整个类增加 Mapper 的注解部分
+ * Generate class or interface to add annotation on className or fieldName.
  * @author yunxiaoxie
  *
  */
-public class MyMapperAnnotationPlugin extends PluginAdapter {
+public class MyAnnotationPlugin extends PluginAdapter {
 
+	private static final String FASTJSON = "fastjson";
+	
+	private String jsonLib;
+	private String attrName;
+	private String attrType;
+	
 	/**
-	 * Generate dao or mapper.
+	 * Generate dao or mapper interface, then add annotation on class.
 	 */
 	@Override
 	public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
@@ -38,26 +45,30 @@ public class MyMapperAnnotationPlugin extends PluginAdapter {
 		
 		interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Mapper"));
 		interfaze.addAnnotation("@Mapper");
-		
-		generateDeleteLogicByIds(interfaze, introspectedTable);
 		return true;
 	}
 	
-	/**
-	 * 生成实体中每个属性
-	 */
 	@Override
-	public boolean modelGetterMethodGenerated(Method method, TopLevelClass topLevelClass,
-			IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+	public boolean modelFieldGenerated(Field field, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
+			IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+		if ("java.util.Date".equals(field.getType().toString()) && FASTJSON.equals(jsonLib)) {
+			topLevelClass.addImportedType(new FullyQualifiedJavaType("com.alibaba.fastjson.annotation.JSONField"));
+			String str = properties.getProperty("format");
+			if (StringUtils.isNotEmpty(str)) {
+				field.addAnnotation("@JSONField(format=\""+str+"\")");
+			} else {
+				field.addAnnotation("@JSONField(format=\"yy-MM-dd\")");
+			}
+		}
 		return true;
 	}
-	
+
 	/**
 	 * 生成实体
 	 */
 	@Override
 	public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-		addFieldToEntity(topLevelClass, introspectedTable, "customName");
+		addFieldToEntity(topLevelClass, introspectedTable, this.attrName);
 		return super.modelBaseRecordClassGenerated(topLevelClass, introspectedTable);
 	}
 	
@@ -118,27 +129,14 @@ public class MyMapperAnnotationPlugin extends PluginAdapter {
 	}
 
 	/*
-	 * Add method to Mapper(or Dao) class.
-	 */
-	private void generateDeleteLogicByIds(Interface interfaze, IntrospectedTable introspectedTable) {
-		Method method = new Method("deleteLogicByIds");
-		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-		method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "deleteFlag", "@Param(\"deleteFlag\")"));
-		method.addParameter(new Parameter(new FullyQualifiedJavaType("Integer[]"), "ids", "@Param(\"ids\")"));
-		//context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
-		interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-		interfaze.addMethod(method);
-	}
-
-	/*
 	 * Add custom attributes and methods to Entity.
 	 */
 	private void addFieldToEntity(TopLevelClass topLevelClass, IntrospectedTable introspectedTable, String name) {
 		CommentGenerator commentGenerator = context.getCommentGenerator();
 		// add field.
 		Field field = new Field();
-		field.setVisibility(JavaVisibility.PROTECTED);
-		field.setType(FullyQualifiedJavaType.getIntInstance());
+		field.setVisibility(JavaVisibility.PRIVATE);
+		field.setType(getType(this.attrType));
 		field.setName(name);
 		field.setInitializationString("-1");
 		commentGenerator.addFieldComment(field, introspectedTable);
@@ -149,22 +147,55 @@ public class MyMapperAnnotationPlugin extends PluginAdapter {
 		Method method = new Method();
 		method.setVisibility(JavaVisibility.PUBLIC);
 		method.setName("set" + camel);
-		method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), name));
+		method.addParameter(new Parameter(getType(this.attrType), name));
 		method.addBodyLine("this." + name + "=" + name + ";");
 		commentGenerator.addGeneralMethodComment(method, introspectedTable);
 		topLevelClass.addMethod(method);
 		// add method.
 		method = new Method();
 		method.setVisibility(JavaVisibility.PUBLIC);
-		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+		method.setReturnType(getType(this.attrType));
 		method.setName("get" + camel);
 		method.addBodyLine("return " + name + ";");
 		commentGenerator.addGeneralMethodComment(method, introspectedTable);
 		topLevelClass.addMethod(method);
 	}
+	
+	/**
+	 * Get type by property from xml config.
+	 * @param type
+	 * @return
+	 */
+	private FullyQualifiedJavaType getType(String type) {
+		FullyQualifiedJavaType result = null;
+		if (StringUtils.isNotEmpty(type)) {
+			switch(type) {
+				case "string" :
+					result = FullyQualifiedJavaType.getStringInstance();
+					break;
+				case "int":
+					result = FullyQualifiedJavaType.getIntInstance();
+					break;
+				case "date":
+					result = FullyQualifiedJavaType.getDateInstance();
+					break;
+				case "boolean":
+					result = FullyQualifiedJavaType.getBooleanPrimitiveInstance();
+					break;
+				default :
+					throw new RuntimeException("Not support type:" + type);
+			}
+			return result;
+		} else {
+			return null;
+		}
+	}
 
 	@Override
 	public boolean validate(List<String> warnings) {
+		this.jsonLib = properties.getProperty("jsonLib");
+		this.attrName = properties.getProperty("attrName");
+		this.attrType = properties.getProperty("attrType");
 		return true;
 	}
 }

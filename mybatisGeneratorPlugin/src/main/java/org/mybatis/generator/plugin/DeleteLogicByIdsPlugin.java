@@ -28,51 +28,17 @@ public class DeleteLogicByIdsPlugin extends PluginAdapter {
 		return true;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method, Interface interfaze,
+	public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass,
 			IntrospectedTable introspectedTable) {
-		interfaze.addMethod(generateDeleteLogicByIds(method, introspectedTable));
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method, Interface interfaze,
-			IntrospectedTable introspectedTable) {
-		interfaze.addMethod(generateDeleteLogicByIds(method, introspectedTable));
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method, TopLevelClass topLevelClass,
-			IntrospectedTable introspectedTable) {
-		topLevelClass.addMethod(generateDeleteLogicByIds(method, introspectedTable));
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method, TopLevelClass topLevelClass,
-			IntrospectedTable introspectedTable) {
-		topLevelClass.addMethod(generateDeleteLogicByIds(method, introspectedTable));
-		return true;
+		generateDeleteLogicByIds(interfaze, introspectedTable);
+		return super.clientGenerated(interfaze, topLevelClass, introspectedTable);
 	}
 
 	@Override
 	public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
 
-		String tableName = introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime();// 数据库表名
-
+		String tableName = introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime();
 		XmlElement parentElement = document.getRootElement();
 
 		XmlElement deleteLogicByIdsElement = new XmlElement("update");
@@ -87,19 +53,17 @@ public class DeleteLogicByIdsPlugin extends PluginAdapter {
 		return super.sqlMapDocumentGenerated(document, introspectedTable);
 	}
 
-	private Method generateDeleteLogicByIds(Method method, IntrospectedTable introspectedTable) {
-
-		Method m = new Method("deleteLogicByIds");
-
-		m.setVisibility(method.getVisibility());
-
-		m.setReturnType(FullyQualifiedJavaType.getIntInstance());
-
-		m.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "deleteFlag", "@Param(\"deleteFlag\")"));
-		m.addParameter(new Parameter(new FullyQualifiedJavaType("Integer[]"), "ids", "@Param(\"ids\")"));
-
-		context.getCommentGenerator().addGeneralMethodComment(m, introspectedTable);
-		return m;
+	/*
+	 * Add method to Mapper(or Dao) class.
+	 */
+	private void generateDeleteLogicByIds(Interface interfaze, IntrospectedTable introspectedTable) {
+		Method method = new Method("deleteLogicByIds");
+		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+		method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "deleteFlag", "@Param(\"deleteFlag\")"));
+		method.addParameter(new Parameter(new FullyQualifiedJavaType("Integer[]"), "ids", "@Param(\"ids\")"));
+		context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+		interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
+		interfaze.addMethod(method);
 	}
 
 }
