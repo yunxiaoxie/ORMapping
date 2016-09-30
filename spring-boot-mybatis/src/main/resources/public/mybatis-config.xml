@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- <typeAliases>
+		<package name="com.crab.mybatis.domain" />
+	</typeAliases> -->
+	<plugins>
+		<plugin interceptor="com.crab.mybatis.config.PageInterceptor" />
+	</plugins>
+	<!-- <mappers>
+		<mapper resource="mapper/MyUserMapper.xml" />
+		<mapper resource="mapper/UserMapper.xml" />
+	</mappers> -->
+</configuration>

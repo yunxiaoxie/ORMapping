@@ -4,7 +4,7 @@
 
 <generatorConfiguration>
 
-    <properties resource="init.properties"/>
+    <properties resource="public/init.properties"/>
     
 	<classPathEntry
 		location="D:\Java\maven322\repository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar" />
