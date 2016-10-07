@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.mybatis.generator.paginator.Page;
 
 import com.crab.mybatis.domain.UserInfo;
 
@@ -22,5 +23,5 @@ public interface UserMapper {
 	 * findAll
 	 * @return
 	 */
-	List<UserInfo> findAll();
+	List<UserInfo> findAll(Page page);
 }

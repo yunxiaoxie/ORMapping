@@ -1,5 +1,6 @@
 package com.crab.mybatis.web;
 
+import org.mybatis.generator.paginator.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,7 @@ public class IndexController {
 	@ResponseBody
 	@RequestMapping("finduser")
 	public String findUser() {
-		return JSON.toJSONString(userService.findAll());
+		return JSON.toJSONString(userService.findAll(Page.newBuilder(2, 3, "/user/page")));
 	}
 	
 	/**

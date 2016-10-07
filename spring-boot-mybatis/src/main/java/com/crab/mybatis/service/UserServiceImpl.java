@@ -2,6 +2,7 @@ package com.crab.mybatis.service;
 
 import java.util.List;
 
+import org.mybatis.generator.paginator.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,8 @@ public class UserServiceImpl implements UserService {
 	private MyUserMapper MyUserMapper;
 
 	@Override
-	public List<UserInfo> findAll() {
-		return UserMapper.findAll();
+	public List<UserInfo> findAll(Page page) {
+		return UserMapper.findAll(page);
 	}
 
 	@Override
