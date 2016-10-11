@@ -1,6 +1,6 @@
 package com.crab.proxychain.test;
 
-import com.crab.proxychain.Intercepte;
+import com.crab.proxychain.Intercept;
 
 /**
  * 真实对象实现类
@@ -9,7 +9,7 @@ import com.crab.proxychain.Intercepte;
  */
 public class TargetImpl implements Target {
 	
-	@Intercepte
+	@Intercept
 	@Override
     public void execute() {
         System.out.println("Execute");

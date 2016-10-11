@@ -11,13 +11,13 @@ public class Client {
 		Target target = new TargetImpl();
 		// 拦截一
 		Interceptor interceptor = new InterceptorImpl();
-		Target target1 = (Target)interceptor.register(target, target);
+		target = (Target)interceptor.register(target);
 		// 拉截二
 		Interceptor interceptor2 = new InterceptorImpl2();
-		Target target2 = (Target)interceptor2.register(target, target1);
+		target = (Target)interceptor2.register(target);
 		// 两次拦截
-		target2.execute();
+		target.execute();
 		// 无拦截
-		target2.execute2();
+		target.execute2();
 	}
 }

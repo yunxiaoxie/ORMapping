@@ -7,8 +7,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD,ElementType.METHOD})
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Documented
-public @interface Intercepte {
+public @interface Intercept {
 	public String value() default "";
 }
