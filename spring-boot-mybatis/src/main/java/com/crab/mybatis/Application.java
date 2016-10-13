@@ -7,10 +7,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 import com.crab.mybatis.config.Config;
 
 @SpringBootApplication
-public class SimpleApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext ctx = SpringApplication.run(SimpleApplication.class, args);
+		ConfigurableApplicationContext ctx = SpringApplication.run(Application.class, args);
 		Config config = ctx.getBean(Config.class);
 		System.out.println(config.getFilenames());
 	}

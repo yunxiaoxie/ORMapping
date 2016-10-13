@@ -23,7 +23,8 @@
 			<property name="jsonLib" value="fastjson" />
 			<property name="format" value="yy-MM-dd" />
 			<property name="attrName" value="custom" />
-			<property name="attrType" value="string" />
+			<property name="attrType" value="int" />
+			<property name="attrValue" value="-1" />
 		</plugin>
 		<plugin type="org.mybatis.generator.plugin.OverIsMergeablePlugin" />
 
@@ -57,6 +58,21 @@
 
 		<!-- mapperName="MyUserDao" -->
 		<table schema="dispatch" tableName="my_user" domainObjectName="MyUser" 
+			enableInsert="false"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="false"
+			enableDeleteByPrimaryKey="false"
+			enableCountByExample="false" 
+			enableUpdateByExample="false"
+			enableDeleteByExample="false" 
+			enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<!-- <ignoreColumn column="fred"/> -->
+			<!-- <columnOverride column="BEG_DATE" property="startDate"/> -->
+			<!-- <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" /> --><!-- 指定列的java数据类型 -->
+			<property name="useActualColumnNames" value="true" />
+		</table>
+		<table schema="dispatch" tableName="sys_user" domainObjectName="SysUser" 
 			enableInsert="false"
 			enableSelectByPrimaryKey="true"
 			enableUpdateByPrimaryKey="false"

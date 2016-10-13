@@ -1,6 +1,27 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
+-- Table structure for sys_user
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user`;
+CREATE TABLE `sys_user` (
+  `id`                        int(11)                NOT NULL AUTO_INCREMENT      COMMENT '主键',
+  `user`                    varchar(20)         NOT NULL                                     COMMENT '账号',
+  `pwd`                    varchar(50)         NOT NULL                                     COMMENT '密码',
+  `is_stop`                varchar(2)           DEFAULT NULL                              COMMENT '是否停用',
+  `stop_time`           datetime             DEFAULT NULL                              COMMENT '停用时间',
+  `stop_user`            varchar(20)         DEFAULT NULL                              COMMENT '停用人',
+  `create_time`         datetime             DEFAULT NULL                              COMMENT '创建时间',
+  `create_user`         varchar(20)         DEFAULT NULL                              COMMENT '创建人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='系统用户表';
+
+-- ----------------------------
+-- Records of sys_user
+-- ----------------------------
+INSERT INTO `sys_user` VALUES ('1', 'test', 'test', null, '2016-06-27 00:01:39', null, '2016-06-27 00:01:39', null);
+
+-- ----------------------------
 -- Table structure for my_user
 -- ----------------------------
 DROP TABLE IF EXISTS `my_user`;
@@ -17,7 +38,7 @@ CREATE TABLE `my_user` (
   `weight`                 double                DEFAULT NULL                              COMMENT '体重',
   `create_time`         datetime             DEFAULT NULL                              COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户测试表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户测试表';
 
 
 -- ----------------------------

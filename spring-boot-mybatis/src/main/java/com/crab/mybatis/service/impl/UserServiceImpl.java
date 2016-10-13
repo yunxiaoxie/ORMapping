@@ -1,4 +1,4 @@
-package com.crab.mybatis.service;
+package com.crab.mybatis.service.impl;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import com.crab.mybatis.domain.MyUser;
 import com.crab.mybatis.domain.UserInfo;
 import com.crab.mybatis.mapper.MyUserMapper;
 import com.crab.mybatis.mapper.UserMapper;
+import com.crab.mybatis.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {

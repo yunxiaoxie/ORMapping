@@ -33,6 +33,7 @@ public class MyAnnotationPlugin extends PluginAdapter {
 	private String jsonLib;
 	private String attrName;
 	private String attrType;
+	private String attrValue;
 	
 	/**
 	 * Generate dao or mapper interface, then add annotation on class.
@@ -68,6 +69,8 @@ public class MyAnnotationPlugin extends PluginAdapter {
 	 */
 	@Override
 	public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+		System.out.println(topLevelClass.getClass().getName());
+		System.out.println(IntrospectedTable.class.getName());
 		addFieldToEntity(topLevelClass, introspectedTable, this.attrName);
 		return super.modelBaseRecordClassGenerated(topLevelClass, introspectedTable);
 	}
@@ -131,14 +134,14 @@ public class MyAnnotationPlugin extends PluginAdapter {
 	/*
 	 * Add custom attributes and methods to Entity.
 	 */
-	private void addFieldToEntity(TopLevelClass topLevelClass, IntrospectedTable introspectedTable, String name) {
+	public void addFieldToEntity(TopLevelClass topLevelClass, IntrospectedTable introspectedTable, String name) {
 		CommentGenerator commentGenerator = context.getCommentGenerator();
 		// add field.
 		Field field = new Field();
 		field.setVisibility(JavaVisibility.PRIVATE);
 		field.setType(getType(this.attrType));
 		field.setName(name);
-		field.setInitializationString("-1");
+		field.setInitializationString(this.attrValue);
 		commentGenerator.addFieldComment(field, introspectedTable);
 		topLevelClass.addField(field);
 		// add method.
@@ -196,6 +199,7 @@ public class MyAnnotationPlugin extends PluginAdapter {
 		this.jsonLib = properties.getProperty("jsonLib");
 		this.attrName = properties.getProperty("attrName");
 		this.attrType = properties.getProperty("attrType");
+		this.attrValue = properties.getProperty("attrValue");
 		return true;
 	}
 }
