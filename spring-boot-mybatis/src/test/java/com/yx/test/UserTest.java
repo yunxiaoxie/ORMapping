@@ -33,9 +33,17 @@ public class UserTest {
 	public void setup() {
 
 	}
-
+	
 	@Test
 	public void findAll() {
+		List<UserInfo> list = userService.findAll();
+		for (UserInfo bean : list) {
+			System.out.println(bean.getName());
+		}
+	}
+	
+	@Test
+	public void findAllPage() {
 		List<UserInfo> list = userService.findAll(Page.newBuilder(2, 3, "/user/page"));
 		for (UserInfo bean : list) {
 			System.out.println(bean.getName());
@@ -44,7 +52,7 @@ public class UserTest {
 
 	@Test
 	public void findOne() {
-		System.out.println(userService.find(1));
+		System.out.println(userService.findOne(1).getName());
 	}
 
 	@Test

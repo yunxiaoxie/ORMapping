@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * Title: ConfigReader Description: 读取配置文件
  */
-public class ConfigReader {
+public class PropUtil {
 
 	/**
 	 * ResourceBundle.getBundle方式不需要.properties后缀.
@@ -28,7 +28,7 @@ public class ConfigReader {
 		}
 	}
 
-	private ConfigReader() {
+	private PropUtil() {
 	}
 
 	/**
@@ -94,6 +94,6 @@ public class ConfigReader {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(ConfigReader.getProperty("tableColumn"));
+		System.out.println(PropUtil.getProperty("tableColumn"));
 	}
 }

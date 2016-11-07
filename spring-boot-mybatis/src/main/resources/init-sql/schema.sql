@@ -22,6 +22,27 @@ CREATE TABLE `sys_user` (
 INSERT INTO `sys_user` VALUES ('1', 'test', 'test', null, '2016-06-27 00:01:39', null, '2016-06-27 00:01:39', null);
 
 -- ----------------------------
+-- Table structure for sys_data_dic
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_data_dic`;
+CREATE TABLE `sys_data_dic` (
+  `id`                        int(11)                NOT NULL AUTO_INCREMENT      COMMENT '主键',
+  `pid`                      int(11)                DEFAULT NULL                              COMMENT '父主键',
+  `dic_key`               varchar(20)         NOT NULL                                     COMMENT '键',
+  `dic_value`            varchar(50)         DEFAULT NULL                              COMMENT '值',
+  `is_stop`                int(2)                  DEFAULT NULL                              COMMENT '是否停用(-1-停用, 空或0-启用)',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='系统字典表';
+
+-- ----------------------------
+-- Records of sys_data_dic
+-- ----------------------------
+INSERT INTO `sys_data_dic` VALUES ('1', null, 'key1', 'value1', null);
+INSERT INTO `sys_data_dic` VALUES ('2', null, 'tree', null, null);
+INSERT INTO `sys_data_dic` VALUES ('3', '2', 'tree1', 'christmas1', null);
+INSERT INTO `sys_data_dic` VALUES ('4', '2', 'tree2', 'christmas2', null);
+
+-- ----------------------------
 -- Table structure for my_user
 -- ----------------------------
 DROP TABLE IF EXISTS `my_user`;

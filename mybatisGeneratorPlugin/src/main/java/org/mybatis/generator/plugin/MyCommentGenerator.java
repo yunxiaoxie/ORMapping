@@ -22,7 +22,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.utils.ConfigReader;
+import org.mybatis.generator.utils.PropUtil;
 
 /**
  * The Class DefaultCommentGenerator.
@@ -278,7 +278,7 @@ public class MyCommentGenerator implements CommentGenerator {
         StringBuilder sb = new StringBuilder();
         sb.append(" *  "); //$NON-NLS-1$
         sb.append(remarks);
-        sb.append(ConfigReader.getProperty("tableColumn"));
+        sb.append(PropUtil.getProperty("tableColumn"));
         sb.append(introspectedTable.getFullyQualifiedTable());
         sb.append('.');
         sb.append(introspectedColumn.getActualColumnName());

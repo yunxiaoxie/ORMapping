@@ -23,5 +23,13 @@ public interface UserMapper {
 	 * findAll
 	 * @return
 	 */
-	List<UserInfo> findAll(Page page);
+	@Select(value="select * from boot_user")
+	List<UserInfo> findAll();
+	
+	/**
+	 * findAll
+	 * @return
+	 */
+	@Select(value="select * from boot_user")
+	List<UserInfo> findAllPage(Page page);
 }

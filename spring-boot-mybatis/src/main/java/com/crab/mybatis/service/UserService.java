@@ -13,6 +13,8 @@ public interface UserService {
 	 * findAll
 	 * @return
 	 */
+	List<UserInfo> findAll();
+	
 	List<UserInfo> findAll(Page page);
 	
 	UserInfo findOne(int id);

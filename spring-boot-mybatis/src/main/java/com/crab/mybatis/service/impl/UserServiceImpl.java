@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserInfo> findAll(Page page) {
-		return UserMapper.findAll(page);
+		return UserMapper.findAllPage(page);
 	}
 
 	@Override
@@ -33,5 +33,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public MyUser find(int id) {
 		return MyUserMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<UserInfo> findAll() {
+		return UserMapper.findAll();
 	}
 }
