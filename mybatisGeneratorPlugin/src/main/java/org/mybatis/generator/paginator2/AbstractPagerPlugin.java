@@ -5,61 +5,48 @@ import java.sql.ResultSet;
 import java.util.Properties;
 
 import org.apache.ibatis.executor.Executor;
-import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
-import org.apache.ibatis.plugin.Signature;
-import org.apache.ibatis.reflection.MetaObject;
-import org.apache.ibatis.reflection.SystemMetaObject;
-import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
-@SuppressWarnings("rawtypes")
-@Intercepts(@Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
-		RowBounds.class, ResultHandler.class }))
-public class PagePlugin implements Interceptor {
-	private static PageSqlGenerator sqlGenerator = new MysqlPagerSqlGenerator();
+public abstract class AbstractPagerPlugin implements Interceptor {
+
+	/**
+	 * build pager SQL.
+	 */
+	public abstract String getPagerSql(String sql, RowBounds rowBounds);
+
+	/**
+	 * build count SQL.
+	 */
+	public abstract String getCountSql(String sql);
 
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
-		final Object[] args = invocation.getArgs();
-		RowBounds rowBounds = (RowBounds) args[2];
+		RowBounds rowBounds = (RowBounds) invocation.getArgs()[2];
 		if (rowBounds instanceof PageRowBounds) {
 			Executor executor = (Executor) invocation.getTarget();
-			MappedStatement mappedStatement = (MappedStatement) args[0];
-			Object parameter = args[1];
-			PageRowBounds pageRowBounds = (PageRowBounds) args[2];
-			ResultHandler resultHandler = (ResultHandler) args[3];
+			MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
+			Object parameter = invocation.getArgs()[1];
+			PageRowBounds pageRowBounds = (PageRowBounds) invocation.getArgs()[2];
 			BoundSql boundSql = mappedStatement.getBoundSql(parameter);
-			PageSqlSqlSource sqlSource = new PageSqlSqlSource(boundSql);
-			MappedStatement statement = buildMappedStatement(mappedStatement, sqlSource);
-			MetaObject msObject = SystemMetaObject.forObject(statement);
-			msObject.setValue("sqlSource.boundSql.sql", sqlGenerator.getPagerSql(boundSql.getSql(), rowBounds));
-			args[0] = statement;
-			StatementHandler statementHandler = mappedStatement.getConfiguration().newStatementHandler(executor,
-					mappedStatement, parameter, rowBounds, resultHandler, boundSql);
-			ResultSet rs = null;
+			// update statement by local SQL.
+			BoundSql newBoundSql = copyBoundSql(mappedStatement, boundSql, getPagerSql(boundSql.getSql(), rowBounds));
+			MappedStatement statement = buildMappedStatement(mappedStatement, new PageSqlSqlSource(newBoundSql));
+			invocation.getArgs()[0] = statement;
+			// get total count by local SQL.
 			try (PreparedStatement stmt = executor.getTransaction().getConnection()
-					.prepareStatement(sqlGenerator.getCountSql(boundSql.getSql()))) {
-				statementHandler.parameterize(stmt);
-				rs = stmt.executeQuery();
+					.prepareStatement(getCountSql(boundSql.getSql())); ResultSet rs = stmt.executeQuery();) {
 				int totalCount = 0;
 				if (rs.next()) {
 					totalCount = rs.getInt("totalCount");
 				}
 				pageRowBounds.setTotalCount(totalCount);
-			} finally {
-				if (rs != null) {
-					try {
-						rs.close();
-					} catch (Throwable ignored) {
-					}
-				}
 			}
 		}
 		return invocation.proceed();
@@ -72,6 +59,18 @@ public class PagePlugin implements Interceptor {
 		} else {
 			return target;
 		}
+	}
+
+	private BoundSql copyBoundSql(MappedStatement ms, BoundSql boundSql, String countSql) {
+		BoundSql newBoundSql = new BoundSql(ms.getConfiguration(), countSql, boundSql.getParameterMappings(),
+				boundSql.getParameterObject());
+		for (ParameterMapping mapping : boundSql.getParameterMappings()) {
+			String prop = mapping.getProperty();
+			if (boundSql.hasAdditionalParameter(prop)) {
+				newBoundSql.setAdditionalParameter(prop, boundSql.getAdditionalParameter(prop));
+			}
+		}
+		return newBoundSql;
 	}
 
 	@Override

@@ -23,7 +23,6 @@ public interface UserMapper {
 	 * findAll
 	 * @return
 	 */
-	@Select(value="select * from boot_user")
 	List<UserInfo> findAll();
 	
 	/**

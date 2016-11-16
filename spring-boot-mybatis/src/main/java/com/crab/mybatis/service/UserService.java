@@ -3,21 +3,26 @@ package com.crab.mybatis.service;
 import java.util.List;
 
 import org.mybatis.generator.paginator.Page;
+import org.mybatis.generator.paginator2.PageRowBounds;
+import org.mybatis.generator.paginator3.PageBounds;
 
 import com.crab.mybatis.domain.MyUser;
-import com.crab.mybatis.domain.UserInfo;
 
 public interface UserService {
 
 	/**
 	 * findAll
+	 * 
 	 * @return
 	 */
-	List<UserInfo> findAll();
+	List<MyUser> findAll();
+
+	List<MyUser> findAll(Page page);
 	
-	List<UserInfo> findAll(Page page);
+	List<MyUser> findAll(PageBounds page);
 	
-	UserInfo findOne(int id);
-	
-	MyUser find(int id);
+	List<MyUser> findAll(PageRowBounds page);
+
+	MyUser findOne(int id);
+
 }

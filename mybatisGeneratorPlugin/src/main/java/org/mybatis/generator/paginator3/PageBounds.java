@@ -2,7 +2,7 @@ package org.mybatis.generator.paginator3;
 
 import org.apache.ibatis.session.RowBounds;
 
-public class PagingBounds extends RowBounds {
+public class PageBounds extends RowBounds {
     
     //总记录数
     private int total;
@@ -11,12 +11,12 @@ public class PagingBounds extends RowBounds {
     //查询多少行记录
     private int limit;
 
-    public PagingBounds() {
+    public PageBounds() {
         this.offset = NO_ROW_OFFSET;
         this.limit = NO_ROW_LIMIT;
     }
 
-    public PagingBounds(int offset, int limit) {
+    public PageBounds(int offset, int limit) {
         this.offset = offset;
         this.limit = limit;
     }

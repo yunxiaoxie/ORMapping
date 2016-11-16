@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.crab.mybatis.domain.SysUser;
 import com.crab.mybatis.service.SysUserService;
 
 @Controller
@@ -23,5 +24,15 @@ public class SysUserController {
 	@RequestMapping("sysuser/{id}")
 	public String findById(@PathVariable int id) {
 		return JSON.toJSONString(service.find(id));
+	}
+	
+	@ResponseBody
+	@RequestMapping("sysuser/{username}/{pwd}")
+	public String findByPwd(@PathVariable String username, @PathVariable String pwd) {
+		SysUser user = service.findByPwd(username, pwd);
+		if (null != user) {
+			return JSON.toJSONString(user);
+		}
+		return null;
 	}
 }

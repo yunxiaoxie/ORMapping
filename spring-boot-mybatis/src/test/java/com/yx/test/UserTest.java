@@ -8,13 +8,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.generator.paginator.Page;
 import org.mybatis.generator.paginator2.PageRowBounds;
-import org.mybatis.generator.paginator3.PagingBounds;
+import org.mybatis.generator.paginator3.PageBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.crab.mybatis.Application;
+import com.crab.mybatis.domain.MyUser;
 import com.crab.mybatis.domain.UserInfo;
 import com.crab.mybatis.service.UserService;
 
@@ -33,19 +34,37 @@ public class UserTest {
 	public void setup() {
 
 	}
-	
+
 	@Test
 	public void findAll() {
-		List<UserInfo> list = userService.findAll();
-		for (UserInfo bean : list) {
+		List<MyUser> list = userService.findAll();
+		for (MyUser bean : list) {
+			System.out.println(bean.getName());
+		}
+	}
+
+	@Test
+	public void findAllPage() {
+		List<MyUser> list = userService.findAll(Page.newBuilder(1, 3, "/user/page"));
+		for (MyUser bean : list) {
 			System.out.println(bean.getName());
 		}
 	}
 	
 	@Test
-	public void findAllPage() {
-		List<UserInfo> list = userService.findAll(Page.newBuilder(2, 3, "/user/page"));
-		for (UserInfo bean : list) {
+	public void findAllPage3() {
+		PageBounds pg = new PageBounds(0, 3);
+		List<MyUser> list = userService.findAll(pg);
+		for (MyUser bean : list) {
+			System.out.println(bean.getName());
+		}
+	}
+	
+	@Test
+	public void findAllPage2() {
+		PageRowBounds pg = new PageRowBounds(0, 3);
+		List<MyUser> list = userService.findAll(pg);
+		for (MyUser bean : list) {
 			System.out.println(bean.getName());
 		}
 	}
@@ -58,15 +77,17 @@ public class UserTest {
 	@Test
 	public void testPage() throws Exception {
 		PageRowBounds pageRowBounds = new PageRowBounds(0, 3);
-		List<UserInfo> students = sqlSession.selectList("com.crab.mybatis.mapper.UserMapper.findAll", null, pageRowBounds);
+		List<UserInfo> students = sqlSession.selectList("com.crab.mybatis.mapper.UserMapper.findAll", null,
+				pageRowBounds);
 		System.out.println(pageRowBounds.getTotalCount());
 		students.forEach(System.out::println);
 	}
-	
+
 	@Test
 	public void testPage2() throws Exception {
-		PagingBounds pageRowBounds = new PagingBounds(0, 3);
-		List<UserInfo> students = sqlSession.selectList("com.crab.mybatis.mapper.UserMapper.findAll", null, pageRowBounds);
+		PageBounds pageRowBounds = new PageBounds(0, 3);
+		List<UserInfo> students = sqlSession.selectList("com.crab.mybatis.mapper.UserMapper.findAll", null,
+				pageRowBounds);
 		System.out.println(pageRowBounds.getTotal());
 		students.forEach(System.out::println);
 	}

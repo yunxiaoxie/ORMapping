@@ -9,13 +9,18 @@ import com.crab.mybatis.service.SysUserService;
 
 @Service
 public class SysUserServiceImpl implements SysUserService {
-	
+
 	@Autowired
 	private SysUserMapper mapper;
 
 	@Override
 	public SysUser find(int id) {
 		return mapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public SysUser findByPwd(String user, String pwd) {
+		return mapper.getUserByPwd(user, pwd);
 	}
 
 }

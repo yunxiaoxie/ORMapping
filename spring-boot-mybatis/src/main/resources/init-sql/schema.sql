@@ -19,8 +19,8 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'test', 'test', null, '2016-06-27 00:01:39', null, '2016-06-27 00:01:39', null);
-
+INSERT INTO `sys_user` VALUES ('1', 'root', 'test', null, '2016-06-27 00:01:39', null, '2016-06-27 00:01:39', null);
+INSERT INTO `sys_user` VALUES ('2', 'test', 'test', null, '2016-06-27 00:01:39', null, '2016-06-27 00:01:39', null);
 -- ----------------------------
 -- Table structure for sys_data_dic
 -- ----------------------------

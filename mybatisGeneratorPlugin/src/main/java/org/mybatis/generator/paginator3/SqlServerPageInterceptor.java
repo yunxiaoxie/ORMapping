@@ -7,7 +7,7 @@ import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Signature;
 
 @Intercepts(@Signature(type=StatementHandler.class,method="prepare",args={Connection.class, Integer.class})) 
-public class SqlServerPagingInterceptor extends AbstractPagingInterceptor {
+public class SqlServerPageInterceptor extends AbstractPageInterceptor {
 
     /**
      * 改造sql变成查询总数的sql
@@ -46,7 +46,7 @@ public class SqlServerPagingInterceptor extends AbstractPagingInterceptor {
      * SELECT * FROM query WHERE __mybatis_row_nr__ >= 3 AND __mybatis_row_nr__ <= 6 
      */
     @Override
-    protected String getSelectPagingSql(String targetSql, PagingBounds bounds) {
+    protected String getSelectPagingSql(String targetSql, PageBounds bounds) {
         String sql = targetSql.toLowerCase();
         StringBuilder sqlBuilder = new StringBuilder(sql);
         

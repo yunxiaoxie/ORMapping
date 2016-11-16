@@ -33,4 +33,9 @@ public class SysUserTest {
 		assertEquals("test", bean.getUser());
 	}
 
+	@Test
+	public void findByPwd() {
+		SysUser bean = service.findByPwd("root", "test");
+		assertEquals("root", bean.getUser());
+	}
 }
