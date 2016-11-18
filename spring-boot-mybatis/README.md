@@ -11,6 +11,9 @@ Application is powered by many powerful frameworks and third-party projects:
 - [HikariCP](https://github.com/brettwooldridge/HikariCP) - A solid high-performance JDBC connection pool
 - [Redis](http://redis.io/) - A very powerful in-memory data cache server.
 
+##State
+-10000 login success.
+
 ## Development
 
 Before development, please install the following service software:

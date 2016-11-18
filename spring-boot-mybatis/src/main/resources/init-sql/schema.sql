@@ -26,21 +26,28 @@ INSERT INTO `sys_user` VALUES ('2', 'test', 'test', null, '2016-06-27 00:01:39',
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_data_dic`;
 CREATE TABLE `sys_data_dic` (
-  `id`                        int(11)                NOT NULL AUTO_INCREMENT      COMMENT '主键',
-  `pid`                      int(11)                DEFAULT NULL                              COMMENT '父主键',
+  `id`                        int(10)                NOT NULL AUTO_INCREMENT      COMMENT '主键',
+  `pid`                      int(10)                DEFAULT NULL                              COMMENT '父主键',
+  `code`                   int(10)                NOT NULL                                     COMMENT '页面通过它取值',
   `dic_key`               varchar(20)         NOT NULL                                     COMMENT '键',
   `dic_value`            varchar(50)         DEFAULT NULL                              COMMENT '值',
   `is_stop`                int(2)                  DEFAULT NULL                              COMMENT '是否停用(-1-停用, 空或0-启用)',
+  `comet`                varchar(50)         DEFAULT NULL                              COMMENT '注释',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='系统字典表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='系统字典表';
 
 -- ----------------------------
 -- Records of sys_data_dic
 -- ----------------------------
-INSERT INTO `sys_data_dic` VALUES ('1', null, 'key1', 'value1', null);
-INSERT INTO `sys_data_dic` VALUES ('2', null, 'tree', null, null);
-INSERT INTO `sys_data_dic` VALUES ('3', '2', 'tree1', 'christmas1', null);
-INSERT INTO `sys_data_dic` VALUES ('4', '2', 'tree2', 'christmas2', null);
+INSERT INTO `sys_data_dic` VALUES ('1', null, 1001, 'key', 'Y', null, '是');
+INSERT INTO `sys_data_dic` VALUES ('9', null, 1001, 'key', 'N', null, '否');
+INSERT INTO `sys_data_dic` VALUES ('2', null, 1002, 'key', 'W', null, '女');
+INSERT INTO `sys_data_dic` VALUES ('3', null, 1002, 'key', 'M', null, '男');
+INSERT INTO `sys_data_dic` VALUES ('4', null, 1003, 'key', '1', null, '显示');
+INSERT INTO `sys_data_dic` VALUES ('5', null, 1003, 'key', '0', null, '隐藏');
+INSERT INTO `sys_data_dic` VALUES ('6', null, 1006, 'tree', null, null, '树型结构');
+INSERT INTO `sys_data_dic` VALUES ('7', '6', 1006, 'tree1', 'christmas1', null, null);
+INSERT INTO `sys_data_dic` VALUES ('8', '6', 1006, 'tree2', 'christmas2', null, null);
 
 -- ----------------------------
 -- Table structure for my_user
