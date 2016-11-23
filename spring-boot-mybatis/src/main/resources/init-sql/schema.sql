@@ -48,6 +48,9 @@ INSERT INTO `sys_data_dic` VALUES ('5', null, 1003, 'key', '0', null, '隐藏');
 INSERT INTO `sys_data_dic` VALUES ('6', null, 1006, 'tree', null, null, '树型结构');
 INSERT INTO `sys_data_dic` VALUES ('7', '6', 1006, 'tree1', 'christmas1', null, null);
 INSERT INTO `sys_data_dic` VALUES ('8', '6', 1006, 'tree2', 'christmas2', null, null);
+INSERT INTO `sys_data_dic` VALUES ('10', null, 1004, 'key', 'book', null, '看书');
+INSERT INTO `sys_data_dic` VALUES ('11', null, 1004, 'key', 'run', null, '跑步');
+INSERT INTO `sys_data_dic` VALUES ('12', null, 1004, 'key', 'ball', null, '打球');
 
 -- ----------------------------
 -- Table structure for my_user
@@ -55,7 +58,7 @@ INSERT INTO `sys_data_dic` VALUES ('8', '6', 1006, 'tree2', 'christmas2', null, 
 DROP TABLE IF EXISTS `my_user`;
 CREATE TABLE `my_user` (
   `id`                        int(11)                NOT NULL AUTO_INCREMENT      COMMENT '主键',
-  `name`                  varchar(50)         DEFAULT NULL                              COMMENT '用户名',
+  `name`                  varchar(50)         NOT NULL                                     COMMENT '用户名',
   `sex`                      varchar(2)           DEFAULT NULL                              COMMENT '性别',
   `age`                     int(3)                   DEFAULT NULL                              COMMENT '年龄',
   `addr`                    varchar(100)       DEFAULT NULL                              COMMENT '地址',
@@ -72,12 +75,12 @@ CREATE TABLE `my_user` (
 -- ----------------------------
 -- Records of my_user
 -- ----------------------------
-INSERT INTO `my_user` VALUES ('1', 'klay', 'W', 22, '武汉市光谷大道', '13799008800', 'Y', '', '2016-6-6', 100.2, '2016-06-27 00:01:39');
-INSERT INTO `my_user` VALUES ('2', 'Tome', 'M', 22, '武汉市光谷大道', '18988991234', 'Y', '', '2016-6-6', 100.3, '2016-06-27 00:35:28');
+INSERT INTO `my_user` VALUES ('1', 'klay', 'W', 22, '武汉市光谷大道', '13799008800', 'Y', 'book', '2016-6-6', 100.2, '2016-06-27 00:01:39');
+INSERT INTO `my_user` VALUES ('2', 'Tome', 'M', 22, '武汉市光谷大道', '18988991234', 'Y', 'book,run', '2016-6-6', 100.3, '2016-06-27 00:35:28');
 INSERT INTO `my_user` VALUES ('3', 'aa', 'M', 22, '武汉市光谷大道', '18988991234', 'Y', '', '2016-6-6', 100.3, '2016-06-27 00:35:28');
-INSERT INTO `my_user` VALUES ('4', 'bb', 'M', 22, '武汉市光谷大道', '18988991234', 'Y', '', '2016-6-6', 100.3, '2016-06-27 00:35:28');
-INSERT INTO `my_user` VALUES ('5', 'dd', 'M', 22, '武汉市光谷大道', '18988991234', 'Y', '', '2016-6-6', 100.3, '2016-06-27 00:35:28');
-INSERT INTO `my_user` VALUES ('6', 'cc', 'M', 22, '武汉市光谷大道', '18988991234', 'Y', '', '2016-6-6', 100.3, '2016-06-27 00:35:28');
+INSERT INTO `my_user` VALUES ('4', 'bb', 'M', 22, '武汉市光谷大道', '18988991234', 'Y', 'book', '2016-6-6', 100.3, '2016-06-27 00:35:28');
+INSERT INTO `my_user` VALUES ('5', 'dd', 'M', 22, '武汉市光谷大道', '18988991234', 'Y', 'book', '2016-6-6', 100.3, '2016-06-27 00:35:28');
+INSERT INTO `my_user` VALUES ('6', 'cc', 'M', 22, '武汉市光谷大道', '18988991234', 'Y', 'book', '2016-6-6', 100.3, '2016-06-27 00:35:28');
 
 
 -- ----------------------------

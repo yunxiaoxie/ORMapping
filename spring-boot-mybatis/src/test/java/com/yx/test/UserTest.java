@@ -10,7 +10,7 @@ import org.mybatis.generator.paginator.Page;
 import org.mybatis.generator.paginator2.PageRowBounds;
 import org.mybatis.generator.paginator3.PageBounds;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -21,7 +21,7 @@ import com.crab.mybatis.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@SpringApplicationConfiguration(classes = Application.class)
+@SpringBootTest(classes = Application.class)
 public class UserTest {
 
 	@Autowired

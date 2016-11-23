@@ -31,9 +31,13 @@ public class CORSFilter implements Filter {
 
 		response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
 		response.setHeader("Access-Control-Allow-Credentials", "true");
-		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
 		response.setHeader("Access-Control-Max-Age", "3600");
-		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-Session-Token");
+		/**
+		 * Set Cache-Control, Pragma for IE ajax request caching disablement
+		 * Custom item X-Session-Token for myself.
+		 */
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-Session-Token, Cache-Control, Pragma");
 
 		chain.doFilter(req, res);
 	}

@@ -29,11 +29,11 @@ public class BaseController {
 	@ResponseBody
 	@RequestMapping("dataDic/{code}")
 	public String findUser(@PathVariable int code) {
-		if (1004 == code) {
-			return "[{\"id\":1, \"name\":\"看书\", \"model\":\"book\"},{\"id\":2, \"name\":\"跑步\", \"model\":\"play\"},{\"id\":3, \"name\":\"打球\", \"model\":\"ball\"}]";
-		}
+//		if (1004 == code) {
+//			return "[{\"id\":1, \"name\":\"看书\", \"model\":\"book\"},{\"id\":2, \"name\":\"跑步\", \"model\":\"run\"},{\"id\":3, \"name\":\"打球\", \"model\":\"ball\"}]";
+//		}
 		if (1005 == code) {
-			return "[{\"id\":1, \"name\":\"语文\", \"model\":\"yw\"},{\"id\":2, \"name\":\"数学\", \"model\":\"sx\"},{\"id\":3, \"name\":\"英语\", \"model\":\"english\"}]";
+			return "[{\"id\":1, \"comet\":\"语文\", \"dic_value\":\"yw\"},{\"id\":2, \"comet\":\"数学\", \"dic_value\":\"sx\"},{\"id\":3, \"comet\":\"英语\", \"dic_value\":\"english\"}]";
 		}
 		if (1006 == code) {
 			return "[{\"id\": 1,\"pId\": 0,\"name\": \"普通的父节点\",\"title\": \"我很普通，随便点我吧\",\"open\": true},"

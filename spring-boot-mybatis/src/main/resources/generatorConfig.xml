@@ -31,7 +31,7 @@
 		<commentGenerator
 			type="org.mybatis.generator.plugin.MyCommentGenerator">
 			<property name="suppressDate" value="true" />
-			<property name="suppressAllComments" value="false" />
+			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
 
 		<jdbcConnection driverClass="${jdbc_driver}" connectionURL="${jdbc_url}" userId="${jdbc_user}" password="${jdbc_password}" />
@@ -41,8 +41,7 @@
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
 
-		<javaModelGenerator targetPackage="com.crab.mybatis.domain"
-			targetProject="src\main\java">
+		<javaModelGenerator targetPackage="com.crab.mybatis.domain"	targetProject="src\main\java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
@@ -51,17 +50,18 @@
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
-		<javaClientGenerator type="XMLMAPPER"
+		<!-- 只生成Mapper一次，因手动编辑较多, 注意：注释这会导致xml文件namespace不全 -->
+		<!-- <javaClientGenerator type="XMLMAPPER"
 			targetPackage="com.crab.mybatis.mapper" targetProject="src\main\java">
 			<property name="enableSubPackages" value="true" />
-		</javaClientGenerator>
+		</javaClientGenerator> -->
 
 		<!-- mapperName="MyUserDao" -->
 		<table schema="dispatch" tableName="my_user" domainObjectName="MyUser" 
-			enableInsert="false"
+			enableInsert="true"
 			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="false"
-			enableDeleteByPrimaryKey="false"
+			enableUpdateByPrimaryKey="true"
+			enableDeleteByPrimaryKey="true"
 			enableCountByExample="false" 
 			enableUpdateByExample="false"
 			enableDeleteByExample="false" 
@@ -73,10 +73,10 @@
 			<property name="useActualColumnNames" value="true" />
 		</table>
 		<table schema="dispatch" tableName="sys_user" domainObjectName="SysUser" 
-			enableInsert="false"
+			enableInsert="true"
 			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="false"
-			enableDeleteByPrimaryKey="false"
+			enableUpdateByPrimaryKey="true"
+			enableDeleteByPrimaryKey="true"
 			enableCountByExample="false" 
 			enableUpdateByExample="false"
 			enableDeleteByExample="false" 
@@ -88,10 +88,10 @@
 			<property name="useActualColumnNames" value="true" />
 		</table>
 		<table schema="dispatch" tableName="sys_data_dic" domainObjectName="SysDataDic" 
-			enableInsert="false"
+			enableInsert="true"
 			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="false"
-			enableDeleteByPrimaryKey="false"
+			enableUpdateByPrimaryKey="true"
+			enableDeleteByPrimaryKey="true"
 			enableCountByExample="false" 
 			enableUpdateByExample="false"
 			enableDeleteByExample="false" 
