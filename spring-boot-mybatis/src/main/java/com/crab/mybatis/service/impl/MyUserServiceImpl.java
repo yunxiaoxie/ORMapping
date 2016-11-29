@@ -50,4 +50,14 @@ public class MyUserServiceImpl implements MyUserService {
 		return mapper.updateByPrimaryKey(user);
 	}
 
+	@Override
+	public int insertSelective(MyUser record) {
+		return mapper.insertSelective(record);
+	}
+
+	@Override
+	public int updateBySelective(MyUser record) {
+		return mapper.updateByPrimaryKeySelective(record);
+	}
+
 }

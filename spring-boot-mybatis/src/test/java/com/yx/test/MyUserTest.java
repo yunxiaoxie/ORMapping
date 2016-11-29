@@ -48,6 +48,18 @@ public class MyUserTest {
 		int result = service.insert(user);
 		assertTrue(result == 1);
 	}
+	
+	@Test
+	public void testInsertSelective() {
+		MyUser user = new MyUser();
+		user.setName("Test2");
+		user.setSex("M");
+		user.setAge(20);
+		user.setAddr("光谷");
+		user.setCreate_time(new Date());
+		int result = service.insertSelective(user);
+		assertTrue(result == 1);
+	}
 
 	@Test
 	public void testUpdate() {
@@ -59,6 +71,15 @@ public class MyUserTest {
 		user.setAddr("光谷");
 		user.setCreate_time(new Date());
 		int result = service.update(user);
+		assertTrue(result == 1);
+	}
+	
+	@Test
+	public void testUpdateSelective() {
+		MyUser user = new MyUser();
+		user.setId(10);
+		user.setAge(22);
+		int result = service.updateBySelective(user);
 		assertTrue(result == 1);
 	}
 

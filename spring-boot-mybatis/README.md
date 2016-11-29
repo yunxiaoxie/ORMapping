@@ -14,6 +14,12 @@ Application is powered by many powerful frameworks and third-party projects:
 ##State
 -10000 login success.
 
+## mybatis-generator
+- generate xml, mapper, domain
+- reconfig generatorConfig.xml for javaClientGenerator.
+- mvn mybatis-generator:generate
+- please update xml namespace, if you don't have javaClientGenerator element before building.
+
 ## Development
 
 Before development, please install the following service software:

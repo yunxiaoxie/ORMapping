@@ -23,4 +23,8 @@ public interface MyUserService {
 	int deleteById(Integer id);
 
 	int update(MyUser user);
+	
+	int insertSelective(MyUser record);
+	
+	int updateBySelective(MyUser record);
 }

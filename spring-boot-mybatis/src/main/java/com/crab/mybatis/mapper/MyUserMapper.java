@@ -57,4 +57,8 @@ public interface MyUserMapper {
 	int deleteByPrimaryKey(Integer id);
 
 	int updateByPrimaryKey(MyUser user);
+	
+	int insertSelective(MyUser record);
+	
+	int updateByPrimaryKeySelective(MyUser record);
 }

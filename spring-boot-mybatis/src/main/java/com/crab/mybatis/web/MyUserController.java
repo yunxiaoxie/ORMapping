@@ -54,6 +54,26 @@ public class MyUserController {
 		}
 		return "-1";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "saveUserSelective", method = RequestMethod.POST)
+	public String saveUserSelective(@RequestBody MyUser user) {
+		if (null != user && StringUtils.isNotEmpty(user.getName())) {
+			user.setCreate_time(new Date());
+			return JSON.toJSONString(service.insertSelective(user));
+		}
+		return "-1";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "updateUserSelective", method = RequestMethod.PUT)
+	public String updateUserSelective(@RequestBody MyUser user) {
+		if (null != user && null != user.getId()) {
+			user.setCreate_time(new Date());
+			return JSON.toJSONString(service.updateBySelective(user));
+		}
+		return "-1";
+	}
 
 	@ResponseBody
 	@RequestMapping(value = "deleteUser", method = RequestMethod.DELETE)
