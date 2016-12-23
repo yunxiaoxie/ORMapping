@@ -34,7 +34,7 @@ public class SysUser implements Serializable {
      *
      * @mbg.generated
      */
-    private String is_stop;
+    private String isStop;
 
     /**
      *
@@ -42,7 +42,7 @@ public class SysUser implements Serializable {
      *
      * @mbg.generated
      */
-    private Date stop_time;
+    private Date stopTime;
 
     /**
      *
@@ -50,7 +50,7 @@ public class SysUser implements Serializable {
      *
      * @mbg.generated
      */
-    private String stop_user;
+    private String stopUser;
 
     /**
      *
@@ -58,7 +58,7 @@ public class SysUser implements Serializable {
      *
      * @mbg.generated
      */
-    private Date create_time;
+    private Date createTime;
 
     /**
      *
@@ -66,7 +66,7 @@ public class SysUser implements Serializable {
      *
      * @mbg.generated
      */
-    private String create_user;
+    private String createUser;
 
     private static final long serialVersionUID = 1L;
 
@@ -94,44 +94,44 @@ public class SysUser implements Serializable {
         this.pwd = pwd == null ? null : pwd.trim();
     }
 
-    public String getIs_stop() {
-        return is_stop;
+    public String getIsStop() {
+        return isStop;
     }
 
-    public void setIs_stop(String is_stop) {
-        this.is_stop = is_stop == null ? null : is_stop.trim();
+    public void setIsStop(String isStop) {
+        this.isStop = isStop == null ? null : isStop.trim();
     }
 
-    public Date getStop_time() {
-        return stop_time;
+    public Date getStopTime() {
+        return stopTime;
     }
 
-    public void setStop_time(Date stop_time) {
-        this.stop_time = stop_time;
+    public void setStopTime(Date stopTime) {
+        this.stopTime = stopTime;
     }
 
-    public String getStop_user() {
-        return stop_user;
+    public String getStopUser() {
+        return stopUser;
     }
 
-    public void setStop_user(String stop_user) {
-        this.stop_user = stop_user == null ? null : stop_user.trim();
+    public void setStopUser(String stopUser) {
+        this.stopUser = stopUser == null ? null : stopUser.trim();
     }
 
-    public Date getCreate_time() {
-        return create_time;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public String getCreate_user() {
-        return create_user;
+    public String getCreateUser() {
+        return createUser;
     }
 
-    public void setCreate_user(String create_user) {
-        this.create_user = create_user == null ? null : create_user.trim();
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser == null ? null : createUser.trim();
     }
 
     @Override
@@ -149,11 +149,11 @@ public class SysUser implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getUser() == null ? other.getUser() == null : this.getUser().equals(other.getUser()))
             && (this.getPwd() == null ? other.getPwd() == null : this.getPwd().equals(other.getPwd()))
-            && (this.getIs_stop() == null ? other.getIs_stop() == null : this.getIs_stop().equals(other.getIs_stop()))
-            && (this.getStop_time() == null ? other.getStop_time() == null : this.getStop_time().equals(other.getStop_time()))
-            && (this.getStop_user() == null ? other.getStop_user() == null : this.getStop_user().equals(other.getStop_user()))
-            && (this.getCreate_time() == null ? other.getCreate_time() == null : this.getCreate_time().equals(other.getCreate_time()))
-            && (this.getCreate_user() == null ? other.getCreate_user() == null : this.getCreate_user().equals(other.getCreate_user()));
+            && (this.getIsStop() == null ? other.getIsStop() == null : this.getIsStop().equals(other.getIsStop()))
+            && (this.getStopTime() == null ? other.getStopTime() == null : this.getStopTime().equals(other.getStopTime()))
+            && (this.getStopUser() == null ? other.getStopUser() == null : this.getStopUser().equals(other.getStopUser()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()));
     }
 
     @Override
@@ -163,11 +163,11 @@ public class SysUser implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getUser() == null) ? 0 : getUser().hashCode());
         result = prime * result + ((getPwd() == null) ? 0 : getPwd().hashCode());
-        result = prime * result + ((getIs_stop() == null) ? 0 : getIs_stop().hashCode());
-        result = prime * result + ((getStop_time() == null) ? 0 : getStop_time().hashCode());
-        result = prime * result + ((getStop_user() == null) ? 0 : getStop_user().hashCode());
-        result = prime * result + ((getCreate_time() == null) ? 0 : getCreate_time().hashCode());
-        result = prime * result + ((getCreate_user() == null) ? 0 : getCreate_user().hashCode());
+        result = prime * result + ((getIsStop() == null) ? 0 : getIsStop().hashCode());
+        result = prime * result + ((getStopTime() == null) ? 0 : getStopTime().hashCode());
+        result = prime * result + ((getStopUser() == null) ? 0 : getStopUser().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getCreateUser() == null) ? 0 : getCreateUser().hashCode());
         return result;
     }
 
@@ -180,11 +180,11 @@ public class SysUser implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", user=").append(user);
         sb.append(", pwd=").append(pwd);
-        sb.append(", is_stop=").append(is_stop);
-        sb.append(", stop_time=").append(stop_time);
-        sb.append(", stop_user=").append(stop_user);
-        sb.append(", create_time=").append(create_time);
-        sb.append(", create_user=").append(create_user);
+        sb.append(", isStop=").append(isStop);
+        sb.append(", stopTime=").append(stopTime);
+        sb.append(", stopUser=").append(stopUser);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", createUser=").append(createUser);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

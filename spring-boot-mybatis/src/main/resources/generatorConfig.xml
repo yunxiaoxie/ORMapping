@@ -51,10 +51,10 @@
 		</sqlMapGenerator>
 
 		<!-- 只生成Mapper一次，因手动编辑较多, 注意：注释这会导致xml文件namespace不全 -->
-		<!-- <javaClientGenerator type="XMLMAPPER"
+		<javaClientGenerator type="XMLMAPPER"
 			targetPackage="com.crab.mybatis.mapper" targetProject="src\main\java">
 			<property name="enableSubPackages" value="true" />
-		</javaClientGenerator>-->
+		</javaClientGenerator>
 
 		<!-- mapperName="MyUserDao" -->
 		<table schema="dispatch" tableName="my_user" domainObjectName="MyUser" 
@@ -70,7 +70,7 @@
 			<!-- <ignoreColumn column="fred"/> -->
 			<!-- <columnOverride column="BEG_DATE" property="startDate"/> -->
 			<!-- <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" /> --><!-- 指定列的java数据类型 -->
-			<property name="useActualColumnNames" value="true" />
+			<property name="useActualColumnNames" value="false" />
 		</table>
 		<table schema="dispatch" tableName="sys_user" domainObjectName="SysUser" 
 			enableInsert="true"
@@ -85,7 +85,7 @@
 			<!-- <ignoreColumn column="fred"/> -->
 			<!-- <columnOverride column="BEG_DATE" property="startDate"/> -->
 			<!-- <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" /> --><!-- 指定列的java数据类型 -->
-			<property name="useActualColumnNames" value="true" />
+			<property name="useActualColumnNames" value="false" />
 		</table>
 		<table schema="dispatch" tableName="sys_data_dic" domainObjectName="SysDataDic" 
 			enableInsert="true"
@@ -100,7 +100,7 @@
 			<!-- <ignoreColumn column="fred"/> -->
 			<!-- <columnOverride column="BEG_DATE" property="startDate"/> -->
 			<!-- <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" /> --><!-- 指定列的java数据类型 -->
-			<property name="useActualColumnNames" value="true" />
+			<property name="useActualColumnNames" value="false" />
 		</table>
 
 	</context>

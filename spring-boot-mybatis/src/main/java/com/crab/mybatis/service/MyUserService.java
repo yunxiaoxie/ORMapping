@@ -8,6 +8,8 @@ import com.crab.mybatis.domain.MyUser;
 
 public interface MyUserService {
 
+	MyUser findOne(int id);
+	
 	List<MyUser> findAll();
 	
 	/**

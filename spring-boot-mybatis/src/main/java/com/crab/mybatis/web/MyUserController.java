@@ -40,7 +40,7 @@ public class MyUserController {
 	@RequestMapping(value = "saveUser", method = RequestMethod.POST)
 	public String saveUser(@RequestBody MyUser user) {
 		if (null != user && StringUtils.isNotEmpty(user.getName())) {
-			user.setCreate_time(new Date());
+			user.setCreateTime(new Date());
 			return JSON.toJSONString(service.insert(user));
 		}
 		return "-1";
@@ -59,7 +59,7 @@ public class MyUserController {
 	@RequestMapping(value = "saveUserSelective", method = RequestMethod.POST)
 	public String saveUserSelective(@RequestBody MyUser user) {
 		if (null != user && StringUtils.isNotEmpty(user.getName())) {
-			user.setCreate_time(new Date());
+			user.setCreateTime(new Date());
 			return JSON.toJSONString(service.insertSelective(user));
 		}
 		return "-1";
@@ -69,7 +69,7 @@ public class MyUserController {
 	@RequestMapping(value = "updateUserSelective", method = RequestMethod.PUT)
 	public String updateUserSelective(@RequestBody MyUser user) {
 		if (null != user && null != user.getId()) {
-			user.setCreate_time(new Date());
+			user.setCreateTime(new Date());
 			return JSON.toJSONString(service.updateBySelective(user));
 		}
 		return "-1";

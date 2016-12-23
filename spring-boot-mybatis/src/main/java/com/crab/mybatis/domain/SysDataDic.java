@@ -49,7 +49,7 @@ public class SysDataDic implements Serializable {
      *
      * @mbg.generated
      */
-    private Integer is_stop;
+    private Integer isStop;
 
     /**
      *
@@ -101,12 +101,12 @@ public class SysDataDic implements Serializable {
         this.text = text == null ? null : text.trim();
     }
 
-    public Integer getIs_stop() {
-        return is_stop;
+    public Integer getIsStop() {
+        return isStop;
     }
 
-    public void setIs_stop(Integer is_stop) {
-        this.is_stop = is_stop;
+    public void setIsStop(Integer isStop) {
+        this.isStop = isStop;
     }
 
     public String getComet() {
@@ -134,7 +134,7 @@ public class SysDataDic implements Serializable {
             && (this.getCode() == null ? other.getCode() == null : this.getCode().equals(other.getCode()))
             && (this.getValue() == null ? other.getValue() == null : this.getValue().equals(other.getValue()))
             && (this.getText() == null ? other.getText() == null : this.getText().equals(other.getText()))
-            && (this.getIs_stop() == null ? other.getIs_stop() == null : this.getIs_stop().equals(other.getIs_stop()))
+            && (this.getIsStop() == null ? other.getIsStop() == null : this.getIsStop().equals(other.getIsStop()))
             && (this.getComet() == null ? other.getComet() == null : this.getComet().equals(other.getComet()));
     }
 
@@ -147,7 +147,7 @@ public class SysDataDic implements Serializable {
         result = prime * result + ((getCode() == null) ? 0 : getCode().hashCode());
         result = prime * result + ((getValue() == null) ? 0 : getValue().hashCode());
         result = prime * result + ((getText() == null) ? 0 : getText().hashCode());
-        result = prime * result + ((getIs_stop() == null) ? 0 : getIs_stop().hashCode());
+        result = prime * result + ((getIsStop() == null) ? 0 : getIsStop().hashCode());
         result = prime * result + ((getComet() == null) ? 0 : getComet().hashCode());
         return result;
     }
@@ -163,7 +163,7 @@ public class SysDataDic implements Serializable {
         sb.append(", code=").append(code);
         sb.append(", value=").append(value);
         sb.append(", text=").append(text);
-        sb.append(", is_stop=").append(is_stop);
+        sb.append(", isStop=").append(isStop);
         sb.append(", comet=").append(comet);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

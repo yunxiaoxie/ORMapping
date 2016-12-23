@@ -60,4 +60,9 @@ public class MyUserServiceImpl implements MyUserService {
 		return mapper.updateByPrimaryKeySelective(record);
 	}
 
+	@Override
+	public MyUser findOne(int id) {
+		return mapper.findOne(id);
+	}
+
 }

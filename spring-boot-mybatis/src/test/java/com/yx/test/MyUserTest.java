@@ -35,6 +35,12 @@ public class MyUserTest {
 		List<MyUser> list = service.findAll();
 		assertTrue(list.size() > 0);
 	}
+	
+	@Test
+	public void testQueryOne() {
+		MyUser bean = service.findOne(2);
+		assertTrue(bean.getId() == 2);
+	}
 
 	@Test
 	public void testInsert() {
@@ -44,7 +50,7 @@ public class MyUserTest {
 		user.setSex("M");
 		user.setAge(20);
 		user.setAddr("光谷");
-		user.setCreate_time(new Date());
+		user.setCreateTime(new Date());
 		int result = service.insert(user);
 		assertTrue(result == 1);
 	}
@@ -56,7 +62,7 @@ public class MyUserTest {
 		user.setSex("M");
 		user.setAge(20);
 		user.setAddr("光谷");
-		user.setCreate_time(new Date());
+		user.setCreateTime(new Date());
 		int result = service.insertSelective(user);
 		assertTrue(result == 1);
 	}
@@ -69,7 +75,7 @@ public class MyUserTest {
 		user.setSex("M");
 		user.setAge(20);
 		user.setAddr("光谷");
-		user.setCreate_time(new Date());
+		user.setCreateTime(new Date());
 		int result = service.update(user);
 		assertTrue(result == 1);
 	}

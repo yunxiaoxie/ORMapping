@@ -5,11 +5,11 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user" jdbcType="VARCHAR" property="user" />
     <result column="pwd" jdbcType="VARCHAR" property="pwd" />
-    <result column="is_stop" jdbcType="VARCHAR" property="is_stop" />
-    <result column="stop_time" jdbcType="TIMESTAMP" property="stop_time" />
-    <result column="stop_user" jdbcType="VARCHAR" property="stop_user" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
-    <result column="create_user" jdbcType="VARCHAR" property="create_user" />
+    <result column="is_stop" jdbcType="VARCHAR" property="isStop" />
+    <result column="stop_time" jdbcType="TIMESTAMP" property="stopTime" />
+    <result column="stop_user" jdbcType="VARCHAR" property="stopUser" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
   </resultMap>
   <sql id="Base_Column_List">
     id, user, pwd, is_stop, stop_time, stop_user, create_time, create_user
@@ -29,8 +29,8 @@
       is_stop, stop_time, stop_user, 
       create_time, create_user)
     values (#{id,jdbcType=INTEGER}, #{user,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
-      #{is_stop,jdbcType=VARCHAR}, #{stop_time,jdbcType=TIMESTAMP}, #{stop_user,jdbcType=VARCHAR}, 
-      #{create_time,jdbcType=TIMESTAMP}, #{create_user,jdbcType=VARCHAR})
+      #{isStop,jdbcType=VARCHAR}, #{stopTime,jdbcType=TIMESTAMP}, #{stopUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.crab.mybatis.domain.SysUser">
     insert into sys_user
@@ -44,19 +44,19 @@
       <if test="pwd != null">
         pwd,
       </if>
-      <if test="is_stop != null">
+      <if test="isStop != null">
         is_stop,
       </if>
-      <if test="stop_time != null">
+      <if test="stopTime != null">
         stop_time,
       </if>
-      <if test="stop_user != null">
+      <if test="stopUser != null">
         stop_user,
       </if>
-      <if test="create_time != null">
+      <if test="createTime != null">
         create_time,
       </if>
-      <if test="create_user != null">
+      <if test="createUser != null">
         create_user,
       </if>
     </trim>
@@ -70,20 +70,20 @@
       <if test="pwd != null">
         #{pwd,jdbcType=VARCHAR},
       </if>
-      <if test="is_stop != null">
-        #{is_stop,jdbcType=VARCHAR},
+      <if test="isStop != null">
+        #{isStop,jdbcType=VARCHAR},
       </if>
-      <if test="stop_time != null">
-        #{stop_time,jdbcType=TIMESTAMP},
+      <if test="stopTime != null">
+        #{stopTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="stop_user != null">
-        #{stop_user,jdbcType=VARCHAR},
+      <if test="stopUser != null">
+        #{stopUser,jdbcType=VARCHAR},
       </if>
-      <if test="create_time != null">
-        #{create_time,jdbcType=TIMESTAMP},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="create_user != null">
-        #{create_user,jdbcType=VARCHAR},
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -96,20 +96,20 @@
       <if test="pwd != null">
         pwd = #{pwd,jdbcType=VARCHAR},
       </if>
-      <if test="is_stop != null">
-        is_stop = #{is_stop,jdbcType=VARCHAR},
+      <if test="isStop != null">
+        is_stop = #{isStop,jdbcType=VARCHAR},
       </if>
-      <if test="stop_time != null">
-        stop_time = #{stop_time,jdbcType=TIMESTAMP},
+      <if test="stopTime != null">
+        stop_time = #{stopTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="stop_user != null">
-        stop_user = #{stop_user,jdbcType=VARCHAR},
+      <if test="stopUser != null">
+        stop_user = #{stopUser,jdbcType=VARCHAR},
       </if>
-      <if test="create_time != null">
-        create_time = #{create_time,jdbcType=TIMESTAMP},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="create_user != null">
-        create_user = #{create_user,jdbcType=VARCHAR},
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -118,11 +118,11 @@
     update sys_user
     set user = #{user,jdbcType=VARCHAR},
       pwd = #{pwd,jdbcType=VARCHAR},
-      is_stop = #{is_stop,jdbcType=VARCHAR},
-      stop_time = #{stop_time,jdbcType=TIMESTAMP},
-      stop_user = #{stop_user,jdbcType=VARCHAR},
-      create_time = #{create_time,jdbcType=TIMESTAMP},
-      create_user = #{create_user,jdbcType=VARCHAR}
+      is_stop = #{isStop,jdbcType=VARCHAR},
+      stop_time = #{stopTime,jdbcType=TIMESTAMP},
+      stop_user = #{stopUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

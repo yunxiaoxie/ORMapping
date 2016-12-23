@@ -8,15 +8,21 @@
     <result column="age" jdbcType="INTEGER" property="age" />
     <result column="addr" jdbcType="VARCHAR" property="addr" />
     <result column="tel" jdbcType="VARCHAR" property="tel" />
-    <result column="is_adult" jdbcType="VARCHAR" property="is_adult" />
+    <result column="is_adult" jdbcType="VARCHAR" property="isAdult" />
     <result column="intrest" jdbcType="VARCHAR" property="intrest" />
     <result column="birthday" jdbcType="DATE" property="birthday" />
     <result column="weight" jdbcType="DOUBLE" property="weight" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
     id, name, sex, age, addr, tel, is_adult, intrest, birthday, weight, create_time
   </sql>
+  <select id="findAll"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from my_user
+    order by id desc
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -33,9 +39,9 @@
       intrest, birthday, weight, 
       create_time)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
-      #{age,jdbcType=INTEGER}, #{addr,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{is_adult,jdbcType=VARCHAR}, 
+      #{age,jdbcType=INTEGER}, #{addr,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{isAdult,jdbcType=VARCHAR}, 
       #{intrest,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{weight,jdbcType=DOUBLE}, 
-      #{create_time,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.crab.mybatis.domain.MyUser">
     insert into my_user
@@ -58,7 +64,7 @@
       <if test="tel != null">
         tel,
       </if>
-      <if test="is_adult != null">
+      <if test="isAdult != null">
         is_adult,
       </if>
       <if test="intrest != null">
@@ -70,7 +76,7 @@
       <if test="weight != null">
         weight,
       </if>
-      <if test="create_time != null">
+      <if test="createTime != null">
         create_time,
       </if>
     </trim>
@@ -93,8 +99,8 @@
       <if test="tel != null">
         #{tel,jdbcType=VARCHAR},
       </if>
-      <if test="is_adult != null">
-        #{is_adult,jdbcType=VARCHAR},
+      <if test="isAdult != null">
+        #{isAdult,jdbcType=VARCHAR},
       </if>
       <if test="intrest != null">
         #{intrest,jdbcType=VARCHAR},
@@ -105,8 +111,8 @@
       <if test="weight != null">
         #{weight,jdbcType=DOUBLE},
       </if>
-      <if test="create_time != null">
-        #{create_time,jdbcType=TIMESTAMP},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -128,8 +134,8 @@
       <if test="tel != null">
         tel = #{tel,jdbcType=VARCHAR},
       </if>
-      <if test="is_adult != null">
-        is_adult = #{is_adult,jdbcType=VARCHAR},
+      <if test="isAdult != null">
+        is_adult = #{isAdult,jdbcType=VARCHAR},
       </if>
       <if test="intrest != null">
         intrest = #{intrest,jdbcType=VARCHAR},
@@ -140,8 +146,8 @@
       <if test="weight != null">
         weight = #{weight,jdbcType=DOUBLE},
       </if>
-      <if test="create_time != null">
-        create_time = #{create_time,jdbcType=TIMESTAMP},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -153,11 +159,11 @@
       age = #{age,jdbcType=INTEGER},
       addr = #{addr,jdbcType=VARCHAR},
       tel = #{tel,jdbcType=VARCHAR},
-      is_adult = #{is_adult,jdbcType=VARCHAR},
+      is_adult = #{isAdult,jdbcType=VARCHAR},
       intrest = #{intrest,jdbcType=VARCHAR},
       birthday = #{birthday,jdbcType=DATE},
       weight = #{weight,jdbcType=DOUBLE},
-      create_time = #{create_time,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

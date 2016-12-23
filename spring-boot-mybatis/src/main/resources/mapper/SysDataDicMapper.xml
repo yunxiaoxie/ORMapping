@@ -7,7 +7,7 @@
     <result column="code" jdbcType="INTEGER" property="code" />
     <result column="value" jdbcType="VARCHAR" property="value" />
     <result column="text" jdbcType="VARCHAR" property="text" />
-    <result column="is_stop" jdbcType="INTEGER" property="is_stop" />
+    <result column="is_stop" jdbcType="INTEGER" property="isStop" />
     <result column="comet" jdbcType="VARCHAR" property="comet" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -28,7 +28,7 @@
       value, text, is_stop, 
       comet)
     values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{code,jdbcType=INTEGER}, 
-      #{value,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, #{is_stop,jdbcType=INTEGER}, 
+      #{value,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, #{isStop,jdbcType=INTEGER}, 
       #{comet,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.crab.mybatis.domain.SysDataDic">
@@ -49,7 +49,7 @@
       <if test="text != null">
         text,
       </if>
-      <if test="is_stop != null">
+      <if test="isStop != null">
         is_stop,
       </if>
       <if test="comet != null">
@@ -72,8 +72,8 @@
       <if test="text != null">
         #{text,jdbcType=VARCHAR},
       </if>
-      <if test="is_stop != null">
-        #{is_stop,jdbcType=INTEGER},
+      <if test="isStop != null">
+        #{isStop,jdbcType=INTEGER},
       </if>
       <if test="comet != null">
         #{comet,jdbcType=VARCHAR},
@@ -95,8 +95,8 @@
       <if test="text != null">
         text = #{text,jdbcType=VARCHAR},
       </if>
-      <if test="is_stop != null">
-        is_stop = #{is_stop,jdbcType=INTEGER},
+      <if test="isStop != null">
+        is_stop = #{isStop,jdbcType=INTEGER},
       </if>
       <if test="comet != null">
         comet = #{comet,jdbcType=VARCHAR},
@@ -110,7 +110,7 @@
       code = #{code,jdbcType=INTEGER},
       value = #{value,jdbcType=VARCHAR},
       text = #{text,jdbcType=VARCHAR},
-      is_stop = #{is_stop,jdbcType=INTEGER},
+      is_stop = #{isStop,jdbcType=INTEGER},
       comet = #{comet,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

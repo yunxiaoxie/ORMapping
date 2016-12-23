@@ -58,7 +58,7 @@ public class MyUser implements Serializable {
      *
      * @mbg.generated
      */
-    private String is_adult;
+    private String isAdult;
 
     /**
      *
@@ -90,7 +90,7 @@ public class MyUser implements Serializable {
      *
      * @mbg.generated
      */
-    private Date create_time;
+    private Date createTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -142,12 +142,12 @@ public class MyUser implements Serializable {
         this.tel = tel == null ? null : tel.trim();
     }
 
-    public String getIs_adult() {
-        return is_adult;
+    public String getIsAdult() {
+        return isAdult;
     }
 
-    public void setIs_adult(String is_adult) {
-        this.is_adult = is_adult == null ? null : is_adult.trim();
+    public void setIsAdult(String isAdult) {
+        this.isAdult = isAdult == null ? null : isAdult.trim();
     }
 
     public String getIntrest() {
@@ -174,12 +174,12 @@ public class MyUser implements Serializable {
         this.weight = weight;
     }
 
-    public Date getCreate_time() {
-        return create_time;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Override
@@ -200,11 +200,11 @@ public class MyUser implements Serializable {
             && (this.getAge() == null ? other.getAge() == null : this.getAge().equals(other.getAge()))
             && (this.getAddr() == null ? other.getAddr() == null : this.getAddr().equals(other.getAddr()))
             && (this.getTel() == null ? other.getTel() == null : this.getTel().equals(other.getTel()))
-            && (this.getIs_adult() == null ? other.getIs_adult() == null : this.getIs_adult().equals(other.getIs_adult()))
+            && (this.getIsAdult() == null ? other.getIsAdult() == null : this.getIsAdult().equals(other.getIsAdult()))
             && (this.getIntrest() == null ? other.getIntrest() == null : this.getIntrest().equals(other.getIntrest()))
             && (this.getBirthday() == null ? other.getBirthday() == null : this.getBirthday().equals(other.getBirthday()))
             && (this.getWeight() == null ? other.getWeight() == null : this.getWeight().equals(other.getWeight()))
-            && (this.getCreate_time() == null ? other.getCreate_time() == null : this.getCreate_time().equals(other.getCreate_time()));
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
     }
 
     @Override
@@ -217,11 +217,11 @@ public class MyUser implements Serializable {
         result = prime * result + ((getAge() == null) ? 0 : getAge().hashCode());
         result = prime * result + ((getAddr() == null) ? 0 : getAddr().hashCode());
         result = prime * result + ((getTel() == null) ? 0 : getTel().hashCode());
-        result = prime * result + ((getIs_adult() == null) ? 0 : getIs_adult().hashCode());
+        result = prime * result + ((getIsAdult() == null) ? 0 : getIsAdult().hashCode());
         result = prime * result + ((getIntrest() == null) ? 0 : getIntrest().hashCode());
         result = prime * result + ((getBirthday() == null) ? 0 : getBirthday().hashCode());
         result = prime * result + ((getWeight() == null) ? 0 : getWeight().hashCode());
-        result = prime * result + ((getCreate_time() == null) ? 0 : getCreate_time().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         return result;
     }
 
@@ -237,11 +237,11 @@ public class MyUser implements Serializable {
         sb.append(", age=").append(age);
         sb.append(", addr=").append(addr);
         sb.append(", tel=").append(tel);
-        sb.append(", is_adult=").append(is_adult);
+        sb.append(", isAdult=").append(isAdult);
         sb.append(", intrest=").append(intrest);
         sb.append(", birthday=").append(birthday);
         sb.append(", weight=").append(weight);
-        sb.append(", create_time=").append(create_time);
+        sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -32,6 +32,10 @@ Edit the spring config profile `src/main/resources/application.yml` according to
 
 And start MySQL and Redis first before running the application.
 
+###约定
+*数据表名用'_'分隔，java名称用驼峰式
+*
+
 ```
 # If you're using Ubuntu server
 
