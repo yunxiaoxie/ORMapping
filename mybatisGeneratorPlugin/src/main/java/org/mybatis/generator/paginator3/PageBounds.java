@@ -45,4 +45,12 @@ public class PageBounds extends RowBounds {
     public int getSelectCount() {
         return limit + offset;
     }
+
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
 }

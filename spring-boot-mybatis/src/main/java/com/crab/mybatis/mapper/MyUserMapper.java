@@ -40,19 +40,19 @@ public interface MyUserMapper {
 	 * 
 	 * @return
 	 */
-	@Select(value = "select * from my_user")
+	@Select(value = "select * from my_user order by id desc")
 	@Results(value = {
             @Result(property = "isAdult", column = "is_adult"),
             @Result(property = "createTime", column = "create_time")})
 	List<MyUser> findAllPage(Page page);
 
-	@Select(value = "select * from my_user")
+	@Select(value = "select * from my_user order by id desc")
 	@Results(value = {
             @Result(property = "isAdult", column = "is_adult"),
             @Result(property = "createTime", column = "create_time")})
 	List<MyUser> findAllPage2(PageBounds page);
 
-	@Select(value = "select * from my_user")
+	@Select(value = "select * from my_user order by id desc")
 	@Results(value = {
             @Result(property = "isAdult", column = "is_adult"),
             @Result(property = "createTime", column = "create_time")})

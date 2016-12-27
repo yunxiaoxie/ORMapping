@@ -2,7 +2,7 @@ package com.crab.mybatis.service;
 
 import java.util.List;
 
-import org.mybatis.generator.paginator2.PageRowBounds;
+import org.mybatis.generator.paginator3.PageBounds;
 
 import com.crab.mybatis.domain.MyUser;
 
@@ -18,7 +18,7 @@ public interface MyUserService {
 	 * @param pwd
 	 * @return
 	 */
-	List<MyUser> findForPager(PageRowBounds pageRow);
+	List<MyUser> findForPager(PageBounds pageRow);
 	
 	int insert(MyUser user);
 

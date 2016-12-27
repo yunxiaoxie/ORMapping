@@ -3,8 +3,10 @@ package com.crab.mybatis.web;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
+import org.mybatis.generator.paginator3.PageBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.crab.mybatis.domain.MyUser;
 import com.crab.mybatis.service.MyUserService;
+import com.crab.mybatis.utils.PageResult;
 
 /**
  * POST /uri 创建 DELETE /uri/xxx 删除 PUT /uri/xxx 更新或创建 GET /uri/xxx 查看
@@ -34,6 +37,16 @@ public class MyUserController {
 	@RequestMapping(value = "getAllUser", method = RequestMethod.GET)
 	public String findAll() {
 		return JSON.toJSONString(service.findAll());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "getUserForPager", method = RequestMethod.GET)
+	public String findForPager(int offset, int limit) {
+		PageResult pr = new PageResult();
+		PageBounds pb = new PageBounds(offset, limit);
+		pr.setData(service.findForPager(pb));
+		pr.setTotal(pb.getTotal());
+		return JSON.toJSONString(pr);
 	}
 
 	@ResponseBody

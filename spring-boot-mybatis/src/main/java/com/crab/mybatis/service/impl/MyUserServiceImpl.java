@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.mybatis.generator.paginator2.PageRowBounds;
+import org.mybatis.generator.paginator3.PageBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +26,8 @@ public class MyUserServiceImpl implements MyUserService {
 	}
 
 	@Override
-	public List<MyUser> findForPager(PageRowBounds pageRow) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MyUser> findForPager(PageBounds pageRow) {
+		return mapper.findAllPage2(pageRow);
 	}
 
 	@Override

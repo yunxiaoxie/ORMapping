@@ -9,7 +9,7 @@
 	<plugins>
 		<!-- <plugin interceptor="org.mybatis.generator.paginator.PageInterceptor" /> -->
 		<plugin interceptor="org.mybatis.generator.paginator2.MysqlPagerPlugin" />
-		<!-- <plugin interceptor="org.mybatis.generator.paginator3.MysqlPagingInterceptor" /> -->
+		<plugin interceptor="org.mybatis.generator.paginator3.MysqlPageInterceptor" />
 	</plugins>
 	<!-- <mappers>
 		<mapper resource="mapper/MyUserMapper.xml" />
