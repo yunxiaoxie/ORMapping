@@ -28,9 +28,9 @@ public class MysqlPageInterceptor extends AbstractPageInterceptor {
 		String sql = targetSql.toLowerCase();
 		StringBuilder sqlBuilder = new StringBuilder(sql);
 
-		sqlBuilder.insert(0, "select * from ( ");
-		sqlBuilder.append(") as page limit ");
-		sqlBuilder.append(bounds.getOffset()).append(",").append(bounds.getLimit());
+		int offset = (bounds.getPageNo() - 1) * bounds.getPageSize();
+		sqlBuilder.append(" limit ");
+		sqlBuilder.append(offset).append(",").append(bounds.getPageSize());
 
 		return sqlBuilder.toString();
 	}

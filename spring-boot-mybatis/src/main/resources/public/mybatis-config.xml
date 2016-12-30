@@ -7,7 +7,7 @@
 		<package name="com.crab.mybatis.domain"/>
 	</typeAliases>
 	<plugins>
-		<!-- <plugin interceptor="org.mybatis.generator.paginator.PageInterceptor" /> -->
+		<plugin interceptor="org.mybatis.generator.paginator.MysqlPagerPlugin" />
 		<plugin interceptor="org.mybatis.generator.paginator2.MysqlPagerPlugin" />
 		<plugin interceptor="org.mybatis.generator.paginator3.MysqlPageInterceptor" />
 	</plugins>

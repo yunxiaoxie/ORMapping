@@ -1,88 +1,23 @@
 package org.mybatis.generator.paginator;
 
 import java.util.List;
-import java.util.Map;
-
-import org.codehaus.jackson.map.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 public class Page {
 
-	private static final Logger logger = LoggerFactory.getLogger(Page.class);
-	private static ObjectMapper mapper = new ObjectMapper();
-
-	public static String DEFAULT_PAGESIZE = "10"; // default number of page
-	private int pageNo; // 当前页码
-	private int pageSize; // 每页行数
-	private int totalRecord; // 总记录数
-	private int totalPage; // 总页数
-	private Map<String, String> params; // 查询条件
-	private Map<String, List<String>> paramLists; // 数组查询条件
-	private String searchUrl; // Url地址
+	private Integer pageNo; // 当前页码
+	private Integer pageSize; // 每页行数
+	private Integer totalRecord; // 总记录数
+	private Integer totalPage; // 总页数
 	private String pageNoDisp; // 可以显示的页号(分隔符"|"，总页数变更时更新)
 
-	private Page() {
-		pageNo = 1;
-		pageSize = Integer.valueOf(DEFAULT_PAGESIZE);
-		totalRecord = 0;
-		totalPage = 0;
-		params = Maps.newHashMap();
-		paramLists = Maps.newHashMap();
-		searchUrl = "";
-		pageNoDisp = "";
+	public Page(Integer pageNo, Integer pageSize) {
+		this.pageNo = pageNo;
+		this.pageSize = pageSize;
 	}
-
-	public static Page newBuilder(int pageNo, int pageSize, String url) {
-		Page page = new Page();
-		page.setPageNo(pageNo);
-		page.setPageSize(pageSize);
-		page.setSearchUrl(url);
-		return page;
-	}
-
-	/**
-	 * 查询条件转JSON
-	 */
-	public String getParaJson() {
-		Map<String, Object> map = Maps.newHashMap();
-		for (String key : params.keySet()) {
-			if (params.get(key) != null) {
-				map.put(key, params.get(key));
-			}
-		}
-		String json = "";
-		try {
-			json = mapper.writeValueAsString(map);
-		} catch (Exception e) {
-			logger.error("转换JSON失败", params, e);
-		}
-		return json;
-	}
-
-	/**
-	 * 数组查询条件转JSON
-	 */
-	public String getParaListJson() {
-		Map<String, Object> map = Maps.newHashMap();
-		for (String key : paramLists.keySet()) {
-			List<String> lists = paramLists.get(key);
-			if (lists != null && lists.size() > 0) {
-				map.put(key, lists);
-			}
-		}
-		String json = "";
-		try {
-			json = mapper.writeValueAsString(map);
-		} catch (Exception e) {
-			logger.error("转换JSON失败", params, e);
-		}
-		return json;
-	}
+	
 
 	/**
 	 * 总件数变化时，更新总页数并计算显示样式
@@ -141,7 +76,7 @@ public class Page {
 		return pageNo;
 	}
 
-	public void setPageNo(int pageNo) {
+	public void setPageNo(Integer pageNo) {
 		this.pageNo = pageNo;
 	}
 
@@ -149,7 +84,7 @@ public class Page {
 		return pageSize;
 	}
 
-	public void setPageSize(int pageSize) {
+	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
 	}
 
@@ -157,7 +92,7 @@ public class Page {
 		return totalRecord;
 	}
 
-	public void setTotalRecord(int totalRecord) {
+	public void setTotalRecord(Integer totalRecord) {
 		this.totalRecord = totalRecord;
 		refreshPage();
 	}
@@ -166,32 +101,8 @@ public class Page {
 		return totalPage;
 	}
 
-	public void setTotalPage(int totalPage) {
+	public void setTotalPage(Integer totalPage) {
 		this.totalPage = totalPage;
-	}
-
-	public Map<String, String> getParams() {
-		return params;
-	}
-
-	public void setParams(Map<String, String> params) {
-		this.params = params;
-	}
-
-	public Map<String, List<String>> getParamLists() {
-		return paramLists;
-	}
-
-	public void setParamLists(Map<String, List<String>> paramLists) {
-		this.paramLists = paramLists;
-	}
-
-	public String getSearchUrl() {
-		return searchUrl;
-	}
-
-	public void setSearchUrl(String searchUrl) {
-		this.searchUrl = searchUrl;
 	}
 
 	public String getPageNoDisp() {

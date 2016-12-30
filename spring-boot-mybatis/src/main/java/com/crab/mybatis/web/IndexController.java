@@ -22,7 +22,7 @@ public class IndexController {
 	@ResponseBody
 	@RequestMapping("finduser")
 	public String findUser() {
-		return JSON.toJSONString(userService.findAll(Page.newBuilder(2, 3, "/user/page")));
+		return JSON.toJSONString(userService.findAll(new Page(2, 3)));
 	}
 	
 	/**

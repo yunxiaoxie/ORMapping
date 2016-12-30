@@ -27,7 +27,7 @@ public class MyUserServiceImpl implements MyUserService {
 
 	@Override
 	public List<MyUser> findForPager(PageBounds pageRow) {
-		return mapper.findAllPage2(pageRow);
+		return mapper.findAllPage3(pageRow);
 	}
 
 	@Override

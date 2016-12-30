@@ -10,16 +10,11 @@ import org.apache.ibatis.session.RowBounds;
 @Intercepts(@Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
 		RowBounds.class, ResultHandler.class }))
 public class OraclePagerPlugin extends AbstractPagerPlugin {
-	public String getPagerSql(String sql, RowBounds rowBounds) {
-		if (rowBounds.getLimit() == Integer.MAX_VALUE) {
-			return sql;
-		} else {
-			return getPagerSql(sql, rowBounds.getOffset(), rowBounds.getLimit());
-		}
-	}
 
-	public String getPagerSql(String sql, int offset, int limit) {
-		return "select * from (select inrow.*, rownum rn from (" + sql + ") inrow where rownum <=" + (limit + offset)
+	public String getPagerSql(String sql, PageRowBounds pageRowBounds) {
+		int offset = (pageRowBounds.getPageNo() - 1) * pageRowBounds.getPageSize();
+		int limit = offset + pageRowBounds.getPageSize();
+		return "select * from (select inrow.*, rownum rn from (" + sql + ") inrow where rownum <=" + limit
 				+ ") where rn >= " + offset;
 	}
 

@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.mybatis.generator.paginator3.PageBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,12 +40,18 @@ public class MyUserController {
 	
 	@ResponseBody
 	@RequestMapping(value = "getUserForPager", method = RequestMethod.GET)
-	public String findForPager(int offset, int limit) {
-		PageResult pr = new PageResult();
-		PageBounds pb = new PageBounds(offset, limit);
-		pr.setData(service.findForPager(pb));
-		pr.setTotal(pb.getTotal());
-		return JSON.toJSONString(pr);
+	public String findForPager(Integer pageNo, Integer pageSize) {
+		if (null != pageNo && null != pageSize) {
+			PageResult pr = new PageResult();
+			PageBounds pb = new PageBounds(pageNo, pageSize);
+			pr.setPageNo(pageNo);
+			pr.setPageSize(pageSize);
+			pr.setData(service.findForPager(pb));
+			pr.setTotalRecord(pb.getTotalRecord());
+			pr.calcPages();
+			return JSON.toJSONString(pr);
+		}
+		return null;
 	}
 
 	@ResponseBody

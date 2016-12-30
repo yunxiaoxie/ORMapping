@@ -1,6 +1,5 @@
 package org.mybatis.generator.paginator;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Map;
@@ -12,32 +11,27 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
-import org.apache.ibatis.plugin.Signature;
-import org.apache.ibatis.session.ResultHandler;
-import org.apache.ibatis.session.RowBounds;
 
 @SuppressWarnings("rawtypes")
-@Intercepts({ @Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
-		RowBounds.class, ResultHandler.class }) })
-public class PageInterceptor implements Interceptor {
+public abstract class AbstractPagePlugin implements Interceptor {
 
+	public abstract String getPagerSql(String sql, int pageNo, int pageSize);
+	
+	public abstract String getCountSql(String sql);
+	
 	public Object intercept(Invocation invocation) throws Throwable {
-
-		MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
 		Object parameter = invocation.getArgs()[1];
-		BoundSql boundSql = mappedStatement.getBoundSql(parameter);
-
 		Page page = getPage(parameter);
 
 		if (page != null) {
-			String countSql = getCountSql(boundSql.getSql());
-			try (Connection connection = mappedStatement.getConfiguration().getEnvironment().getDataSource()
-					.getConnection();
-					PreparedStatement countStmt = connection.prepareStatement(countSql);
-					ResultSet rs = countStmt.executeQuery();) {
+			Executor executor = (Executor) invocation.getTarget();
+			MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
+			BoundSql boundSql = mappedStatement.getBoundSql(parameter);
+			try (PreparedStatement stmt = executor.getTransaction().getConnection()
+					.prepareStatement(getCountSql(boundSql.getSql()));
+					ResultSet rs = stmt.executeQuery();) {
 				int totpage = 0;
 				if (rs.next()) {
 					totpage = rs.getInt(1);
@@ -46,10 +40,7 @@ public class PageInterceptor implements Interceptor {
 			}
 
 			// 对原始Sql追加limit
-			int offset = (page.getPageNo() - 1) * page.getPageSize();
-			StringBuffer sb = new StringBuffer();
-			sb.append(boundSql.getSql()).append(" limit ").append(offset).append(",").append(page.getPageSize());
-			BoundSql newBoundSql = copyBoundSql(mappedStatement, boundSql, sb.toString());
+			BoundSql newBoundSql = copyBoundSql(mappedStatement, boundSql, getPagerSql(boundSql.getSql(), page.getPageNo(), page.getPageSize()));
 			MappedStatement newMs = buildMappedStatement(mappedStatement, new BoundSqlSqlSource(newBoundSql));
 			invocation.getArgs()[0] = newMs;
 		}
@@ -116,10 +107,6 @@ public class PageInterceptor implements Interceptor {
 			}
 		}
 		return newBoundSql;
-	}
-
-	private String getCountSql(String sql) {
-		return "SELECT COUNT(*) FROM (" + sql + ") aliasForPage";
 	}
 
 	class BoundSqlSqlSource implements SqlSource {

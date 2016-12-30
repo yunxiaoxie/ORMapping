@@ -35,11 +35,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<MyUser> findAll(PageBounds page) {
-		return mapper.findAllPage2(page);
+		return mapper.findAllPage3(page);
 	}
 
 	@Override
 	public List<MyUser> findAll(PageRowBounds page) {
-		return mapper.findAllPage3(page);
+		return mapper.findAllPage2(page);
 	}
 }

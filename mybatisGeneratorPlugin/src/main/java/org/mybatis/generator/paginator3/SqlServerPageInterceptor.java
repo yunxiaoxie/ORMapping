@@ -50,16 +50,18 @@ public class SqlServerPageInterceptor extends AbstractPageInterceptor {
         String sql = targetSql.toLowerCase();
         StringBuilder sqlBuilder = new StringBuilder(sql);
         
+        int offset = (bounds.getPageNo() - 1) * bounds.getPageSize();
+		int limit = offset + bounds.getPageSize();
         if(sqlBuilder.indexOf(ORDER_BY) != -1) {
             int selectPos = sqlBuilder.indexOf(SELECT);
-            sqlBuilder.insert(selectPos + SELECT.length(), " TOP(" + bounds.getSelectCount() + ")");
+            sqlBuilder.insert(selectPos + SELECT.length(), " TOP(" + limit + ")");
         }
         
         sqlBuilder.insert(0, "SELECT inner_query.*, ROW_NUMBER() OVER (ORDER BY CURRENT_TIMESTAMP) as __mybatis_row_nr__ FROM ( ");
         sqlBuilder.append(" ) inner_query ");
         
         sqlBuilder.insert(0, "WITH query AS (").append(") SELECT ").append("*").append(" FROM query ");
-        sqlBuilder.append("WHERE __mybatis_row_nr__ >= " + (bounds.getOffset() + 1) + " AND __mybatis_row_nr__ <= " + bounds.getSelectCount());
+        sqlBuilder.append("WHERE __mybatis_row_nr__ >= " + (offset + 1) + " AND __mybatis_row_nr__ <= " + limit);
         
         return sqlBuilder.toString();
     }

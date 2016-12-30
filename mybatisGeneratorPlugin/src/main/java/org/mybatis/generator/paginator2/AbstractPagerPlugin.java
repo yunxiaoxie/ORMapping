@@ -12,14 +12,13 @@ import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
-import org.apache.ibatis.session.RowBounds;
 
 public abstract class AbstractPagerPlugin implements Interceptor {
 
 	/**
 	 * build pager SQL.
 	 */
-	public abstract String getPagerSql(String sql, RowBounds rowBounds);
+	public abstract String getPagerSql(String sql, PageRowBounds pageRowBounds);
 
 	/**
 	 * build count SQL.
@@ -28,26 +27,26 @@ public abstract class AbstractPagerPlugin implements Interceptor {
 
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
-		RowBounds rowBounds = (RowBounds) invocation.getArgs()[2];
-		if (rowBounds instanceof PageRowBounds) {
+		Object parameter = invocation.getArgs()[1];
+		if (parameter instanceof PageRowBounds) {
 			Executor executor = (Executor) invocation.getTarget();
 			MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
-			Object parameter = invocation.getArgs()[1];
-			PageRowBounds pageRowBounds = (PageRowBounds) invocation.getArgs()[2];
+			PageRowBounds pageRowBounds = (PageRowBounds) parameter;
 			BoundSql boundSql = mappedStatement.getBoundSql(parameter);
-			// update statement by local SQL.
-			BoundSql newBoundSql = copyBoundSql(mappedStatement, boundSql, getPagerSql(boundSql.getSql(), rowBounds));
-			MappedStatement statement = buildMappedStatement(mappedStatement, new PageSqlSqlSource(newBoundSql));
-			invocation.getArgs()[0] = statement;
 			// get total count by local SQL.
 			try (PreparedStatement stmt = executor.getTransaction().getConnection()
-					.prepareStatement(getCountSql(boundSql.getSql())); ResultSet rs = stmt.executeQuery();) {
+					.prepareStatement(getCountSql(boundSql.getSql())); 
+					ResultSet rs = stmt.executeQuery();) {
 				int totalCount = 0;
 				if (rs.next()) {
 					totalCount = rs.getInt("totalCount");
 				}
-				pageRowBounds.setTotalCount(totalCount);
+				pageRowBounds.setTotalRecord(totalCount);
 			}
+			// update statement by local SQL.
+			BoundSql newBoundSql = copyBoundSql(mappedStatement, boundSql, getPagerSql(boundSql.getSql(), pageRowBounds));
+			MappedStatement statement = buildMappedStatement(mappedStatement, new PageSqlSqlSource(newBoundSql));
+			invocation.getArgs()[0] = statement;
 		}
 		return invocation.proceed();
 	}

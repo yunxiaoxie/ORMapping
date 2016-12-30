@@ -17,15 +17,12 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
-import org.apache.ibatis.session.RowBounds;
 
 public abstract class AbstractPageInterceptor implements Interceptor {
 
 	private static final Pattern PATTERN_SQL_BLANK = Pattern.compile("\\s+");
 
 	private static final String FIELD_DELEGATE = "delegate";
-
-	private static final String FIELD_ROWBOUNDS = "rowBounds";
 
 	private static final String FIELD_MAPPEDSTATEMENT = "mappedStatement";
 
@@ -47,15 +44,16 @@ public abstract class AbstractPageInterceptor implements Interceptor {
 		RoutingStatementHandler statementHandler = (RoutingStatementHandler) invocation.getTarget();
 
 		StatementHandler handler = (StatementHandler) readField(statementHandler, FIELD_DELEGATE);
-		PageBounds pageBounds = (PageBounds) readField(handler, FIELD_ROWBOUNDS);
+		PageBounds pageBounds = (PageBounds)handler.getParameterHandler().getParameterObject();
 		MappedStatement mappedStatement = (MappedStatement) readField(handler, FIELD_MAPPEDSTATEMENT);
 		BoundSql boundSql = handler.getBoundSql();
 
 		// replace all blank
 		String targetSql = replaceSqlBlank(boundSql.getSql());
 
-		// paging
+		// get totalRecord
 		getTotalAndSetInPagingBounds(targetSql, boundSql, pageBounds, mappedStatement, connection);
+		// get page data
 		String pagingSql = getSelectPagingSql(targetSql, pageBounds);
 		writeDeclaredField(boundSql, FIELD_SQL, pagingSql);
 
@@ -70,7 +68,7 @@ public abstract class AbstractPageInterceptor implements Interceptor {
 				ResultSet rs = pstmt.executeQuery();) {
 			if (rs.next()) {
 				int totalRecord = rs.getInt(1);
-				bounds.setTotal(totalRecord);
+				bounds.setTotalRecord(totalRecord);
 			}
 		}
 	}
@@ -90,8 +88,9 @@ public abstract class AbstractPageInterceptor implements Interceptor {
 			try {
 				Field delegate = getField(RoutingStatementHandler.class, FIELD_DELEGATE);
 				StatementHandler handler = (StatementHandler) delegate.get(target);
-				RowBounds rowBounds = (RowBounds) readField(handler, FIELD_ROWBOUNDS);
-				if (rowBounds != RowBounds.DEFAULT && rowBounds instanceof PageBounds) {
+				//RowBounds rowBounds = (RowBounds) readField(handler, FIELD_ROWBOUNDS);
+				Object parameter = handler.getParameterHandler().getParameterObject();
+				if (parameter instanceof PageBounds) {
 					return Plugin.wrap(target, this);
 				}
 			} catch (IllegalAccessException e) {

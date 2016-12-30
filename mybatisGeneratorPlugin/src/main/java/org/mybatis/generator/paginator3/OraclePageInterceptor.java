@@ -28,10 +28,12 @@ public class OraclePageInterceptor extends AbstractPageInterceptor {
 		String sql = targetSql.toLowerCase();
 		StringBuilder sqlBuilder = new StringBuilder(sql);
 
+		int offset = (bounds.getPageNo() - 1) * bounds.getPageSize();
+		int limit = offset + bounds.getPageSize();
 		sqlBuilder.insert(0, "select * from ( select table_alias.*, rownum mybatis_rowNo from (");
 		sqlBuilder.append(") ");
-		sqlBuilder.append("table_alias where rownum <= " + bounds.getSelectCount()).append(")");
-		sqlBuilder.append("where mybatis_rowNo >= " + (bounds.getOffset() + 1));
+		sqlBuilder.append("table_alias where rownum <= " + limit).append(")");
+		sqlBuilder.append("where mybatis_rowNo >= " + (offset + 1));
 
 		return sqlBuilder.toString();
 	}
