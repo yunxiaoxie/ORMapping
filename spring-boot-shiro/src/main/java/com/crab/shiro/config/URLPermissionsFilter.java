@@ -30,7 +30,10 @@ public class URLPermissionsFilter extends PermissionsAuthorizationFilter{
 		if(subject.getPrincipal() == null 
 				|| StringUtils.endsWithAny(curUrl, ".js",".css",".html")
 				|| StringUtils.endsWithAny(curUrl, ".jpg",".png",".gif", ".jpeg")
+				|| StringUtils.startsWith(curUrl, "/fonts")
 				|| StringUtils.equals(curUrl, "/unauthor")
+				|| StringUtils.equals(curUrl, "/getModuleByUser")
+				|| StringUtils.equals(curUrl, "/updatePermission")
 				|| StringUtils.equals(curUrl, "/login")) {
 			return true;
 		}

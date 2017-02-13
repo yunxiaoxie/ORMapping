@@ -51,7 +51,7 @@ public interface AclMapper {
     @ResultMap("com.crab.shiro.mapper.AclMapper.BaseResultMap")
     List<Acl> getAclsExtends(String principalType, Integer principalSn);
     
-    @Select(value="select * from p_acl acl where acl.principal_type = #{0} and acl.principal_sn = #{1} and acl.resource_sn.id = #{2}")
+    @Select(value="select * from p_acl acl where acl.principal_type = #{0} and acl.principal_sn = #{1} and acl.resource_sn = #{2}")
     @ResultMap("com.crab.shiro.mapper.AclMapper.BaseResultMap")
-    Acl searchModulePermission(String principalType,int principalSn, int resourceSn);
+    Acl searchModulePermission(String principalType, int principalSn, int resourceSn);
 }

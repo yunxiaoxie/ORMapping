@@ -9,7 +9,7 @@
 <title>Login</title>
 
 <!-- Bootstrap -->
-<link href="/base/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/bootstrap.min.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -84,9 +84,8 @@ body {
 		</form>
 	</div>
 
-	<script src="/base/js/jquery.min.js"></script>
-	<script src="/base/js/bootstrap.min.js"></script>
-	<script src="/layer/layer.js"></script>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	$(function(){
 		var errorText = '${errorText}';

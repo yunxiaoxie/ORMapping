@@ -164,10 +164,11 @@ public class AclImpl implements IAcl {
 	}
 
 	@Override
-	public Map<String, Boolean> searchModulePermission(List<Integer> principalSn, Integer resourceSn) {
-		Acl acl = aclMapper.searchModulePermission(Acl.TYPE_USER, principalSn.get(0), resourceSn);
+	public Map<String, Boolean> searchModulePermission(Integer userId, Integer resourceSn) {
+		Acl acl = aclMapper.searchModulePermission(Acl.TYPE_USER, userId, resourceSn);
 		if (acl == null) {
-			for (Integer sn : principalSn) {
+			List<Integer> roleIds = roleMapper.getRoleIdsByUserId(userId);
+			for (Integer sn : roleIds) {
 				acl = aclMapper.searchModulePermission(Acl.TYPE_ROLE, sn, resourceSn);
 				if (acl != null) break;
 			}
@@ -195,6 +196,14 @@ public class AclImpl implements IAcl {
 	public List<Module> searchModules(String account, Integer modulePid) {
 		User user = userMapper.findByAccount(account);
 		return searchModules(user.getId(), modulePid);
+	}
+
+	@Override
+	public void updatePermission(Integer moduleId, Integer userId, String permission, Boolean yesno) {
+		Acl acl = findACL(Acl.TYPE_ROLE, userId, moduleId);
+		Permission permi = permissionMapper.findByName(permission);
+		acl.setPermission(permi.getSn(), yesno);
+		updatePermission(acl);
 	}
 
 }

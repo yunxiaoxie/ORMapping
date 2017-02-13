@@ -62,7 +62,7 @@ public interface IAcl {
 	 * 搜索某个用户拥有读取权限的模块列表（用于登录，形成导航菜单的时候）
 	 * @param userId 用户标识
 	 * @param isPanel 区分panel与treePanel数据
-	 * @param modulePID 子模块树顶级ID
+	 * @param modulePID 子模块树顶级ID,默认为Null.
 	 * @return 模块列表（即列表的元素是Module对象）
 	 */
 	public List<Module> searchModules(Integer userId, Integer modulePid);
@@ -85,13 +85,22 @@ public interface IAcl {
 	public List<Acl> searchAclRecord(String principalType, Integer principalSn);
 	
 	/**
-	 * 查找模块的授权,用map保存所有的permissions。
+	 * 根据用户id查找模块的授权,用map保存所有的permissions。
+	 * 先查找用户授权，若有用户授权则忽略角色授权，反之查找所有用户角色的授权.
 	 * 每次打开一个模块调用此方法。
 	 * 注意:如果用户与角色中存在相同模块而授权不同,则用户中授权会覆盖角色中授权.
-	 * @param principalSn 主体有可能是用户或多个角色
+	 * @param principalSn 主体有可能是用户
 	 * @param resourceSn
 	 * @return map<String, Boolean> String: permissionName, Boolean: true/false
 	 */
-	public Map<String, Boolean> searchModulePermission(List<Integer> principalSn, Integer resourceSn);
+	public Map<String, Boolean> searchModulePermission(Integer userId, Integer resourceSn);
+	
+	/**
+	 * 更新模块权限
+	 * @param moduleId 模块ID
+	 * @param permission  权限名
+	 * @param yesno 权限值
+	 */
+	public void updatePermission(Integer moduleId, Integer userId, String permission, Boolean yesno);
 	
 }

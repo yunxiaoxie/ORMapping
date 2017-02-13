@@ -25,4 +25,8 @@ public interface PermissionMapper {
     @Select(value="select * from p_permission order by id")
     @ResultMap("com.crab.shiro.mapper.PermissionMapper.BaseResultMap")
     List<Permission> getAll();
+    
+    @Select(value="select * from p_permission where name=#{0}")
+    @ResultMap("com.crab.shiro.mapper.PermissionMapper.BaseResultMap")
+    Permission findByName(String permission);
 }

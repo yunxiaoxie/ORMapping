@@ -10,7 +10,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `p_permission`;
 CREATE TABLE `p_permission` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50)  NOT NULL COMMENT '权限名',
+  `name` varchar(50) UNIQUE NOT NULL COMMENT '权限名',
   `sn` int(2)  NOT NULL UNIQUE COMMENT '权限标识(BIT)',
   `comment` varchar(50)  DEFAULT NULL COMMENT '权限说明',
   `create_time` datetime DEFAULT NULL,

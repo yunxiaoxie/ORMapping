@@ -24,6 +24,9 @@ acl 通过bit位设置module的N种操作权限
 授权方式：大类通过角色授权，小类可直接通过账号授权，或同时拥有
 暂时不考虑继承。
 
+For bootstrap table:
+http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
+
 Add dependencies to pom
 ```xml
 <shiro.version>1.2.5</shiro.version>

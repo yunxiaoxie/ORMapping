@@ -41,7 +41,7 @@ public class DruidConfig {
 		FilterRegistrationBean fitler = new FilterRegistrationBean();
 		fitler.setFilter(new WebStatFilter());
 		fitler.setUrlPatterns(Arrays.asList("/*"));
-		fitler.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
+		fitler.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*,/fonts/*");
 		return fitler;
 	}
 }

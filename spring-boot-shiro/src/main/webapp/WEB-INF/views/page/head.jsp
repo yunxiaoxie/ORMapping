@@ -5,16 +5,18 @@
   <title>Dashboard</title>
 
   <!-- Bootstrap -->
-  <link href="/base/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/dashboard.css" rel="stylesheet">
+  <link href="/css/bootstrap-table.min.css" rel="stylesheet">
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
     <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
-  <script src="/base/js/jquery.min.js"></script>
-  <script src="/base/js/bootstrap.min.js"></script>
-  <script src="/layer/layer.js"></script>
-  <script src="/base/js/holder.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/holder.min.js"></script>
+  <script src="/js/underscore-min.js"></script>
+  <script src="/js/bootstrap-table.min.js"></script>
 </head>
