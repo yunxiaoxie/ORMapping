@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.crab.shiro.domain.Module;
 import com.crab.shiro.domain.User;
+import com.crab.shiro.exception.SystemException;
 import com.crab.shiro.service.IAcl;
 import com.crab.shiro.service.IModule;
 import com.crab.shiro.service.IUser;
@@ -82,12 +84,20 @@ public class IndexController {
 		return list;
 	}
 	
+	@RequestMapping(value="/execption")
+    public void execption(String id) throws SystemException {
+		if (StringUtils.isEmpty(id)) {
+			throw new SystemException("发生系统错误");
+		}
+    }
+	
 	/**
 	 * Go Index
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value={"", "/", "index"})
-	public String index() {
+	public String index(String id) throws Exception {
 		return "index.jsp";
 	}
 	

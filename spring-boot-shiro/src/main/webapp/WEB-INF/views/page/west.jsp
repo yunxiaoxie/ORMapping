@@ -5,7 +5,7 @@
             	<li><a href="/reports">Reports</a></li>
             </shiro:hasPermission>
             <shiro:hasPermission name="Analytics">
-            	<li><a href="#">Analytics</a></li>
+            	<li><a href="/execption">Analytics</a></li>
             </shiro:hasPermission>
             <shiro:hasPermission name="Export">
             	<li><a href="#">Export</a></li>

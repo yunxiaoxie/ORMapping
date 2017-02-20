@@ -1,4 +1,4 @@
-package com.crab.shiro;
+package com.crab.shiro.exception;
 
 /**
  * 应用异常

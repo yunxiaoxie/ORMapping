@@ -13,11 +13,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.crab.shiro.SystemException;
 import com.crab.shiro.domain.Acl;
 import com.crab.shiro.domain.Module;
 import com.crab.shiro.domain.Permission;
 import com.crab.shiro.domain.User;
+import com.crab.shiro.exception.SystemException;
 import com.crab.shiro.mapper.AclMapper;
 import com.crab.shiro.mapper.ModuleMapper;
 import com.crab.shiro.mapper.PermissionMapper;

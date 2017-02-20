@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.crab.mybatis.domain.RequestObj;
+import com.crab.mybatis.exception.SystemException;
 import com.crab.mybatis.service.SysDataDicService;
 import com.crab.mybatis.utils.FileUtil;
 
@@ -108,4 +110,11 @@ public class BaseController {
 		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
 	}
+	
+	@RequestMapping(value="/execption")
+    public void execption(String id) throws SystemException {
+		if (StringUtils.isEmpty(id)) {
+			throw new SystemException("发生系统错误");
+		}
+    }
 }

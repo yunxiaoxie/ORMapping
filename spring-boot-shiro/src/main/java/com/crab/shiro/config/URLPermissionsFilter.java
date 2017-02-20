@@ -2,6 +2,7 @@ package com.crab.shiro.config;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletRequest;
@@ -31,10 +32,8 @@ public class URLPermissionsFilter extends PermissionsAuthorizationFilter{
 				|| StringUtils.endsWithAny(curUrl, ".js",".css",".html")
 				|| StringUtils.endsWithAny(curUrl, ".jpg",".png",".gif", ".jpeg")
 				|| StringUtils.startsWith(curUrl, "/fonts")
-				|| StringUtils.equals(curUrl, "/unauthor")
-				|| StringUtils.equals(curUrl, "/getModuleByUser")
-				|| StringUtils.equals(curUrl, "/updatePermission")
-				|| StringUtils.equals(curUrl, "/login")) {
+				|| Arrays.asList("/execption", "/unauthor", "/getModuleByUser", "/updatePermission", "/login")
+				.contains(curUrl)	) {
 			return true;
 		}
 		List<Module> modules = aclService.searchModules(subject.getPrincipal().toString(), null);
