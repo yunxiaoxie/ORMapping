@@ -2,6 +2,9 @@ package com.crab.mybatis.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
@@ -105,9 +108,11 @@ public class BaseController {
 	@RequestMapping("download")
 	public ResponseEntity<byte[]> download(@RequestBody RequestObj filepath) throws IOException {
 		File file = new File(filepath.getFilepath() + "/" + filepath.getFilename());
+		Path path = Paths.get(filepath.getFilepath() + "/" + filepath.getFilename());
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDispositionFormData("attachment", filepath.getFilename());
 		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		headers.add("contentType", Files.probeContentType(path));
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
 	}
 	

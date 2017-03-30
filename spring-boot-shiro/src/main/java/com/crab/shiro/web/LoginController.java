@@ -36,7 +36,9 @@ public class LoginController {
 		UsernamePasswordToken upt = new UsernamePasswordToken(account, password);
 		Subject subject = SecurityUtils.getSubject();
 		try {
+			subject.getPrincipal();
 			subject.login(upt);
+			subject.getPrincipal();
 		} catch (AuthenticationException e) {
 			rediect.addFlashAttribute("errorText", "您的账号或密码输入错误!");
 			return "redirect:/login";

@@ -38,7 +38,7 @@ public class CORSFilter implements Filter {
 		 * Set Cache-Control, Pragma for IE ajax request caching disablement
 		 * Custom item X-Session-Token for myself.
 		 */
-		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, X-Session-Token, Cache-Control, Pragma");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, apiKey, remember-me, X-Session-Token, Cache-Control, Pragma");
 
 		chain.doFilter(req, res);
 	}
