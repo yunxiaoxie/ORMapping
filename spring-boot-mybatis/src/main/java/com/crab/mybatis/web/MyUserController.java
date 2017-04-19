@@ -39,7 +39,7 @@ public class MyUserController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "getUserForPager", method = RequestMethod.GET)
+	@RequestMapping(value = "getUserForPager", method = RequestMethod.GET) //consumes = "application/json"
 	public String findForPager(Integer pageNo, Integer pageSize) {
 		if (null != pageNo && null != pageSize) {
 			PageResult pr = new PageResult();

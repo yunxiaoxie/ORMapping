@@ -5,6 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class FileUtil {
 
@@ -14,6 +19,33 @@ public class FileUtil {
 		// 获取文件名，兼容各种浏览器的写法
 		return tempArr2[1].substring(tempArr2[1].lastIndexOf("\\") + 1).replaceAll("\"", "");
 
+	}
+	
+	/**
+	 * 读取所有文件片, 如name---0-12313，并按升序返回
+	 * 0-表示第x片，123132-表示每一片大小
+	 * @param path
+	 * @param fileName
+	 * @param breakpoint
+	 * @return
+	 */
+	public static List<File> getAllFileName(String path, String fileName, String breakpoint) {
+		Map<Integer, File> resultMap = new TreeMap<>();
+		File dir = new File(path);
+		for (File f : dir.listFiles()) {
+			String name = f.getName();
+			if (f.isFile() && name.startsWith(fileName) && name.contains(breakpoint)) {
+				String[] pos = name.substring(name.indexOf(breakpoint) + 3).split("-");
+				if (pos.length > 0) {
+					resultMap.put(Integer.parseInt(pos[0]), f);
+				}
+			}
+		}
+		if (resultMap.size() > 0) {
+			// result.stream().sorted(Comparator.comparing(File::getName));
+			return new ArrayList<>(resultMap.values());
+		}
+		return Collections.emptyList();
 	}
 
 	public static boolean write(InputStream inputStream, File f) {

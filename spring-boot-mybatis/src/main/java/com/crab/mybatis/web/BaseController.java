@@ -5,13 +5,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSON;
 import com.crab.mybatis.domain.RequestObj;
 import com.crab.mybatis.exception.SystemException;
+import com.crab.mybatis.largeupload.FileUnifier;
 import com.crab.mybatis.service.SysDataDicService;
 import com.crab.mybatis.utils.FileUtil;
 
@@ -40,6 +47,15 @@ import com.crab.mybatis.utils.FileUtil;
  */
 @Controller
 public class BaseController {
+	private static final Logger Logger = LoggerFactory.getLogger(BaseController.class);
+	/**
+	 * 断点续传分隔符
+	 */
+	private static final String BREAKPOINT = "---";
+	/**
+	 * 文件目录
+	 */
+	private static final String FILE_DIR = "d:/images/";
 
 	@Autowired
 	private SysDataDicService service;
@@ -94,15 +110,71 @@ public class BaseController {
 			for (Part part : parts) {
 				if (part.getContentType() != null) { // 忽略路径字段,只处理文件类型
 					String fileName = FileUtil.getFileName(part.getHeader("content-disposition"));
-					System.out.println(fileName);
-					File f = new File("d:/images/" + fileName);
+					File f = new File(FILE_DIR + fileName);
 					FileUtil.write(part.getInputStream(), f);
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.error("upload large file error:",	e);
 		}
 		return "-1";
+	}
+
+	@ResponseBody
+	@RequestMapping("/uploadLarge")
+	public String uploadLarge(@RequestParam("name") String destination, @RequestParam("_chunkSize") String _chunkSize,
+			@RequestParam("_currentChunkSize") String _currentChunkSize,
+			@RequestParam("_chunkNumber") String _chunkNumber, @RequestParam("_totalSize") String _totalSize,
+			HttpServletRequest request) {
+
+		try {
+			// Servlet3.0方式
+			Collection<Part> parts = request.getParts();
+			String fileName = null;
+			for (Part part : parts) {
+				if (part.getContentType() != null) { // 忽略路径字段,只处理文件类型
+					fileName = FileUtil.getFileName(part.getHeader("content-disposition"));
+					File f = new File(FILE_DIR + fileName + BREAKPOINT + _chunkNumber + "-" + _chunkSize);
+					FileUtil.write(part.getInputStream(), f);
+				}
+			}
+
+			if (StringUtils.isNotEmpty(_currentChunkSize) && StringUtils.isNotEmpty(_chunkSize)
+					&& !_chunkSize.equals(_currentChunkSize)) {
+				String filePath = FILE_DIR + fileName;
+				FileUnifier.mergeFileByChannel(filePath, FileUtil.getAllFileName(FILE_DIR, fileName, BREAKPOINT));
+			}
+		} catch (Exception e) {
+			Logger.error("upload large file error:",	e);
+		}
+		return "-1";
+	}
+
+	/**
+	 * 得到文件的上传位置
+	 * 
+	 * @param fileName
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getFilePos", method = RequestMethod.GET)
+	public Map<String, Integer> getFilePos(@RequestParam("fileName") String fileName) {
+		Map<String, Integer> resultMap = new HashMap<String, Integer>();
+		List<File> list = FileUtil.getAllFileName(FILE_DIR, fileName, BREAKPOINT);
+		if (list != null && list.size() > 0) {
+			List<String> listName = new ArrayList<>();
+			for (File f : list) {
+				listName.add(f.getName());
+			}
+			String lastFileName = listName.get(listName.size() - 1);
+			String[] pos = lastFileName.substring(lastFileName.indexOf(BREAKPOINT) + 3).split("-");
+			if (pos != null && pos.length == 2) {
+				resultMap.put("size", Integer.parseInt(pos[0]) * Integer.parseInt(pos[1]));
+			}
+		} else {
+			resultMap.put("size", 0);
+		}
+		return resultMap;
 	}
 
 	@RequestMapping("download")
@@ -115,11 +187,11 @@ public class BaseController {
 		headers.add("contentType", Files.probeContentType(path));
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
 	}
-	
-	@RequestMapping(value="/execption")
-    public void execption(String id) throws SystemException {
+
+	@RequestMapping(value = "/execption")
+	public void execption(String id) throws SystemException {
 		if (StringUtils.isEmpty(id)) {
 			throw new SystemException("发生系统错误");
 		}
-    }
+	}
 }
