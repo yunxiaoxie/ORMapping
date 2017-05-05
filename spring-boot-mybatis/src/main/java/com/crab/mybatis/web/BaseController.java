@@ -24,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,6 +60,24 @@ public class BaseController {
 
 	@Autowired
 	private SysDataDicService service;
+	
+	/**
+	 * 返回前台通用接口规范
+	 * <功能详细描述>
+	 * @author LimingWang
+	 * @param code
+	 * @param msg
+	 * @param content
+	 * @return
+	 * @date 2017年3月14日 下午7:56:03
+	 */
+	public ModelMap retResult(String code, String msg, Object content){
+		ModelMap modelMap = new ModelMap();
+		modelMap.put("code", code);
+		modelMap.put("msg", msg);
+		modelMap.put("result", content);
+		return modelMap;
+	}
 
 	/**
 	 * 查询用户

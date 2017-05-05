@@ -34,7 +34,9 @@ And start MySQL and Redis first before running the application.
 
 ###约定
 *数据表名用'_'分隔，java名称用驼峰式
-*
+*数据返回形式：
+success: 200  {result: xxx}
+error: -1 {msg: xxx} 
 
 ```
 # If you're using Ubuntu server
