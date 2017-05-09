@@ -9,13 +9,22 @@ public class Constant {
 	/**
 	 * 返回状态码
 	 */
-	public static final String SUCCESS_CODE = "200";
-	public static final String BAD_REQUEST_CODE = "405";
-	public static final String FAIL_CODE = "500";
-	public static final String ERROR_CODE = "400";
-	public static final String IS_NOT_NULL_CODE = "001";
-	//重复状态码
-	public static final String DUPLICATE_CODE = "002";
+	/**请求成功*/
+	public static final String HTTP_200 = "200";
+	/**请求无效*/
+	public static final String HTTP_400 = "400";
+	/**无法找到文件*/
+	public static final String HTTP_404 = "404";
+	/**资源被禁止*/
+	public static final String HTTP_405 = "405";
+	/**无法接受*/
+	public static final String HTTP_406= "406";
+	/**要求代理身份验证*/
+	public static final String HTTP_407 = "407";
+	/**永远不可用*/
+	public static final String HTTP_410 = "410";
+	/**内部服务器错误*/
+	public static final String HTTP_500 = "500";
 
 	
 	public static interface HEALTH_CHECK_STATUS {

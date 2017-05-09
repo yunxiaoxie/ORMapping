@@ -51,7 +51,7 @@ public class SysUserController extends BaseController{
 		if (null != user) {
 			Map<String, Object> result = new HashMap<>();
 			result.put(Constant.SUCCESS_MSG, true);
-			return retResult(Constant.SUCCESS_CODE, Constant.SUCCESS_MSG, result);
+			return retResult(Constant.HTTP_200, Constant.SUCCESS_MSG, result);
 		}
 		return null;
 	}
