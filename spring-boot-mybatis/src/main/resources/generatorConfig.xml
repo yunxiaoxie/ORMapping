@@ -56,6 +56,7 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
+		<!--% 表示全部表 tableName="my_user%" tableName="%" -->
 		<!-- mapperName="MyUserDao" -->
 		<table schema="dispatch" tableName="my_user" domainObjectName="MyUser" 
 			enableInsert="true"
