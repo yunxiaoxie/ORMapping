@@ -1,7 +1,7 @@
 package com.crab.mybatis.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class LoggerUtil {
 	
@@ -196,6 +196,6 @@ public class LoggerUtil {
    */
   private static Logger innerGet() {
       StackTraceElement[]stackTrace = Thread.currentThread().getStackTrace();
-      return LoggerFactory.getLogger(stackTrace[3].getClassName());
+      return LogManager.getLogger(stackTrace[3].getClassName());
   }
 }

@@ -2,8 +2,8 @@ package com.crab.mybatis.service.impl;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mybatis.generator.paginator3.PageBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import com.crab.mybatis.service.MyUserService;
 @Service
 public class MyUserServiceImpl implements MyUserService {
 
-	private Log logger = LogFactory.getLog(MyUserService.class);
+	private Logger logger = LogManager.getLogger(MyUserService.class);
 
 	@Autowired
 	private MyUserMapper mapper;

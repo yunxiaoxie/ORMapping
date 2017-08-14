@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.2.RELEASE</version>
+		<version>1.5.4.RELEASE</version>
 	</parent>
 	<groupId>com.crab</groupId>
 	<artifactId>spring-boot-parents</artifactId>
@@ -34,9 +34,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<!-- <dependency> <groupId>org.springframework.data</groupId> <artifactId>spring-data-commons</artifactId> 
-			</dependency> -->
+			</dependency>
 
 		<!-- apache -->
 		<dependency>
@@ -92,7 +90,6 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
