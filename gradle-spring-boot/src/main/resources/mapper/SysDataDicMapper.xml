@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crab.mybatis.mapper.SysDataDicMapper">
+  <resultMap id="BaseResultMap" type="com.crab.mybatis.domain.SysDataDic">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="code" jdbcType="INTEGER" property="code" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="is_stop" jdbcType="INTEGER" property="isStop" />
+    <result column="comet" jdbcType="VARCHAR" property="comet" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, pid, code, value, text, is_stop, comet
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_data_dic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_data_dic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.crab.mybatis.domain.SysDataDic">
+    insert into sys_data_dic (id, pid, code, 
+      value, text, is_stop, 
+      comet)
+    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{code,jdbcType=INTEGER}, 
+      #{value,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, #{isStop,jdbcType=INTEGER}, 
+      #{comet,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.crab.mybatis.domain.SysDataDic">
+    insert into sys_data_dic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+      <if test="text != null">
+        text,
+      </if>
+      <if test="isStop != null">
+        is_stop,
+      </if>
+      <if test="comet != null">
+        comet,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=INTEGER},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null">
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="isStop != null">
+        #{isStop,jdbcType=INTEGER},
+      </if>
+      <if test="comet != null">
+        #{comet,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.crab.mybatis.domain.SysDataDic">
+    update sys_data_dic
+    <set>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=INTEGER},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null">
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="isStop != null">
+        is_stop = #{isStop,jdbcType=INTEGER},
+      </if>
+      <if test="comet != null">
+        comet = #{comet,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.crab.mybatis.domain.SysDataDic">
+    update sys_data_dic
+    set pid = #{pid,jdbcType=INTEGER},
+      code = #{code,jdbcType=INTEGER},
+      value = #{value,jdbcType=VARCHAR},
+      text = #{text,jdbcType=VARCHAR},
+      is_stop = #{isStop,jdbcType=INTEGER},
+      comet = #{comet,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

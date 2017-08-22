@@ -1,0 +1,99 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenLocal()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+    }
+}
+
+repositories {
+    jcenter()
+    mavenLocal()
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'checkstyle'
+apply plugin: "jacoco"
+apply plugin: 'org.springframework.boot'
+apply plugin: 'application'
+applicationDefaultJvmArgs = [ "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005" ]
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.1'
+}
+
+sourceSets {
+    apiTest {
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
+configurations {
+    apiTestCompile.extendsFrom testCompile
+    apiTestRuntime.extendsFrom testRuntime
+}
+springBoot {
+    mainClass = "com.crab.mybatis.Application"
+}
+
+dependencies {
+    // remote
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter', version:'1.5.4.RELEASE') {
+		exclude(module: 'spring-boot-starter-logging')
+    }
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'1.5.4.RELEASE'
+    compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version:'1.1.1'
+    compile group: 'mysql', name: 'mysql-connector-java', version:'5.1.39'
+    
+    compile group: 'com.cedarsoft.commons', name: 'io', version: '8.3.1'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    
+    compile 'org.slf4j:slf4j-api:1.7.14'
+    compile 'ch.qos.logback:logback-core:1.2.3'
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+    // local
+    compile group: 'com.crab', name: 'mybatis-generator-yxx', version:'1.0.0-SNAPSHOT'
+}
+
+task apiTest(type: Test) {
+    testClassesDir = sourceSets.apiTest.output.classesDir
+    classpath = sourceSets.apiTest.runtimeClasspath
+}
+
+
+idea {
+    module {
+        testSourceDirs += file('src/apiTest/java')
+        testSourceDirs += file('src/apiTest/resources')
+        scopes.TEST.plus += [configurations.apiTestCompile]
+        scopes.TEST.plus += [configurations.apiTestRuntime]
+    }
+}
+
+apiTest.mustRunAfter test
+build.dependsOn apiTest
+
+//API Test Code coverage
+task jacocoApiTestReport(type: JacocoReport){
+    sourceSets sourceSets.main
+    executionData apiTest
+}
+
+//Unit Test and API Test Code coverage all together
+task jacocoAllTestReport(type: JacocoReport){
+    sourceSets sourceSets.main
+    executionData test, apiTest
+}
+
+
+
