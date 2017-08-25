@@ -6,4 +6,12 @@ Build Spring Boot project using Gradle
 ./gradlew -x task --skip
 
 #How to run
-./gradlew runRun
+./gradlew bootRun
+
+#How to deploy
+./gradlew bootRun > system.log &
+
+#How to close
+jobs --show job
+ps -ef|grep java  --show process
+kill -9 id

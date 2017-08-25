@@ -91,16 +91,17 @@ I recommend you import the source code into Intellij IDE to edit the code.
 
 ## Deployment
 
-- Build application jar `mvn clean package`.
+- Build application jar `mvn clean package -Dmaven.test.skip=true`.
 - Copy `application.properties` to `application_production.properties`, if you want to change some configurations.
 - Upload `application-production.yml` to your server and change it according to your server settings.
 - Run it (Java8 is a must)
 
   ```
   # assuming you have the jar and yml files under current dir
-  java -jar spring-boot-mybatis-sources.jar
+  # &--后台运行，可用jobs查看任务，用kill关闭。
+  java -jar spring-boot-mybatis-sources.jar > boot.log &
   or
-  java -jar spring-boot-mybatis-sources.jar --spring.config.location=application-production.yml
+  java -jar spring-boot-mybatis-sources.jar --spring.config.location=application-production.yml > boot.log &
   ```
 
 ## License
