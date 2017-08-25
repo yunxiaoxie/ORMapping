@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crab.shiro.mapper.AclMapper">
+  <resultMap id="BaseResultMap" type="com.crab.shiro.domain.Acl">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="principal_type" jdbcType="VARCHAR" property="principalType" />
+    <result column="principal_sn" jdbcType="INTEGER" property="principalSn" />
+    <result column="resource_sn" jdbcType="INTEGER" property="resourceSn" />
+    <result column="acl_state" jdbcType="INTEGER" property="aclState" />
+    <result column="acl_ext_state" jdbcType="INTEGER" property="aclExtState" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, principal_type, principal_sn, resource_sn, acl_state, acl_ext_state, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from p_acl
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from p_acl
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.crab.shiro.domain.Acl">
+    insert into p_acl (id, principal_type, principal_sn, 
+      resource_sn, acl_state, acl_ext_state, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{principalType,jdbcType=VARCHAR}, #{principalSn,jdbcType=INTEGER}, 
+      #{resourceSn,jdbcType=INTEGER}, #{aclState,jdbcType=INTEGER}, #{aclExtState,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.crab.shiro.domain.Acl">
+    insert into p_acl
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="principalType != null">
+        principal_type,
+      </if>
+      <if test="principalSn != null">
+        principal_sn,
+      </if>
+      <if test="resourceSn != null">
+        resource_sn,
+      </if>
+      <if test="aclState != null">
+        acl_state,
+      </if>
+      <if test="aclExtState != null">
+        acl_ext_state,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="principalType != null">
+        #{principalType,jdbcType=VARCHAR},
+      </if>
+      <if test="principalSn != null">
+        #{principalSn,jdbcType=INTEGER},
+      </if>
+      <if test="resourceSn != null">
+        #{resourceSn,jdbcType=INTEGER},
+      </if>
+      <if test="aclState != null">
+        #{aclState,jdbcType=INTEGER},
+      </if>
+      <if test="aclExtState != null">
+        #{aclExtState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.crab.shiro.domain.Acl">
+    update p_acl
+    <set>
+      <if test="principalType != null">
+        principal_type = #{principalType,jdbcType=VARCHAR},
+      </if>
+      <if test="principalSn != null">
+        principal_sn = #{principalSn,jdbcType=INTEGER},
+      </if>
+      <if test="resourceSn != null">
+        resource_sn = #{resourceSn,jdbcType=INTEGER},
+      </if>
+      <if test="aclState != null">
+        acl_state = #{aclState,jdbcType=INTEGER},
+      </if>
+      <if test="aclExtState != null">
+        acl_ext_state = #{aclExtState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.crab.shiro.domain.Acl">
+    update p_acl
+    set principal_type = #{principalType,jdbcType=VARCHAR},
+      principal_sn = #{principalSn,jdbcType=INTEGER},
+      resource_sn = #{resourceSn,jdbcType=INTEGER},
+      acl_state = #{aclState,jdbcType=INTEGER},
+      acl_ext_state = #{aclExtState,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
