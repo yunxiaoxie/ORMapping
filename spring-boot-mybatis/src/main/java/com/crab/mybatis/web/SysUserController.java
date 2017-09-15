@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,6 +55,24 @@ public class SysUserController extends BaseController{
 	@RequestMapping("loginsystem/{username}/{pwd}")
 	public ModelMap login(@PathVariable String username, @PathVariable String pwd) {
 		try {
+			SysUser user = service.findByPwd(username, pwd);
+			if (null != user) {
+				Map<String, Object> result = new HashMap<>();
+				result.put(Constant.SUCCESS_MSG, true);
+				return retResult(Constant.HTTP_200, Constant.SUCCESS_MSG, result);
+			}
+			return null;
+		} catch(Exception e) {
+			LoggerUtil.error("method login " + e.getMessage(), e);
+			return retResult( Constant.FAIL_MSG,  e.getMessage(), null);
+		}
+	}
+	
+	@RequestMapping("loginsystem2")
+	public ModelMap login2(@RequestBody Map<String, String> paramMap) {
+		try {
+			String username = paramMap.get("username");
+			String pwd = paramMap.get("pwd");
 			SysUser user = service.findByPwd(username, pwd);
 			if (null != user) {
 				Map<String, Object> result = new HashMap<>();

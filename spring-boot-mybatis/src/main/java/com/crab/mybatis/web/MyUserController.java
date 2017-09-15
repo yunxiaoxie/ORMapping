@@ -17,11 +17,16 @@ import com.crab.mybatis.utils.Constant;
 import com.crab.mybatis.utils.LoggerUtil;
 import com.crab.mybatis.utils.PageResult;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 /**
  * POST /uri 创建 DELETE /uri/xxx 删除 PUT /uri/xxx 更新或创建 GET /uri/xxx 查看
  * 
  * @author YunxiaoXie
  */
+@Api(value = "用户接口")
 @RestController
 @RequestMapping("/user/")
 public class MyUserController extends BaseController {
@@ -34,6 +39,7 @@ public class MyUserController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation(value = "查询所有用户")
 	@RequestMapping(value = "getAllUser", method = RequestMethod.GET)
 	public ModelMap findAll() {
 		try {
@@ -44,8 +50,9 @@ public class MyUserController extends BaseController {
 		}
 	}
 	
+	@ApiOperation(value = "查询所有分页用户")
 	@RequestMapping(value = "getUserForPager", method = RequestMethod.GET) //consumes = "application/json"
-	public ModelMap findForPager(PageResult pageResult) { // remove @RequestBody for get request.
+	public ModelMap findForPager(@ApiParam(value = "分页对象", required = true) PageResult pageResult) { // remove @RequestBody for get request.
 		try {
 			if (null != pageResult) {
 				PageResult pr = new PageResult();
@@ -64,8 +71,9 @@ public class MyUserController extends BaseController {
 		}
 	}
 
+	@ApiOperation(value = "保存用户", notes="根据User对象创建用户")
 	@RequestMapping(value = "saveUser", method = RequestMethod.POST)
-	public ModelMap saveUser(@RequestBody MyUser user) {
+	public ModelMap saveUser(@ApiParam(value = "用户表单", required = true) @RequestBody MyUser user) {
 		try {
 			if (null != user && StringUtils.isNotEmpty(user.getName())) {
 				user.setCreateTime(new Date());
@@ -79,8 +87,9 @@ public class MyUserController extends BaseController {
 		}
 	}
 
+	@ApiOperation(value = "更新用户", notes="根据User对象创建用户")
 	@RequestMapping(value = "updateUser", method = RequestMethod.PUT)
-	public ModelMap updateUser(@RequestBody MyUser user) {
+	public ModelMap updateUser(@ApiParam(value = "用户表单", required = true) @RequestBody MyUser user) {
 		try {
 			if (null != user && StringUtils.isNotEmpty(user.getName())) {
 				service.update(user);
@@ -93,8 +102,9 @@ public class MyUserController extends BaseController {
 		}
 	}
 	
+	@ApiOperation(value = "保存用户Selective", notes="根据User对象创建用户")
 	@RequestMapping(value = "saveUserSelective", method = RequestMethod.POST)
-	public ModelMap saveUserSelective(@RequestBody MyUser user) {
+	public ModelMap saveUserSelective(@ApiParam(value = "用户表单", required = true) @RequestBody MyUser user) {
 		try {
 			if (null != user && StringUtils.isNotEmpty(user.getName())) {
 				user.setCreateTime(new Date());
@@ -108,8 +118,9 @@ public class MyUserController extends BaseController {
 		}
 	}
 
+	@ApiOperation(value = "更新用户Selective", notes="根据User对象创建用户")
 	@RequestMapping(value = "updateUserSelective", method = RequestMethod.PUT)
-	public ModelMap updateUserSelective(@RequestBody MyUser user) {
+	public ModelMap updateUserSelective(@ApiParam(value = "用户表单", required = true) @RequestBody MyUser user) {
 		try {
 			if (null != user && null != user.getId()) {
 				user.setCreateTime(new Date());
@@ -123,8 +134,9 @@ public class MyUserController extends BaseController {
 		}
 	}
 
+	@ApiOperation(value = "删除用户")
 	@RequestMapping(value = "deleteUser", method = RequestMethod.DELETE)
-	public ModelMap deleteUser(int id) {
+	public ModelMap deleteUser(@ApiParam(value = "用户Id", required = true) int id) {
 		try {
 			service.deleteById(id);
 			return retResult(Constant.HTTP_200, Constant.SUCCESS_MSG, null);
