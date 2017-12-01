@@ -39,20 +39,21 @@ public class JwtFilter extends GenericFilterBean {
 			        String subjectName = (String) SecurityUtils.getSubject().getPrincipal();
 					if (username != null && username.equals(subjectName)) {
 						chain.doFilter(request, response);
-						return;
+					} else {
+						HttpServletResponse httpResponse = (HttpServletResponse) response;
+						httpResponse.setCharacterEncoding("UTF-8");
+						httpResponse.setContentType("application/json; charset=utf-8");
+						httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+						//Don't use getWriter() to write json.
+			            httpResponse.getOutputStream().print("{\"result\":\"You need a login.\"}");
 					}
 				}
+			} else {
+				chain.doFilter(request, response);
 			}
 		} else {
 			chain.doFilter(request, response);
 		}
-
-		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		httpResponse.setCharacterEncoding("UTF-8");
-		httpResponse.setContentType("application/json; charset=utf-8");
-		httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		httpResponse.getWriter().write("Need a request header Authorization for JWT.");
-		return;
 	}
 
 	@Override

@@ -13,6 +13,7 @@ Application is powered by many powerful frameworks and third-party projects:
 
 ##Query Api
 http://localhost/swagger-ui.html
+http://localhost/index.jsp
 
 ##State
 -10000 login success.
