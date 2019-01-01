@@ -1,0 +1,58 @@
+spring:
+  profiles: prod
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.104.81.61:3306/pengyuan?useUnicode=true&characterEncoding=utf-8
+    max-active: 300
+    max-idle: 10
+    min-idle: 8
+    username: pengyuan
+    password: pengyuan
+    test-on-borrow: true
+    test-on-return: false
+    test-while-idle: true
+    validation-query: select 1
+    filters: stat
+    max-wait: 60000
+    pool-prepared-statements: true
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+#  resources:
+#    static-locations: classpath:/static/
+##Note:Don't config static by static-locations, otherwise, swagger-ui cannot work, Boot configured default.
+
+server:
+  port: 443
+  #for dev only.
+  jsp-servlet:
+    init-parameters:
+      development: false
+  ssl:
+      key-store: classpath:public/214461471410812.pfx
+      key-store-password: 214461471410812
+      keyStoreType: PKCS12
+  #ssl:
+  #    key-store: classpath:public/keystore.p12
+  #    key-store-password: 123456,
+  #    keyStoreType: PKCS12
+  #    keyAlias: jyax
+logging:
+  config: classpath:public/log4j2.xml
+  level:
+    tk:
+      mybatis: TRACE
+mybatis:
+  type-aliases-package: com.crab.domain
+  mapper-locations: classpath:com/crab/mapper/**/*.xml
+  config-location: classpath:public/mybatis-config.xml
+mapper:
+  mappers:
+    - com.qfpie.server.util.QkMapper
+  not-empty: false
+  identity: oracle
+
+
+
+ 

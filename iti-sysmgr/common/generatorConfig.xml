@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+		"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<context id="MysqlTables" targetRuntime="MyBatis3">
+		<!-- 抑制警告 -->
+		<property name="suppressTypeWarnings" value="true" />
+
+		<property name="javaFileEncoding" value="utf-8"/>
+
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"  />
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<!-- 这个插件只会增加字符串字段映射到一个JDBC字符的方法 -->
+		<plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+		<!-- <plugin type="org.mybatis.generator.plugin.DeleteLogicByIdsPlugin" />
+		<plugin type="org.mybatis.generator.plugin.MyAnnotationPlugin">
+			<property name="generateMapper" value="true" />
+		</plugin>-->
+		<plugin type="org.mybatis.generator.plugin.OverIsMergeablePlugin" />
+
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+						connectionURL="jdbc:mysql://127.0.0.1:3306/iti?characterEncoding=utf-8"
+						userId="root" password="root" />
+
+		<javaTypeResolver>
+			<!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时解析为java.math.BigDecimal -->
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<javaModelGenerator targetPackage="com.crab.mybatis.domain"	targetProject="src\main\java">
+			<property name="enableSubPackages" value="false" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="mapper" targetProject="src\main\resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- 只生成一次，避免已改的文件被覆盖 -->
+		<!--<javaClientGenerator type="XMLMAPPER"-->
+		<!--targetPackage="com.crab.mybatis.mapper" targetProject="src\main\java">-->
+		<!--<property name="enableSubPackages" value="true" />-->
+		<!--<property name="rootInterface" value="GenericMapper"/>-->
+		<!--</javaClientGenerator>-->
+
+		<table schema="dispatch" tableName="p%"
+			   enableCountByExample="false"
+			   enableUpdateByExample="false"
+			   enableDeleteByExample="false"
+			   enableSelectByExample="false"
+			   selectByExampleQueryId="false">
+			<!-- <ignoreColumn column="fred"/> -->
+			<!-- <columnOverride column="BEG_DATE" property="startDate"/> -->
+			<!-- <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" /> --><!-- 列java类型 -->
+			<property name="useActualColumnNames" value="false" />
+			<domainObjectRenamingRule searchString="^P" replaceString="" />
+		</table>
+
+		<table schema="dispatch" tableName="t%"
+			   enableInsert="true"
+			   enableSelectByPrimaryKey="true"
+			   enableUpdateByPrimaryKey="true"
+			   enableDeleteByPrimaryKey="true"
+			   enableCountByExample="false"
+			   enableUpdateByExample="false"
+			   enableDeleteByExample="false"
+			   enableSelectByExample="false"
+			   selectByExampleQueryId="false">
+			<!-- <ignoreColumn column="fred"/> -->
+			<!-- <columnOverride column="BEG_DATE" property="startDate"/> -->
+			<!-- <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" /> --><!-- 列java类型 -->
+			<property name="useActualColumnNames" value="false" />
+			<domainObjectRenamingRule searchString="^T" replaceString="" />
+		</table>
+
+	</context>
+
+</generatorConfiguration> 

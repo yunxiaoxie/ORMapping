@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<package name="com.crab.domain"/>
+	</typeAliases>
+	<!--<plugins>
+		<plugin interceptor="org.mybatis.generator.paginator.MysqlPagerPlugin" />
+		<plugin interceptor="org.mybatis.generator.paginator2.MysqlPagerPlugin" />
+		<plugin interceptor="org.mybatis.generator.paginator3.MysqlPageInterceptor" />
+	</plugins>-->
+	<!-- <mappers>
+		<mapper resource="mapper/MyUserMapper.xml" />
+		<mapper resource="mapper/UserMapper.xml" />
+	</mappers> -->
+</configuration>
