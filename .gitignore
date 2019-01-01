@@ -4,5 +4,6 @@ logs/
 .classpath
 .project
 .idea
+.metadata
 target
 *.iml
