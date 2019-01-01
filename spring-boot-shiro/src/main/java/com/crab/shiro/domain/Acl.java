@@ -38,6 +38,59 @@ public class Acl implements Serializable {
 	 */
 	public static final int ACL_NOTEXTENDS = 0;
 	
+	/**
+	 * 获得ACL授权,判断是否有READ权限
+	 * @param permission C/R/U/D权限
+	 * @return 授权标识：允许/不允许/不确定
+	 */
+	public int getPermission(int permission) {
+
+		if(aclExtState == 0xFFFFFFFF){
+			return ACL_NEUTRAL;
+		}
+		
+		int tmp = 1;
+		
+		tmp = tmp << permission;
+		
+		tmp &= aclState;
+		
+		if(tmp != 0){
+			return ACL_YES;
+		}
+		
+		return ACL_NO;
+	}
+
+	/**
+	 * acl实例跟主体和资源关联
+	 * 针对此实例进行授权：某种操作是否允许
+	 * @param permission 只可以取值0,1,2,3
+	 * @param yes true表示允许，false表示不允许
+	 */
+	public void setPermission(int permission, boolean yes) {
+		int tmp = 1;
+		tmp = tmp << permission;
+		if(yes){
+			aclState |= tmp;
+		}else{
+			aclState &= ~tmp;
+		}
+	}
+	
+	/**
+	 * 设置本授权是否是继承的(继承--角色授权,不继承--用户授权)
+	 * 只有给用户的授权(不继承)才会被读取
+	 * @param yes true表示继承，false表示不继承
+	 */
+	public void setExtends(boolean yes){
+		if(yes){
+			aclExtState = 0xFFFFFFFF;
+		}else{
+			aclExtState = 0;
+		}
+	}
+	
     /**
      *
      *  , 所属表字段为p_acl.id
@@ -95,59 +148,6 @@ public class Acl implements Serializable {
     private Date createTime;
 
     private static final long serialVersionUID = 1L;
-    
-    /**
-	 * 获得ACL授权,判断是否有READ权限
-	 * @param permission C/R/U/D权限
-	 * @return 授权标识：允许/不允许/不确定
-	 */
-	public int getPermission(int permission) {
-
-		if(aclExtState == 0xFFFFFFFF){
-			return ACL_NEUTRAL;
-		}
-		
-		int tmp = 1;
-		
-		tmp = tmp << permission;
-		
-		tmp &= aclState;
-		
-		if(tmp != 0){
-			return ACL_YES;
-		}
-		
-		return ACL_NO;
-	}
-
-	/**
-	 * acl实例跟主体和资源关联
-	 * 针对此实例进行授权：某种操作是否允许
-	 * @param permission 只可以取值0,1,2,3
-	 * @param yes true表示允许，false表示不允许
-	 */
-	public void setPermission(int permission, boolean yes) {
-		int tmp = 1;
-		tmp = tmp << permission;
-		if(yes){
-			aclState |= tmp;
-		}else{
-			aclState &= ~tmp;
-		}
-	}
-	
-	/**
-	 * 设置本授权是否是继承的(继承--角色授权,不继承--用户授权)
-	 * 只有给用户的授权(不继承)才会被读取
-	 * @param yes true表示继承，false表示不继承
-	 */
-	public void setExtends(boolean yes){
-		if(yes){
-			aclExtState = 0xFFFFFFFF;
-		}else{
-			aclExtState = 0;
-		}
-	}
 
     public Integer getId() {
         return id;
