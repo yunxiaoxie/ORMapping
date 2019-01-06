@@ -23,6 +23,7 @@ export default {
     ])
   },
   created() {
+    debugger
     if (!this.roles.includes('admin')) {
       this.currentRole = 'editorDashboard'
     }

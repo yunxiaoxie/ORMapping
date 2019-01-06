@@ -16,6 +16,8 @@ public interface IUser {
 	User findUser(Integer userId);
 	
 	User findUser(String account, String pwd);
+
+	User findUserByAccount(String account);
 	
 	/**
 	 * 查询用户拥有的所有的角色

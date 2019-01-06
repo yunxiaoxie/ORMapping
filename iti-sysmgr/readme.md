@@ -63,3 +63,7 @@ localhost:8080/swagger-ui.html
 ##TODO
  - 取消接口
 
+##整合jwt+shiro+https
+因jwt默认是不加密的，所以不能存储涉密信息，最好使用Https传输
+
+##

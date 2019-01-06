@@ -91,6 +91,9 @@ public class Constant {
 	}
 	/**permission*/
 
+	/**JWT*/
+	public static final String Bearer = "ITI";
+
 	/**请求成功*/
 	public static final String HTTP_200 = "200";
 	/**请求无效*/

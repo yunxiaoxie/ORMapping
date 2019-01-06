@@ -86,4 +86,9 @@ public class UserImpl implements IUser {
 		return userMapper.findUser(account, pwd);
 	}
 
+	@Override
+	public User findUserByAccount(String account) {
+		return userMapper.findByAccount(account);
+	}
+
 }

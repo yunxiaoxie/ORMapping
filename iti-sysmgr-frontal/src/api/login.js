@@ -7,7 +7,7 @@ export function loginByUsername(username, password) {
     password
   }
   return request({
-    url: '/login/simple',
+    url: '/login',
     method: 'post',
     data: qs.stringify(data)
   })

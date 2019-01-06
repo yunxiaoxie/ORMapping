@@ -1,4 +1,4 @@
-package com.crab.shiro.config;
+package com.crab.config;
 
 import java.util.Map;
 
@@ -38,7 +38,7 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * @see org.apache.shiro.spring.web.ShiroFilterFactoryBean
+	 * @see ShiroFilterFactoryBean
 	 * @return
 	 */
 	@Bean(name = "shiroFilter")
@@ -56,10 +56,18 @@ public class ShiroConfig {
 		// 拦截器+配置登录和登录成功之后的url
         //LinkHashMap是有序的，shiro会根据添加的顺序进行拦截
 		Map<String, String> chains = Maps.newLinkedHashMap();
+		//for swagger
+		chains.put("/swagger-ui.html", "anon");
+		chains.put("/static/**", "anon");
+		chains.put("/swagger/**","anon");
+		chains.put("/webjars/**", "anon");
+		chains.put("/swagger-resources/**","anon");
+		chains.put("/v2/**","anon");
+
 		chains.put("/login/**", "anon");
 		chains.put("/unauthor", "anon");
 		chains.put("/logout", "logout");
-		chains.put("/base/**", "anon");
+		chains.put("/user/**", "anon");
 		chains.put("/css/**", "anon");
 		chains.put("/fonts/**", "anon");
 		chains.put("/layer/**", "anon");
@@ -118,7 +126,7 @@ public class ShiroConfig {
 	@Bean
 	public EhCacheManager cacheManager() {
 		EhCacheManager cacheManager = new EhCacheManager();
-		cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
+		cacheManager.setCacheManagerConfigFile("classpath:public/ehcache.xml");
 		return cacheManager;
 	}
 

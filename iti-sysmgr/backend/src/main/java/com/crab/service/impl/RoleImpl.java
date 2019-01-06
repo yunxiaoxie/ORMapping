@@ -6,6 +6,7 @@ import com.crab.service.IRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -49,7 +50,11 @@ public class RoleImpl implements IRole {
 
 	@Override
 	public List<Role> searchRolesOfUser(Integer userId) {
-		return roleMapper.getRolesByUserId(userId);
+		List<Role> list = roleMapper.getRolesByUserId(userId);
+		if (list == null || list.isEmpty()){
+			return Collections.emptyList();
+		}
+		return list;
 	}
 	
 	@Override
