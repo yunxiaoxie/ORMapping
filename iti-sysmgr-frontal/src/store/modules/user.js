@@ -39,7 +39,6 @@ const user = {
       state.avatar = avatar
     },
     SET_ROLES: (state, roles) => {
-      debugger
       state.roles = roles
     }
   },
@@ -76,8 +75,8 @@ const user = {
           }
 
           commit('SET_NAME', data.user.name)
-          commit('SET_AVATAR', data.avatar)
-          commit('SET_INTRODUCTION', data.introduction)
+          commit('SET_AVATAR', data.user_token.avatar)
+          commit('SET_INTRODUCTION', data.user_token.introduction)
           resolve(response)
         }).catch(error => {
           reject(error)

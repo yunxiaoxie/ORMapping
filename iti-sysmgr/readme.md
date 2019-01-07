@@ -65,5 +65,7 @@ localhost:8080/swagger-ui.html
 
 ##整合jwt+shiro+https
 因jwt默认是不加密的，所以不能存储涉密信息，最好使用Https传输
+在axios拦截器中配置header(authorization x-token)
 
-##
+##完善jwtFilter
+只有login logout能通过，其它的要header

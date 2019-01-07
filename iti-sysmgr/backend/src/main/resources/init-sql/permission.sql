@@ -6,10 +6,10 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `p_permission`;
 CREATE TABLE `p_permission` (
   `id`              int(11)            NOT NULL AUTO_INCREMENT,
-  `name`            varchar(50)        UNIQUE NOT NULL                   COMMENT '权限名',
+  `name`            varchar(50)        UNIQUE NOT NULL                    COMMENT '权限名',
   `sn`              int(2)             NOT NULL UNIQUE                    COMMENT '权限标识(BIT)',
   `comment`         varchar(50)        DEFAULT NULL                       COMMENT '权限说明',
-  `create_time`     timestamp         DEFAULT CURRENT_TIMESTAMP          COMMENT '创建日期',
+  `create_time`     timestamp          DEFAULT CURRENT_TIMESTAMP          COMMENT '创建日期',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT '权限表';
 
@@ -27,12 +27,12 @@ INSERT INTO `p_permission` VALUES ('4', 'delete', 3, '删除', null);
 DROP TABLE IF EXISTS `p_acl`;
 CREATE TABLE `p_acl` (
   `id`                 int(11)             NOT NULL AUTO_INCREMENT,
-  `principal_type`     varchar(50)         NOT NULL                       COMMENT '主体类型(角色或用户)',
+  `principal_type`     varchar(50)         NOT NULL                        COMMENT '主体类型(角色或用户)',
   `principal_sn`       int(11)             NOT NULL                        COMMENT '主体标识(ID)',
   `resource_sn`        int(11)             NOT NULL                        COMMENT '资源标识(Module ID)',
   `acl_state`          int(32)             NOT NULL                        COMMENT '授权状态(用(bit)表示, 64bit-20位max)',
   `acl_ext_state`      int(2)              DEFAULT 0                       COMMENT '是否继承(0否-1是)',
-  `create_time`        timestamp          DEFAULT CURRENT_TIMESTAMP       COMMENT '创建日期',
+  `create_time`        timestamp          DEFAULT CURRENT_TIMESTAMP        COMMENT '创建日期',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT '访问控制列表';
 
@@ -63,9 +63,9 @@ CREATE TABLE `p_module` (
   `id`              int(11)            NOT NULL AUTO_INCREMENT,
   `pid`             int(10)            DEFAULT NULL                     COMMENT '父模块',
   `name`            varchar(32)        NOT NULL                         COMMENT '模块名称',
-  `url`             varchar(50)        DEFAULT NULL                    COMMENT '模块地址',
+  `url`             varchar(50)        DEFAULT NULL                     COMMENT '模块地址',
   `order_no`        int(10)            DEFAULT NULL                     COMMENT '模块排序编号',
-  `sn`              varchar(32)        NOT NULL UNIQUE                 COMMENT '模块标识',
+  `sn`              varchar(32)        NOT NULL UNIQUE                  COMMENT '模块标识',
   `create_time`     timestamp          DEFAULT CURRENT_TIMESTAMP        COMMENT '创建日期',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT '系统模块';
@@ -92,7 +92,7 @@ INSERT INTO `p_module` VALUES ('12', null, 'Another nav item', null, '1', 'Anoth
 DROP TABLE IF EXISTS `p_role`;
 CREATE TABLE `p_role` (
   `id`                int(11)              NOT NULL AUTO_INCREMENT,
-  `role_name`         varchar(32)          DEFAULT NULL UNIQUE               COMMENT '角色名称',
+  `role_name`         varchar(32)          DEFAULT NULL UNIQUE                COMMENT '角色名称',
   `description`       varchar(200)         DEFAULT NULL                       COMMENT '角色描述',
   `create_time`       timestamp            DEFAULT CURRENT_TIMESTAMP          COMMENT '创建日期',
   PRIMARY KEY (`id`)
@@ -141,12 +141,12 @@ INSERT INTO `p_role_module` VALUES ('15', '3', '1');
 DROP TABLE IF EXISTS `p_user`;
 CREATE TABLE `p_user` (
   `id`                int(11)              NOT NULL AUTO_INCREMENT,
-  `account`           varchar(32)          UNIQUE NOT NULL                 COMMENT '账号',
+  `account`           varchar(32)          UNIQUE NOT NULL                  COMMENT '账号',
   `password`          varchar(32)          NOT NULL                         COMMENT '密码',
-  `name`              varchar(32)          DEFAULT NULL                    COMMENT '用户名称',
-  `stop_state`        varchar(2)           DEFAULT NULL                    COMMENT '是否停用',
-  `stop_user`         varchar(20)          DEFAULT NULL                    COMMENT '停用人',
-  `create_time`       timestamp            DEFAULT CURRENT_TIMESTAMP       COMMENT '创建日期',
+  `name`              varchar(32)          DEFAULT NULL                     COMMENT '用户名称',
+  `stop_state`        varchar(2)           DEFAULT NULL                     COMMENT '是否停用',
+  `stop_user`         varchar(20)          DEFAULT NULL                     COMMENT '停用人',
+  `create_time`       timestamp            DEFAULT CURRENT_TIMESTAMP        COMMENT '创建日期',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT '用户表';
 
