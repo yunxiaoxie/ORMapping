@@ -5,10 +5,14 @@ import java.util.Map;
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 
+import com.crab.common.shiro.RestShiroFilterFactoryBean;
+import com.crab.common.shiro.credential.RetryLimitHashedCredentialsMatcher;
+import com.crab.common.shiro.filter.RestFormAuthenticationFilter;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.filter.authc.AnonymousFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -24,7 +28,7 @@ public class ShiroConfig {
 
 	/**
 	 * FilterRegistrationBean
-	 * 
+	 *
 	 * @return
 	 */
 	@Bean
@@ -39,21 +43,23 @@ public class ShiroConfig {
 
 	/**
 	 * @see ShiroFilterFactoryBean
-	 * @return
 	 */
-	@Bean(name = "shiroFilter")
-	public ShiroFilterFactoryBean shiroFilter() {
-		ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
-		//注册securityManager
-		bean.setSecurityManager(securityManager());
+	@Bean
+	public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
+		ShiroFilterFactoryBean bean = new RestShiroFilterFactoryBean();
+		bean.setSecurityManager(securityManager);
 		bean.setLoginUrl("/login");
-		bean.setUnauthorizedUrl("/unauthor");
-
-		Map<String, Filter> filters = Maps.newHashMap();
-		filters.put("perms", urlPermissionsFilter());
-		filters.put("anon", new AnonymousFilter());
-		bean.setFilters(filters);
-		// 拦截器+配置登录和登录成功之后的url
+		bean.setUnauthorizedUrl("/401");
+		//config filter chain
+		Map<String, Filter> filters = bean.getFilters();
+		filters.put("authc", new RestFormAuthenticationFilter());
+		filters.put("perms", new RestAuthorizationFilter());
+		//配置filters
+//		Map<String, Filter> filters = Maps.newHashMap();
+//		filters.put("perms", new URLPermissionsFilter());
+//		filters.put("anon", new AnonymousFilter());
+//		bean.setFilters(filters);
+		// 配置过滤器链
         //LinkHashMap是有序的，shiro会根据添加的顺序进行拦截
 		Map<String, String> chains = Maps.newLinkedHashMap();
 		//for swagger
@@ -64,8 +70,9 @@ public class ShiroConfig {
 		chains.put("/swagger-resources/**","anon");
 		chains.put("/v2/**","anon");
 
+		chains.put("/course/**", "anon");
+
 		chains.put("/login/**", "anon");
-		chains.put("/unauthor", "anon");
 		chains.put("/logout", "logout");
 		chains.put("/user/**", "anon");
 		chains.put("/css/**", "anon");
@@ -79,9 +86,8 @@ public class ShiroConfig {
 
 	/**
 	 * @see org.apache.shiro.mgt.SecurityManager
-	 * @return
 	 */
-	@Bean(name = "securityManager")
+	@Bean
 	public DefaultWebSecurityManager securityManager() {
 		DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 		manager.setRealm(userRealm());
@@ -92,21 +98,19 @@ public class ShiroConfig {
 
 	/**
 	 * @see DefaultWebSessionManager
-	 * @return
 	 */
-	@Bean(name = "sessionManager")
+	@Bean
 	public DefaultWebSessionManager defaultWebSessionManager() {
 		DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
 		sessionManager.setCacheManager(cacheManager());
 		sessionManager.setGlobalSessionTimeout(1800000);
 		sessionManager.setDeleteInvalidSessions(true);
 		sessionManager.setSessionValidationSchedulerEnabled(true);
-		sessionManager.setDeleteInvalidSessions(true);
 		return sessionManager;
 	}
 
 	/**
-	 * 自定义的认证类，继承子AuthorizingRealm，负责用户的认证和权限处理
+	 * 自定义认证类，继承AuthorizingRealm，负责用户的认证和权限处理
 	 * @see UserRealm--->AuthorizingRealm
 	 * @return
 	 */
@@ -114,14 +118,11 @@ public class ShiroConfig {
 	@DependsOn(value = "lifecycleBeanPostProcessor")
 	public UserRealm userRealm() {
 		UserRealm userRealm = new UserRealm();
+//		userRealm.setCredentialsMatcher(hashedCredentialsMatcher());
 		userRealm.setCacheManager(cacheManager());
 		return userRealm;
 	}
 
-	@Bean
-	public URLPermissionsFilter urlPermissionsFilter() {
-		return new URLPermissionsFilter();
-	}
 
 	@Bean
 	public EhCacheManager cacheManager() {
@@ -130,8 +131,20 @@ public class ShiroConfig {
 		return cacheManager;
 	}
 
+//	@Bean
+//	public HashedCredentialsMatcher hashedCredentialsMatcher() {
+//		// 重试次数
+//		return new RetryLimitHashedCredentialsMatcher("md5");
+//	}
+
+	//for thymeleaf-extras-shiro
+//	@Bean
+//	public ShiroDialect shiroDialect() {
+//		return new ShiroDialect();
+//	}
+
 	/**
-     * 负责shiroBean的生命周期
+     * shiro生命周期
      */
 	@Bean
 	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {

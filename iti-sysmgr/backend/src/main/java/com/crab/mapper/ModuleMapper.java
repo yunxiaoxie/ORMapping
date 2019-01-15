@@ -3,6 +3,7 @@ package com.crab.mapper;
 import com.crab.common.GenericMapper;
 import com.crab.domain.Module;
 import com.crab.domain.ModuleInfo;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 
@@ -19,8 +20,16 @@ public interface ModuleMapper extends GenericMapper<Module, Integer> {
     /**
      * 得到用户拥有的权限模块
      */
-    @Select(value="select * from p_module m where m.pid is null and m.id in (${ids}) order by m.order_no")
-    List<Module> findModules(List<Integer> ids);
+    //@Select(value="select * from p_module m where m.pid is null and m.id in (${ids}) order by m.order_no")
+    @Select({
+            "<script>",
+            "select * from p_module m where m.pid is null and m.id in ",
+            "<foreach item='item' index='index' collection='ids' open='(' separator=',' close=')'>",
+            "#{item}",
+            "</foreach>",
+            "</script>"
+    })
+    List<Module> findModules(@Param("ids") List<Integer> ids);
 
     /**
      * 得到用户拥有的权限模块

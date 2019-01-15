@@ -31,8 +31,7 @@ server:
 logging:
   config: classpath:public/log4j2.xml
   level:
-    tk:
-      mybatis: TRACE
+    com.crab.mapper: DEBUG
 mybatis:
   type-aliases-package: com.crab.domain
   mapper-locations: classpath:com/crab/mapper/**/*.xml

@@ -27,7 +27,8 @@ public class JwtFilter extends GenericFilterBean {
 	private Audience audienceEntity;
 
 	private boolean isContains(List<String> urls, String url) {
-		List<String> list = urls.stream().filter(u -> url.endsWith(u)).collect(Collectors.toList());
+		List<String> list = urls.stream().filter(u -> url.endsWith(u) || url.contains(u))
+				.collect(Collectors.toList());
 		return list!=null&&!list.isEmpty();
 	}
 
@@ -38,7 +39,7 @@ public class JwtFilter extends GenericFilterBean {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String url = httpRequest.getRequestURL().toString();
 		//not filter urls
-		List<String> urls = Arrays.asList("/login", "/logout");
+		List<String> urls = Arrays.asList("course/", "/login", "/logout", "v2/api-docs", "swagger-ui", "swagger-resources");
 		//only for '/login'
 		// 复杂ajax跨域请求前会先发出OPTIONS请求
 		if (StringUtils.isNotEmpty(url) && isContains(urls, url)

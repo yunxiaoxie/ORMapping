@@ -7,4 +7,5 @@
     from t_course c
     order by c.id
   </select>
+
 </mapper>

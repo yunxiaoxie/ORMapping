@@ -69,3 +69,23 @@ localhost:8080/swagger-ui.html
 
 ##完善jwtFilter
 只有login logout能通过，其它的要header
+
+##集成pagehelper插件
+可以把查询变为分页查询，不过不适合大数据量的(百万级)
+
+##接口设计原则
+* 输入参数
+* 输出结果
+* 异常处理(已知异常和未知异常)
+接口定义的原则是要明确约定实现者，若实现超出以上3种情况，则视为不合格
+
+##集成druid-spring-boot-starter
+Druid是Java语言中最好的数据库连接池。Druid能够提供强大的监控和扩展功能。DruidDataSource支持的数据库：
+理论上说，支持所有有jdbc驱动的数据库
+
+##重构shiro过滤器支持rest
+RestPathMatchingFilterChainResolver 
+
+
+##前端路由动态化
+TODO

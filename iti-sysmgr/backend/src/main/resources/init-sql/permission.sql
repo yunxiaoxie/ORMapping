@@ -74,8 +74,8 @@ CREATE TABLE `p_module` (
 -- Records of p_module
 -- ----------------------------
 INSERT INTO `p_module` VALUES ('1', null, 'Overview', '/index', '1', 'IndexUrl', null);
-INSERT INTO `p_module` VALUES ('2', null, 'Reports', '/reports', '1', 'Reports', null);
-INSERT INTO `p_module` VALUES ('3', null, 'Analytics', '/analytics', '1', 'Analytics', null);
+INSERT INTO `p_module` VALUES ('2', null, 'Course', '/course/add', '1', 'Reports', null);
+INSERT INTO `p_module` VALUES ('3', null, 'Course', '/course/list', '1', 'Analytics', null);
 INSERT INTO `p_module` VALUES ('4', null, 'Export', '/export', '1', 'Export', null);
 INSERT INTO `p_module` VALUES ('5', null, 'Nav item', '/navitem', '1', 'Nav_item', null);
 INSERT INTO `p_module` VALUES ('6', null, 'Nav item again', '/navitemagain', '1', 'Nav_item_again', null);

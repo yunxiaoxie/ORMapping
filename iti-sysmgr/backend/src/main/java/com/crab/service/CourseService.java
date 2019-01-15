@@ -16,13 +16,17 @@ public class CourseService {
     @Resource
     private CourseMapper courseMapper;
 
-    @Resource
-    private UserImpl userImpl;
-
     public List<Course> getAll() {
-        User u = userImpl.findUser(1);
-        log.info(u.getName()+"=========================================");
-        Course c = courseMapper.selectByPrimaryKey(1);
+//        User u = userImpl.findUser(1);
+//        Course c = courseMapper.selectByPrimaryKey(1);
+        return courseMapper.selectAll();
+    }
+
+    public void insert(Course course){
+        courseMapper.insert(course);
+    }
+
+    public List<Course> getCourseList(){
         return courseMapper.selectAll();
     }
 }

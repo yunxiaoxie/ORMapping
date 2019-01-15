@@ -79,6 +79,10 @@ export const constantRouterMap = [
   {
     path: '/documentation',
     component: Layout,
+    meta: {
+      title: 'example',
+      icon: 'example'
+    },
     redirect: '/documentation/index',
     children: [
       {
@@ -86,6 +90,25 @@ export const constantRouterMap = [
         component: () => import('@/views/documentation/index'),
         name: 'Documentation',
         meta: { title: 'documentation', icon: 'documentation', noCache: true }
+      },
+      {
+        path: 'create',
+        component: () => import('@/views/course/create'),
+        name: 'CreateArticle',
+        meta: { title: 'createArticle', icon: 'edit' }
+      },
+      {
+        path: 'edit/:id(\\d+)',
+        component: () => import('@/views/course/edit'),
+        name: 'EditArticle',
+        meta: { title: 'editArticle', noCache: true },
+        hidden: true
+      },
+      {
+        path: 'list',
+        component: () => import('@/views/course/list'),
+        name: 'ArticleList',
+        meta: { title: 'articleList', icon: 'list' }
       }
     ]
   },
