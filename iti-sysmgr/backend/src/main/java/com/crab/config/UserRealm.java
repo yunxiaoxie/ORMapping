@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
  * 
  * @author Administrator
  */
-@Component("userRealm")
+//@Component("userRealm")
 public class UserRealm extends AuthorizingRealm {
 	@Autowired
 	private IUser userService;
@@ -41,6 +41,14 @@ public class UserRealm extends AuthorizingRealm {
 		setName("UserRealm");
 		// 采用MD5加密
 		//setCredentialsMatcher(new HashedCredentialsMatcher("md5"));
+	}
+
+	/**
+	 * 大坑！，必须重写此方法，不然Shiro会报错
+	 */
+	@Override
+	public boolean supports(AuthenticationToken token) {
+		return token instanceof UsernamePasswordToken;
 	}
 
 	//权限资源角色

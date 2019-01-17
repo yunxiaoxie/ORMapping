@@ -6,9 +6,12 @@ import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +23,18 @@ public class RestFormAuthenticationFilter extends FormAuthenticationFilter {
 
     private static final Logger log = LoggerFactory
             .getLogger(RestFormAuthenticationFilter.class);
+
+    @Override
+    public boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue)
+            throws Exception {
+        HttpServletRequest req = (HttpServletRequest)request;
+        HttpServletResponse res = (HttpServletResponse)response;
+        if(req.getMethod().equals(RequestMethod.OPTIONS.name())){
+            return true;
+        }
+        return super.onPreHandle(request, response, mappedValue);
+    }
+
 
     @Override
     protected boolean pathsMatch(String path, ServletRequest request) {

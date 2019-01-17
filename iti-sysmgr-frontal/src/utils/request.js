@@ -9,7 +9,7 @@ axios.defaults.withCredentials = true
 const service = axios.create({
   // baseURL: process.env.BASE_API, // api 的 base_url
   baseURL: 'http://localhost:8080',
-  timeout: 50000 // request timeout
+  timeout: 5000000 // request timeout
 })
 
 // request interceptor
@@ -20,6 +20,7 @@ service.interceptors.request.use(
       // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
       config.headers['X-Token'] = getToken()
       config.headers['Authorization'] = 'ITI ' + getToken()
+      config.headers['X-Requested-With'] = 'XMLHttpRequest'
     }
     return config
   },

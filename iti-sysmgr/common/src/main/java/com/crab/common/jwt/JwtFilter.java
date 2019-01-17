@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
 
-@Component
+//@Component
 public class JwtFilter extends GenericFilterBean {
 	@Autowired
 	private Audience audienceEntity;

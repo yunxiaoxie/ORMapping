@@ -84,8 +84,21 @@ Druid是Java语言中最好的数据库连接池。Druid能够提供强大的监
 理论上说，支持所有有jdbc驱动的数据库
 
 ##重构shiro过滤器支持rest
-RestPathMatchingFilterChainResolver 
+* 疑问，未看到url==method，是否需要下面的改造
+RestPathMatchingFilterChainResolver
+* RestLogoutFilter
 
+##注意http OPTIONS请求
+* 复杂ajax请求会先发OPTIONS请求，这会被shiro拦截导致后面请求失败
+* axios默认不传X-Requested-With，需要手动添加
+* config.headers['X-Requested-With'] = 'XMLHttpRequest'
+* 重构的restshiro是通过X-Requested-With判断是否是ajax并处理相应返回
+
+##整合jwtToken
+* 使用纯filter方式，可参考JwtFilter
+* 结合shiro
+
+##
 
 ##前端路由动态化
 TODO

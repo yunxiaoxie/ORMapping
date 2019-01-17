@@ -8,6 +8,8 @@ import javax.servlet.Filter;
 import com.crab.common.shiro.RestShiroFilterFactoryBean;
 import com.crab.common.shiro.credential.RetryLimitHashedCredentialsMatcher;
 import com.crab.common.shiro.filter.RestFormAuthenticationFilter;
+import com.crab.common.shiro.filter.RestLogoutFilter;
+import com.crab.common.shiro.filter.ShiroUserFilter;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
@@ -29,17 +31,16 @@ public class ShiroConfig {
 	/**
 	 * FilterRegistrationBean
 	 *
-	 * @return
 	 */
-	@Bean
-	public FilterRegistrationBean filterRegistrationBean() {
-		FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
-		filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
-		filterRegistration.setEnabled(true);
-		filterRegistration.addUrlPatterns("/*");
-		filterRegistration.setDispatcherTypes(DispatcherType.REQUEST);
-		return filterRegistration;
-	}
+//	@Bean
+//	public FilterRegistrationBean filterRegistrationBean() {
+//		FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
+//		filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
+//		filterRegistration.setEnabled(true);
+//		filterRegistration.addUrlPatterns("/*");
+//		filterRegistration.setDispatcherTypes(DispatcherType.REQUEST);
+//		return filterRegistration;
+//	}
 
 	/**
 	 * @see ShiroFilterFactoryBean
@@ -52,8 +53,10 @@ public class ShiroConfig {
 		bean.setUnauthorizedUrl("/401");
 		//config filter chain
 		Map<String, Filter> filters = bean.getFilters();
+		filters.put("user", new ShiroUserFilter());
 		filters.put("authc", new RestFormAuthenticationFilter());
 		filters.put("perms", new RestAuthorizationFilter());
+		filters.put("logout", new RestLogoutFilter());
 		//配置filters
 //		Map<String, Filter> filters = Maps.newHashMap();
 //		filters.put("perms", new URLPermissionsFilter());
@@ -70,11 +73,11 @@ public class ShiroConfig {
 		chains.put("/swagger-resources/**","anon");
 		chains.put("/v2/**","anon");
 
-		chains.put("/course/**", "anon");
+		chains.put("/course/**", "authc");
+		chains.put("/user/**", "authc");
+		chains.put("/logout", "logout");
 
 		chains.put("/login/**", "anon");
-		chains.put("/logout", "logout");
-		chains.put("/user/**", "anon");
 		chains.put("/css/**", "anon");
 		chains.put("/fonts/**", "anon");
 		chains.put("/layer/**", "anon");
