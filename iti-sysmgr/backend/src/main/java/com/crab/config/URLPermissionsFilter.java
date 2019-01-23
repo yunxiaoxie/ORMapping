@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
-@Component("urlPermissionsFilter")
+//@Component("urlPermissionsFilter")
 public class URLPermissionsFilter extends PermissionsAuthorizationFilter{
 	@Autowired
 	private IAcl aclService;

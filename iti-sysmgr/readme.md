@@ -12,7 +12,7 @@ sql中有中文，最好用工具导入
 用source导入会有中文问题
 
 ##mybatis-generator
-mvn mybatis-generator:generate
+在backend里执行：mvn mybatis-generator:generate
 or
 MavenProjects->backend->Plugins->mybatis-generator
 
@@ -42,8 +42,9 @@ columnRenamingRule & domainObjectRenamingRule
  - GenericMapper
 
 ##swagger2
-localhost:8080/swagger-ui.html
-注意：每次要mvn clean install
+* localhost:8080/swagger-ui.html
+* 注意：每次要mvn clean install
+* 添加header
 
 ##工程模块化
 将一个大的工程，拆分成多个子模块，便于扩展维护
@@ -84,9 +85,11 @@ Druid是Java语言中最好的数据库连接池。Druid能够提供强大的监
 理论上说，支持所有有jdbc驱动的数据库
 
 ##重构shiro过滤器支持rest
-* 疑问，未看到url==method，是否需要下面的改造
-RestPathMatchingFilterChainResolver
+* url==method需要先配置在chains，下面的改造是对这种资源的支持
+* RestPathMatchingFilterChainResolver
 * RestLogoutFilter
+* FormAuthenticationFilter->BasicHttpAuthenticationFilter
+* PermissionsAuthorizationFilter->HttpMethodPermissionFilter
 
 ##注意http OPTIONS请求
 * 复杂ajax请求会先发OPTIONS请求，这会被shiro拦截导致后面请求失败
@@ -96,9 +99,16 @@ RestPathMatchingFilterChainResolver
 
 ##整合jwtToken
 * 使用纯filter方式，可参考JwtFilter
-* 结合shiro
+* 结合shiro, 服务端无状态，用户名及角色信息在jwt中，通过获取jwt中用户信息在服务端验证
+* 唯一不好是在jwt失效前，服务端无法控制它
 
-##
+##启用shiro注解及授权
+* shiro配置授权chains.put("/course/**", "authc,perms[Export]")
+* 动态生成以上的权限信息
+* 通过注解方式@RequiresPermissions("list")
+* 使用注解需要spring aop功能，请参见shiroConfig
+
+##整合shiro-cache
 
 ##前端路由动态化
 TODO

@@ -82,7 +82,7 @@
 // import MDinput from '@/components/MDinput'
 // import Sticky from '@/components/Sticky' // 粘性header组件
 // import { validateURL } from '@/utils/validate'
-import { fetchArticle } from '@/api/article'
+import { fetchCourse } from '@/api/course'
 import { userSearch } from '@/api/remoteSearch'
 // import Warning from './Warning'
 // import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
@@ -93,7 +93,7 @@ const defaultForm = {
 }
 
 export default {
-  name: 'Course',
+  name: 'CourseDetail',
   // components: { Tinymce, MDinput, Upload, Sticky, Warning, CommentDropdown, PlatformDropdown, SourceUrlDropdown },
   props: {
     isEdit: {
@@ -147,8 +147,8 @@ export default {
   },
   methods: {
     fetchData(id) {
-      fetchArticle(id).then(response => {
-        this.postForm = response.data
+      fetchCourse(id).then(response => {
+        this.postForm = response.content
         // Just for test
         this.postForm.title += `   Article Id:${this.postForm.id}`
         this.postForm.content_short += `   Article Id:${this.postForm.id}`

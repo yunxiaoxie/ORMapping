@@ -35,13 +35,13 @@
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
 
-		<javaModelGenerator targetPackage="com.crab.domain"	targetProject="src\main\java">
+		<javaModelGenerator targetPackage="com.crab.domain"	targetProject="./src/main/java">
 			<property name="enableSubPackages" value="false" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
 		<!-- 需要手动复制到mapper, namespace要与mapper对应 -->
-		<sqlMapGenerator targetPackage="com.crab.mapper" targetProject="src\main\resources">
+		<sqlMapGenerator targetPackage="com.crab.mapper" targetProject="./src/main/resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 

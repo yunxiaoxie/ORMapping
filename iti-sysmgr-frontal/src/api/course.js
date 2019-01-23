@@ -9,6 +9,13 @@ export function fetchList(query) {
   })
 }
 
+export function fetchNames() {
+  return request({
+    url: '/course/names',
+    method: 'get'
+  })
+}
+
 export function fetchCourse(id) {
   return request({
     url: '/course/detail',
@@ -27,7 +34,15 @@ export function fetchPv(pv) {
 
 export function createCourse(data) {
   return request({
-    url: '/course/add',
+    url: '/course/addOrUpd',
+    method: 'post',
+    data: qs.stringify(data)
+  })
+}
+
+export function createCourseChapter(data) {
+  return request({
+    url: '/course/chapter/addOrUpd',
     method: 'post',
     data: qs.stringify(data)
   })
@@ -35,8 +50,8 @@ export function createCourse(data) {
 
 export function updateCourse(data) {
   return request({
-    url: '/course/update',
+    url: '/course/addOrUpd',
     method: 'post',
-    data
+    data: qs.stringify(data)
   })
 }

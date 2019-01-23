@@ -10,9 +10,13 @@ public class Coursechapter implements Serializable {
 
     private String chapter;
 
-    private String url;
+    private String videoUrl;
 
-    private String code;
+    private String videoCode;
+
+    private String sourcecodeUrl;
+
+    private String sourcecodeCode;
 
     private Date createTime;
 
@@ -44,20 +48,36 @@ public class Coursechapter implements Serializable {
         this.chapter = chapter == null ? null : chapter.trim();
     }
 
-    public String getUrl() {
-        return url;
+    public String getVideoUrl() {
+        return videoUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl == null ? null : videoUrl.trim();
     }
 
-    public String getCode() {
-        return code;
+    public String getVideoCode() {
+        return videoCode;
     }
 
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+    public void setVideoCode(String videoCode) {
+        this.videoCode = videoCode == null ? null : videoCode.trim();
+    }
+
+    public String getSourcecodeUrl() {
+        return sourcecodeUrl;
+    }
+
+    public void setSourcecodeUrl(String sourcecodeUrl) {
+        this.sourcecodeUrl = sourcecodeUrl == null ? null : sourcecodeUrl.trim();
+    }
+
+    public String getSourcecodeCode() {
+        return sourcecodeCode;
+    }
+
+    public void setSourcecodeCode(String sourcecodeCode) {
+        this.sourcecodeCode = sourcecodeCode == null ? null : sourcecodeCode.trim();
     }
 
     public Date getCreateTime() {
@@ -91,8 +111,10 @@ public class Coursechapter implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getCourseId() == null ? other.getCourseId() == null : this.getCourseId().equals(other.getCourseId()))
             && (this.getChapter() == null ? other.getChapter() == null : this.getChapter().equals(other.getChapter()))
-            && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
-            && (this.getCode() == null ? other.getCode() == null : this.getCode().equals(other.getCode()))
+            && (this.getVideoUrl() == null ? other.getVideoUrl() == null : this.getVideoUrl().equals(other.getVideoUrl()))
+            && (this.getVideoCode() == null ? other.getVideoCode() == null : this.getVideoCode().equals(other.getVideoCode()))
+            && (this.getSourcecodeUrl() == null ? other.getSourcecodeUrl() == null : this.getSourcecodeUrl().equals(other.getSourcecodeUrl()))
+            && (this.getSourcecodeCode() == null ? other.getSourcecodeCode() == null : this.getSourcecodeCode().equals(other.getSourcecodeCode()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()));
     }
@@ -104,8 +126,10 @@ public class Coursechapter implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getCourseId() == null) ? 0 : getCourseId().hashCode());
         result = prime * result + ((getChapter() == null) ? 0 : getChapter().hashCode());
-        result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
-        result = prime * result + ((getCode() == null) ? 0 : getCode().hashCode());
+        result = prime * result + ((getVideoUrl() == null) ? 0 : getVideoUrl().hashCode());
+        result = prime * result + ((getVideoCode() == null) ? 0 : getVideoCode().hashCode());
+        result = prime * result + ((getSourcecodeUrl() == null) ? 0 : getSourcecodeUrl().hashCode());
+        result = prime * result + ((getSourcecodeCode() == null) ? 0 : getSourcecodeCode().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getCreateUser() == null) ? 0 : getCreateUser().hashCode());
         return result;
@@ -120,8 +144,10 @@ public class Coursechapter implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", courseId=").append(courseId);
         sb.append(", chapter=").append(chapter);
-        sb.append(", url=").append(url);
-        sb.append(", code=").append(code);
+        sb.append(", videoUrl=").append(videoUrl);
+        sb.append(", videoCode=").append(videoCode);
+        sb.append(", sourcecodeUrl=").append(sourcecodeUrl);
+        sb.append(", sourcecodeCode=").append(sourcecodeCode);
         sb.append(", createTime=").append(createTime);
         sb.append(", createUser=").append(createUser);
         sb.append(", serialVersionUID=").append(serialVersionUID);

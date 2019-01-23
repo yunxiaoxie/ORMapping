@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -19,19 +20,19 @@ import java.util.Map.Entry;
 @Service
 public class AclImpl implements IAcl {
 	
-	@Autowired
+	@Resource
 	private AclMapper aclMapper;
 	
-	@Autowired
+	@Resource
 	private UserMapper userMapper;
 	
-	@Autowired
+	@Resource
 	private RoleMapper roleMapper;
 	
-	@Autowired
+	@Resource
 	private PermissionMapper permissionMapper;
 	
-	@Autowired
+	@Resource
 	private ModuleMapper moduleMapper;
 	
 	@Override

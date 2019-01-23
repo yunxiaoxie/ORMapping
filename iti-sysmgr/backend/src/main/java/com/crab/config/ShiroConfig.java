@@ -14,9 +14,11 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,20 +29,6 @@ import com.google.common.collect.Maps;
 
 @Configuration
 public class ShiroConfig {
-
-	/**
-	 * FilterRegistrationBean
-	 *
-	 */
-//	@Bean
-//	public FilterRegistrationBean filterRegistrationBean() {
-//		FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
-//		filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
-//		filterRegistration.setEnabled(true);
-//		filterRegistration.addUrlPatterns("/*");
-//		filterRegistration.setDispatcherTypes(DispatcherType.REQUEST);
-//		return filterRegistration;
-//	}
 
 	/**
 	 * @see ShiroFilterFactoryBean
@@ -73,7 +61,10 @@ public class ShiroConfig {
 		chains.put("/swagger-resources/**","anon");
 		chains.put("/v2/**","anon");
 
-		chains.put("/course/**", "authc");
+		//添加url==method
+		chains.put("/course/list==Get", "authc");
+		chains.put("/course/chapter/addOrUpd==Post", "anon");
+		chains.put("/course/**", "authc,perms[Export]");
 		chains.put("/user/**", "authc");
 		chains.put("/logout", "logout");
 
@@ -81,6 +72,7 @@ public class ShiroConfig {
 		chains.put("/css/**", "anon");
 		chains.put("/fonts/**", "anon");
 		chains.put("/layer/**", "anon");
+
 		//过滤连接自定义，从上往下顺序执行，所以用LinkHashMap /**放在最下边
 		chains.put("/**", "authc,perms");
 		bean.setFilterChainDefinitionMap(chains);
@@ -152,5 +144,27 @@ public class ShiroConfig {
 	@Bean
 	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
 		return new LifecycleBeanPostProcessor();
+	}
+
+	/**
+	 * 开启Shiro注解(如@RequiresRoles,@RequiresPermissions),
+	 * 需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
+	 * 配置以下两个bean(DefaultAdvisorAutoProxyCreator和AuthorizationAttributeSourceAdvisor)
+	 */
+	@Bean
+	public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator(){
+		DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+		advisorAutoProxyCreator.setProxyTargetClass(true);
+		return advisorAutoProxyCreator;
+	}
+
+	/**
+	 * 开启aop注解支持
+	 */
+	@Bean
+	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+		AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+		authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+		return authorizationAttributeSourceAdvisor;
 	}
 }

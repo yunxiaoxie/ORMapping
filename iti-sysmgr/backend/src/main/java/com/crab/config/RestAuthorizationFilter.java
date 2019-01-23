@@ -1,17 +1,12 @@
 package com.crab.config;
 
 import com.crab.common.utils.AjaxUtils;
-import com.crab.domain.Module;
-import com.crab.service.IAcl;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.StringUtils;
 import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
 import org.apache.shiro.web.util.WebUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -26,46 +21,15 @@ import java.util.*;
 @Slf4j
 public class RestAuthorizationFilter extends PermissionsAuthorizationFilter {
 
-    @Autowired
-    private IAcl aclService;
-
     @Override
-    public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
-        String curUrl = getRequestUrl(request);
-        // remove get parameter
-        if (org.apache.commons.lang3.StringUtils.isNotEmpty(curUrl) && curUrl.indexOf("?") != -1) {
-            curUrl = curUrl.substring(0, curUrl.indexOf("?"));
-        }
-        Subject subject = SecurityUtils.getSubject();
-        if(subject.getPrincipal() == null
-                || org.apache.commons.lang3.StringUtils.endsWithAny(curUrl, ".js",".css",".html")
-                || org.apache.commons.lang3.StringUtils.endsWithAny(curUrl, ".jpg",".png",".gif", ".jpeg")
-                || org.apache.commons.lang3.StringUtils.startsWith(curUrl, "/fonts")
-                || Arrays.asList("/execption", "/unauthor", "/getModuleByUser", "/updatePermission", "/login", "/authorize", "/accessToken", "/user/info")
-                .contains(curUrl)	) {
+    public boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue)
+            throws Exception {
+        HttpServletRequest req = (HttpServletRequest)request;
+        HttpServletResponse res = (HttpServletResponse)response;
+        if(req.getMethod().equals(RequestMethod.OPTIONS.name())){
             return true;
         }
-        List<Module> modules = aclService.searchModules(subject.getPrincipal().toString(), null);
-        List<String> urls = new ArrayList<>();
-        for (Module m : modules) {
-            if (org.apache.commons.lang3.StringUtils.isNotEmpty(m.getUrl())) {
-                urls.add(m.getUrl());
-            }
-        }
-        return urls.contains(curUrl);
-    }
-
-    /**
-     * 获取当前URL+Parameter
-     * @param request	拦截请求request
-     * @return			返回完整URL
-     */
-    private String getRequestUrl(ServletRequest request) {
-        HttpServletRequest req = (HttpServletRequest)request;
-        String queryString = req.getQueryString();
-
-        queryString = org.apache.commons.lang3.StringUtils.isBlank(queryString)?"": "?"+queryString;
-        return req.getRequestURI()+queryString;
+        return super.onPreHandle(request, response, mappedValue);
     }
 
     @Override

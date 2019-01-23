@@ -10,8 +10,9 @@ CREATE TABLE `t_course` (
   `period`                int(2)                 NOT NULL                                   COMMENT '课程期数',
   `create_time`           timestamp              DEFAULT CURRENT_TIMESTAMP                  COMMENT '创建时间',
   `create_user`           varchar(20)            DEFAULT NULL                               COMMENT '创建人',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='录课表';
+  PRIMARY KEY (`id`),
+  unique key(`course`, `period`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='课程表';
 
 -- ----------------------------
 -- Records of t_course
@@ -24,12 +25,12 @@ INSERT INTO `t_course` VALUES ('2', '前端初中级', '1', null, null);
 DROP TABLE IF EXISTS `t_course_chapter`;
 CREATE TABLE `t_course_chapter` (
   `id`                       int(10)               NOT NULL AUTO_INCREMENT                    COMMENT '主键',
-  `course_id`                int(10)               DEFAULT NULL                               COMMENT '课程主键',
+  `course_id`                int(10)               NOT NULL                                   COMMENT '课程主键',
   `chapter`                  varchar(20)           NOT NULL                                   COMMENT '章节名称',
   `video_url`                varchar(50)           NOT NULL                                   COMMENT '章节视频地址',
   `video_code`               varchar(20)           NOT NULL                                   COMMENT '提取码',
-  `sourcecode_url`           varchar(50)           NOT NULL                                   COMMENT '章节代码地址',
-  `sourcecode_code`          varchar(20)           NOT NULL                                   COMMENT '提取码',
+  `sourcecode_url`           varchar(50)           DEFAULT NULL                               COMMENT '章节代码地址',
+  `sourcecode_code`          varchar(20)           DEFAULT NULL                               COMMENT '提取码',
   `create_time`              timestamp             DEFAULT CURRENT_TIMESTAMP                  COMMENT '创建时间',
   `create_user`              varchar(20)           DEFAULT NULL                               COMMENT '创建人',
   PRIMARY KEY (`id`)

@@ -95,20 +95,39 @@ export const constantRouterMap = [
         path: 'create',
         component: () => import('@/views/course/create'),
         name: 'CreateArticle',
-        meta: { title: 'createArticle', icon: 'edit' }
+        meta: { title: 'createCourse', icon: 'edit' }
       },
       {
         path: 'edit/:id(\\d+)',
         component: () => import('@/views/course/edit'),
         name: 'EditArticle',
-        meta: { title: 'editArticle', noCache: true },
+        meta: { title: 'editCourse', noCache: true },
         hidden: true
       },
       {
         path: 'list',
         component: () => import('@/views/course/list'),
         name: 'ArticleList',
-        meta: { title: 'articleList', icon: 'list' }
+        meta: { title: 'courseList', icon: 'list' }
+      },
+      {
+        path: 'createchapter',
+        component: () => import('@/views/course/createChapter'),
+        name: 'CreateChapter',
+        meta: { title: 'createChapter', icon: 'edit' }
+      },
+      {
+        path: 'editchapter/:id(\\d+)',
+        component: () => import('@/views/course/edit'),
+        name: 'EditChapter',
+        meta: { title: 'editChapter', noCache: true },
+        hidden: true
+      },
+      {
+        path: 'chapterlist',
+        component: () => import('@/views/course/list'),
+        name: 'ChapterList',
+        meta: { title: 'chapterList', icon: 'list' }
       }
     ]
   },
