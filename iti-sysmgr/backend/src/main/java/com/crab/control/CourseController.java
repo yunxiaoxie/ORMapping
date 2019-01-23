@@ -88,6 +88,7 @@ public class CourseController {
     @PostMapping("chapter/addOrUpd")
     public ApiResult addCourseChapter(@ApiParam(value="章节名称", required=true) @RequestParam(value="chapter") String chapter,
                                       @ApiParam(value="章节id") @RequestParam(value="id", required = false) Integer id,
+                                      @ApiParam(value="章节内容说明") @RequestParam(value="video_comm", required = false) String video_comm,
                                       @ApiParam(value="课程id",required = true) @RequestParam(value="course_id") Integer course_id,
                                       @ApiParam(value="视频地址", required=true) @RequestParam(value="video_url") String video_url,
                                       @ApiParam(value="视频提取码", required=true) @RequestParam(value="video_code") String video_code,
@@ -100,6 +101,7 @@ public class CourseController {
         course.setCourseId(course_id);
         course.setVideoUrl(video_url);
         course.setVideoCode(video_code);
+        course.setVideoComm(video_comm);
         course.setSourcecodeUrl(sourcecode_url);
         course.setSourcecodeCode(sourcecode_code);
         courseChapterService.insertOrUpdate(course);

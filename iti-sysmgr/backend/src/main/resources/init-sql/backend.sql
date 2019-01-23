@@ -29,6 +29,7 @@ CREATE TABLE `t_course_chapter` (
   `chapter`                  varchar(20)           NOT NULL                                   COMMENT '章节名称',
   `video_url`                varchar(50)           NOT NULL                                   COMMENT '章节视频地址',
   `video_code`               varchar(20)           NOT NULL                                   COMMENT '提取码',
+  `video_comm`               varchar(500)          DEFAULT NULL                               COMMENT '章节视频内容说明',
   `sourcecode_url`           varchar(50)           DEFAULT NULL                               COMMENT '章节代码地址',
   `sourcecode_code`          varchar(20)           DEFAULT NULL                               COMMENT '提取码',
   `create_time`              timestamp             DEFAULT CURRENT_TIMESTAMP                  COMMENT '创建时间',

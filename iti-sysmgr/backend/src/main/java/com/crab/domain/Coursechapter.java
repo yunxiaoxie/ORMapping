@@ -14,6 +14,8 @@ public class Coursechapter implements Serializable {
 
     private String videoCode;
 
+    private String videoComm;
+
     private String sourcecodeUrl;
 
     private String sourcecodeCode;
@@ -62,6 +64,14 @@ public class Coursechapter implements Serializable {
 
     public void setVideoCode(String videoCode) {
         this.videoCode = videoCode == null ? null : videoCode.trim();
+    }
+
+    public String getVideoComm() {
+        return videoComm;
+    }
+
+    public void setVideoComm(String videoComm) {
+        this.videoComm = videoComm == null ? null : videoComm.trim();
     }
 
     public String getSourcecodeUrl() {
@@ -113,6 +123,7 @@ public class Coursechapter implements Serializable {
             && (this.getChapter() == null ? other.getChapter() == null : this.getChapter().equals(other.getChapter()))
             && (this.getVideoUrl() == null ? other.getVideoUrl() == null : this.getVideoUrl().equals(other.getVideoUrl()))
             && (this.getVideoCode() == null ? other.getVideoCode() == null : this.getVideoCode().equals(other.getVideoCode()))
+            && (this.getVideoComm() == null ? other.getVideoComm() == null : this.getVideoComm().equals(other.getVideoComm()))
             && (this.getSourcecodeUrl() == null ? other.getSourcecodeUrl() == null : this.getSourcecodeUrl().equals(other.getSourcecodeUrl()))
             && (this.getSourcecodeCode() == null ? other.getSourcecodeCode() == null : this.getSourcecodeCode().equals(other.getSourcecodeCode()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
@@ -128,6 +139,7 @@ public class Coursechapter implements Serializable {
         result = prime * result + ((getChapter() == null) ? 0 : getChapter().hashCode());
         result = prime * result + ((getVideoUrl() == null) ? 0 : getVideoUrl().hashCode());
         result = prime * result + ((getVideoCode() == null) ? 0 : getVideoCode().hashCode());
+        result = prime * result + ((getVideoComm() == null) ? 0 : getVideoComm().hashCode());
         result = prime * result + ((getSourcecodeUrl() == null) ? 0 : getSourcecodeUrl().hashCode());
         result = prime * result + ((getSourcecodeCode() == null) ? 0 : getSourcecodeCode().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
@@ -146,6 +158,7 @@ public class Coursechapter implements Serializable {
         sb.append(", chapter=").append(chapter);
         sb.append(", videoUrl=").append(videoUrl);
         sb.append(", videoCode=").append(videoCode);
+        sb.append(", videoComm=").append(videoComm);
         sb.append(", sourcecodeUrl=").append(sourcecodeUrl);
         sb.append(", sourcecodeCode=").append(sourcecodeCode);
         sb.append(", createTime=").append(createTime);

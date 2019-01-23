@@ -74,6 +74,14 @@
           </el-col>
         </el-row>
 
+        <div class="postInfo-container">
+          <el-row>
+            <el-col :span="24">
+              <tinymce :height="200" v-model="postForm.video_comm"/>
+            </el-col>
+          </el-row>
+        </div>
+
         <!-- <el-form-item style="margin-bottom: 40px;" label-width="45px" label="摘要:">
           <el-input :rows="1" v-model="postForm.content_short" type="textarea" class="article-textarea" autosize placeholder="请输入内容"/>
           <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}字</span>
@@ -105,6 +113,7 @@
 // import { validateURL } from '@/utils/validate'
 import { fetchCourse, fetchNames } from '@/api/course'
 import { userSearch } from '@/api/remoteSearch'
+import Tinymce from '@/components/Tinymce'
 // import Warning from './Warning'
 // import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
 
@@ -113,13 +122,15 @@ const defaultForm = {
   chapter: '', // 课程章节
   video_url: '',
   video_code: '',
+  video_comm: '',
   sourcecode_url: '',
   sourcecode_code: ''
 }
 
 export default {
   name: 'ChapterDetail',
-  // components: { Tinymce, MDinput, Upload, Sticky, Warning, CommentDropdown, PlatformDropdown, SourceUrlDropdown },
+  //, MDinput, Upload, Sticky, Warning, CommentDropdown, PlatformDropdown, SourceUrlDropdown
+  components: { Tinymce },
   props: {
     isEdit: {
       type: Boolean,
