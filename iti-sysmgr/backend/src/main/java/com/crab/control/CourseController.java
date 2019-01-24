@@ -5,6 +5,7 @@ import com.crab.domain.Course;
 import com.crab.domain.Coursechapter;
 import com.crab.service.CourseChapterService;
 import com.crab.service.CourseService;
+import com.crab.vo.CourseChapterVo;
 import com.crab.vo.SelectVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -38,6 +39,13 @@ public class CourseController {
     public ApiResult findCourseAll() {
         log.info("查询所有课程");
         return ApiResult.success(courseService.getAll());
+    }
+
+    @ApiOperation(value = "查询所有课程章节信息", notes = "查询所有课程章节信息")
+    @GetMapping("chapter/all")
+    public ApiResult findCourseChapterAll() {
+        log.info("查询所有课程章节");
+        return ApiResult.success(courseChapterService.getAll());
     }
 
     @ApiOperation(value = "添加或更新课程", notes = "添加或更新课程")
@@ -88,23 +96,44 @@ public class CourseController {
     @PostMapping("chapter/addOrUpd")
     public ApiResult addCourseChapter(@ApiParam(value="章节名称", required=true) @RequestParam(value="chapter") String chapter,
                                       @ApiParam(value="章节id") @RequestParam(value="id", required = false) Integer id,
-                                      @ApiParam(value="章节内容说明") @RequestParam(value="video_comm", required = false) String video_comm,
-                                      @ApiParam(value="课程id",required = true) @RequestParam(value="course_id") Integer course_id,
-                                      @ApiParam(value="视频地址", required=true) @RequestParam(value="video_url") String video_url,
-                                      @ApiParam(value="视频提取码", required=true) @RequestParam(value="video_code") String video_code,
-                                      @ApiParam(value="源码地址") @RequestParam(value="sourcecode_url",required = false) String sourcecode_url,
-                                      @ApiParam(value="源码提取码") @RequestParam(value="sourcecode_code", required = false) String sourcecode_code) {
-        log.info("addCourse: {} {} {} {} {} {}", chapter, id, video_url, video_code, sourcecode_code, sourcecode_url);
+                                      @ApiParam(value="章节内容说明") @RequestParam(value="videoComm", required = false) String videoComm,
+                                      @ApiParam(value="课程id",required = true) @RequestParam(value="courseId") Integer courseId,
+                                      @ApiParam(value="视频地址", required=true) @RequestParam(value="videoUrl") String videoUrl,
+                                      @ApiParam(value="视频提取码", required=true) @RequestParam(value="videoCode") String videoCode,
+                                      @ApiParam(value="源码地址") @RequestParam(value="sourcecodeUrl",required = false) String sourcecodeUrl,
+                                      @ApiParam(value="源码提取码") @RequestParam(value="sourcecodeCode", required = false) String sourcecodeCode) {
+        log.info("addCourse: {} {} {} {} {} {}", chapter, id, videoUrl, videoCode, sourcecodeCode, sourcecodeUrl);
         Coursechapter course = new Coursechapter();
         course.setId(id);
         course.setChapter(chapter);
-        course.setCourseId(course_id);
-        course.setVideoUrl(video_url);
-        course.setVideoCode(video_code);
-        course.setVideoComm(video_comm);
-        course.setSourcecodeUrl(sourcecode_url);
-        course.setSourcecodeCode(sourcecode_code);
+        course.setCourseId(courseId);
+        course.setVideoUrl(videoUrl);
+        course.setVideoCode(videoCode);
+        course.setVideoComm(videoComm);
+        course.setSourcecodeUrl(sourcecodeUrl);
+        course.setSourcecodeCode(sourcecodeCode);
         courseChapterService.insertOrUpdate(course);
         return ApiResult.success();
+    }
+
+    @ApiOperation(value = "分页查询所有课程章节", notes = "分页查询所有课程章节")
+    @RequiresPermissions("Export")
+    @GetMapping("chapter/list")
+    public ApiResult getCourseChapterList(@ApiParam(value="起始页", required=true) @RequestParam(value="page") Integer page,
+                                   @ApiParam(value="每页数", required=true) @RequestParam(value="limit") Integer limit) {
+        log.info("分页查询所有课程章节");
+        PageHelper.startPage(page, limit);
+        List<CourseChapterVo> list = courseChapterService.getAll();
+        PageInfo<CourseChapterVo> pageInfo = new PageInfo<>(list);
+        return ApiResult.success(pageInfo);
+    }
+
+    @ApiOperation(value = "通过id查询课程章节", notes = "通过id查询课程章节")
+    @RequiresPermissions("Export")
+    @GetMapping("chapter/detail")
+    public ApiResult getCourseChapter(@ApiParam(value="id", required=true) @RequestParam(value="id") Integer id) {
+        log.info("通过id查询课程,{}",id);
+        Coursechapter course = courseChapterService.getChapterById(id);
+        return ApiResult.success(course);
     }
 }

@@ -28,7 +28,7 @@
                 <el-col :span="8">
                   <el-form-item prop="period" label-width="80px" label="课程:" class="postInfo-container-item">
                     <el-select
-                      v-model="postForm.course_id"
+                      v-model="postForm.courseId"
                       placeholder="请选择">
                       <el-option
                         v-for="item in courseNames"
@@ -47,26 +47,26 @@
 
                 <el-col :span="8">
                   <el-form-item prop="period" label-width="80px" label="视频地址:" class="postInfo-container-item">
-                    <el-input v-model.number="postForm.video_url" placeholder="请输入网盘地址"/>
+                    <el-input v-model.number="postForm.videoUrl" placeholder="请输入网盘地址"/>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col :span="8">
                   <el-form-item prop="course" label-width="80px" label="视频提取码:" class="postInfo-container-item">
-                    <el-input v-model="postForm.video_code" placeholder="请输入内容"/>
+                    <el-input v-model="postForm.videoCode" placeholder="请输入内容"/>
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="8">
                   <el-form-item prop="course" label-width="80px" label="源码地址:" class="postInfo-container-item">
-                    <el-input v-model="postForm.sourcecode_url" placeholder="请输入网盘地址"/>
+                    <el-input v-model="postForm.sourcecodeUrl" placeholder="请输入网盘地址"/>
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="8">
                   <el-form-item prop="period" label-width="80px" label="源码提取码:" class="postInfo-container-item">
-                    <el-input v-model.number="postForm.sourcecode_code" placeholder="请输入网盘地址"/>
+                    <el-input v-model.number="postForm.sourcecodeCode" placeholder="请输入网盘地址"/>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -77,7 +77,7 @@
         <div class="postInfo-container">
           <el-row>
             <el-col :span="24">
-              <tinymce :height="200" v-model="postForm.video_comm"/>
+              <tinymce :height="200" v-model="postForm.videoComm"/>
             </el-col>
           </el-row>
         </div>
@@ -111,20 +111,20 @@
 // import MDinput from '@/components/MDinput'
 // import Sticky from '@/components/Sticky' // 粘性header组件
 // import { validateURL } from '@/utils/validate'
-import { fetchCourse, fetchNames } from '@/api/course'
+import { fetchCourseChapter, fetchNames } from '@/api/course'
 import { userSearch } from '@/api/remoteSearch'
 import Tinymce from '@/components/Tinymce'
 // import Warning from './Warning'
 // import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
 
 const defaultForm = {
-  course_id: '', // 课程名称
+  courseId: '', // 课程名称
   chapter: '', // 课程章节
-  video_url: '',
-  video_code: '',
-  video_comm: '',
-  sourcecode_url: '',
-  sourcecode_code: ''
+  videoUrl: '',
+  videoCode: '',
+  videoComm: '',
+  sourcecodeUrl: '',
+  sourcecodeCode: ''
 }
 
 export default {
@@ -185,7 +185,7 @@ export default {
   },
   methods: {
     fetchData(id) {
-      fetchCourse(id).then(response => {
+      fetchCourseChapter(id).then(response => {
         this.postForm = response.content
         // Just for test
         this.postForm.title += `   Article Id:${this.postForm.id}`

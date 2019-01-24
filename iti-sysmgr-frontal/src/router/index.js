@@ -118,14 +118,14 @@ export const constantRouterMap = [
       },
       {
         path: 'editchapter/:id(\\d+)',
-        component: () => import('@/views/course/edit'),
+        component: () => import('@/views/course/edit-chapter'),
         name: 'EditChapter',
         meta: { title: 'editChapter', noCache: true },
         hidden: true
       },
       {
         path: 'chapterlist',
-        component: () => import('@/views/course/list'),
+        component: () => import('@/views/course/list-chapter'),
         name: 'ChapterList',
         meta: { title: 'chapterList', icon: 'list' }
       }

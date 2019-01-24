@@ -2,6 +2,7 @@ package com.crab.service;
 
 import com.crab.domain.Coursechapter;
 import com.crab.mapper.CoursechapterMapper;
+import com.crab.vo.CourseChapterVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class CourseChapterService {
     @Resource
     private CoursechapterMapper coursechapterMapper;
 
-    public List<Coursechapter> getAll() {
+    public List<CourseChapterVo> getAll() {
         return coursechapterMapper.selectAll();
     }
 
@@ -26,11 +27,7 @@ public class CourseChapterService {
         }
     }
 
-    public List<Coursechapter> getCourseList() {
-        return coursechapterMapper.selectAll();
-    }
-
-    public Coursechapter getCourseById(Integer id) {
+    public Coursechapter getChapterById(Integer id) {
         return coursechapterMapper.selectByPrimaryKey(id);
     }
 

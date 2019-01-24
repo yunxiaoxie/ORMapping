@@ -9,6 +9,14 @@ export function fetchList(query) {
   })
 }
 
+export function fetchChapterList(query) {
+  return request({
+    url: '/course/chapter/list',
+    method: 'get',
+    params: query
+  })
+}
+
 export function fetchNames() {
   return request({
     url: '/course/names',
@@ -19,6 +27,14 @@ export function fetchNames() {
 export function fetchCourse(id) {
   return request({
     url: '/course/detail',
+    method: 'get',
+    params: { id }
+  })
+}
+
+export function fetchCourseChapter(id) {
+  return request({
+    url: '/course/chapter/detail',
     method: 'get',
     params: { id }
   })

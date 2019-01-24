@@ -63,7 +63,7 @@ public class ShiroConfig {
 
 		//添加url==method
 		chains.put("/course/list==Get", "authc");
-		chains.put("/course/chapter/addOrUpd==Post", "anon");
+		chains.put("/course/chapter/all==Get", "anon");
 		chains.put("/course/**", "authc,perms[Export]");
 		chains.put("/user/**", "authc");
 		chains.put("/logout", "logout");

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.crab.mapper.CoursechapterMapper">
-  <select id="selectAll" resultMap="BaseResultMap">
+  <select id="selectAll" resultType="com.crab.vo.CourseChapterVo">
     select 
-    <include refid="Base_Column_List" />
-    from t_course_chapter
+    cc.chapter, cc.video_url as videoUrl, cc.video_code as videoCode, cc.video_comm as videoComm,
+    cc.sourcecode_url as sourcecodeUrl, cc.sourcecode_code as sourcecodeCode,
+    cc.id, cc.course_id as courseId, c.period, c.course
+    from t_course_chapter cc left join t_course c on cc.course_id = c.id
     order by id
   </select>
 </mapper>
