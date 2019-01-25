@@ -128,6 +128,12 @@ export const constantRouterMap = [
         component: () => import('@/views/course/list-chapter'),
         name: 'ChapterList',
         meta: { title: 'chapterList', icon: 'list' }
+      },
+      {
+        path: 'coursequery',
+        component: () => import('@/views/course/course-query'),
+        name: 'CourseQuery',
+        meta: { title: 'courseQuery', icon: 'list' }
       }
     ]
   },

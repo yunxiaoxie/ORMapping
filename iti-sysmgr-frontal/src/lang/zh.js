@@ -9,6 +9,7 @@ export default {
     createChapter: '课程章节添加',
     editChapter: '编辑课程章节',
     chapterList: '课程章节列表',
+    courseQuery: '课程查询',
     guide: '引导页',
     permission: '权限测试页',
     pagePermission: '页面权限',
