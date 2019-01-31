@@ -13,13 +13,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 
 @Slf4j
@@ -34,6 +35,7 @@ public class CourseController {
     @Autowired
     private CourseChapterService courseChapterService;
 
+    //TODO 角色注解
     @ApiOperation(value = "查询所有课程信息", notes = "查询所有课程信息")
     @GetMapping("all")
     public ApiResult findCourseAll() {

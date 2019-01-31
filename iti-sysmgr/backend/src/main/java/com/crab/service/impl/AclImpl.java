@@ -141,11 +141,11 @@ public class AclImpl implements IAcl {
 		// 现已获得用户拥有的读取授权
 		if (null == modulePid) {
 			Set<Integer> ids = temp.keySet();
-			return moduleMapper.findModules(new ArrayList<Integer>(ids));
+			return moduleMapper.findModules(new ArrayList<>(ids));
 		}
 		
 		Set<Integer> ids = temp.keySet();
-		return moduleMapper.findModulesWithPid(new ArrayList<Integer>(ids), modulePid);
+		return moduleMapper.findModulesWithPid(new ArrayList<>(ids), modulePid);
 	}
 
 	@Override

@@ -3,6 +3,7 @@
 <mapper namespace="com.crab.mapper.CoursechapterMapper">
   <resultMap id="BaseResultMap" type="com.crab.domain.Coursechapter">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="course_id" jdbcType="INTEGER" property="courseId" />
     <result column="chapter" jdbcType="VARCHAR" property="chapter" />
     <result column="video_url" jdbcType="VARCHAR" property="videoUrl" />
@@ -14,8 +15,8 @@
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, course_id, chapter, video_url, video_code, video_comm, sourcecode_url, sourcecode_code, 
-    create_time, create_user
+    id, user_id, course_id, chapter, video_url, video_code, video_comm, sourcecode_url, 
+    sourcecode_code, create_time, create_user
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -28,20 +29,23 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.crab.domain.Coursechapter">
-    insert into t_course_chapter (id, course_id, chapter, 
-      video_url, video_code, video_comm, 
-      sourcecode_url, sourcecode_code, create_time, 
-      create_user)
-    values (#{id,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER}, #{chapter,jdbcType=VARCHAR}, 
-      #{videoUrl,jdbcType=VARCHAR}, #{videoCode,jdbcType=VARCHAR}, #{videoComm,jdbcType=VARCHAR}, 
-      #{sourcecodeUrl,jdbcType=VARCHAR}, #{sourcecodeCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{createUser,jdbcType=VARCHAR})
+    insert into t_course_chapter (id, user_id, course_id, 
+      chapter, video_url, video_code, 
+      video_comm, sourcecode_url, sourcecode_code, 
+      create_time, create_user)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER}, 
+      #{chapter,jdbcType=VARCHAR}, #{videoUrl,jdbcType=VARCHAR}, #{videoCode,jdbcType=VARCHAR}, 
+      #{videoComm,jdbcType=VARCHAR}, #{sourcecodeUrl,jdbcType=VARCHAR}, #{sourcecodeCode,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.crab.domain.Coursechapter">
     insert into t_course_chapter
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="userId != null">
+        user_id,
       </if>
       <if test="courseId != null">
         course_id,
@@ -75,6 +79,9 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
       <if test="courseId != null">
         #{courseId,jdbcType=INTEGER},
       </if>
@@ -107,6 +114,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.crab.domain.Coursechapter">
     update t_course_chapter
     <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
       <if test="courseId != null">
         course_id = #{courseId,jdbcType=INTEGER},
       </if>
@@ -139,7 +149,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.crab.domain.Coursechapter">
     update t_course_chapter
-    set course_id = #{courseId,jdbcType=INTEGER},
+    set user_id = #{userId,jdbcType=INTEGER},
+      course_id = #{courseId,jdbcType=INTEGER},
       chapter = #{chapter,jdbcType=VARCHAR},
       video_url = #{videoUrl,jdbcType=VARCHAR},
       video_code = #{videoCode,jdbcType=VARCHAR},

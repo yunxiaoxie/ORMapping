@@ -27,4 +27,11 @@ public class StudentController {
         log.info("查询所有学员");
         return studentService.getAll();
     }
+
+    @ApiOperation(value = "查询学生所属课程", notes = "查询学生所属课程")
+    @RequestMapping(value = "all0", method = RequestMethod.GET)
+    public List<Student> findCourseAllById() {
+        log.info("查询所有学员");
+        return studentService.getAll();
+    }
 }

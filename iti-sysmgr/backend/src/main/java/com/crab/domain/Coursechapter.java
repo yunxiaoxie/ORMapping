@@ -6,6 +6,8 @@ import java.util.Date;
 public class Coursechapter implements Serializable {
     private Integer id;
 
+    private Integer userId;
+
     private Integer courseId;
 
     private String chapter;
@@ -32,6 +34,14 @@ public class Coursechapter implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getCourseId() {
@@ -119,6 +129,7 @@ public class Coursechapter implements Serializable {
         }
         Coursechapter other = (Coursechapter) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getCourseId() == null ? other.getCourseId() == null : this.getCourseId().equals(other.getCourseId()))
             && (this.getChapter() == null ? other.getChapter() == null : this.getChapter().equals(other.getChapter()))
             && (this.getVideoUrl() == null ? other.getVideoUrl() == null : this.getVideoUrl().equals(other.getVideoUrl()))
@@ -135,6 +146,7 @@ public class Coursechapter implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getCourseId() == null) ? 0 : getCourseId().hashCode());
         result = prime * result + ((getChapter() == null) ? 0 : getChapter().hashCode());
         result = prime * result + ((getVideoUrl() == null) ? 0 : getVideoUrl().hashCode());
@@ -154,6 +166,7 @@ public class Coursechapter implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
         sb.append(", courseId=").append(courseId);
         sb.append(", chapter=").append(chapter);
         sb.append(", videoUrl=").append(videoUrl);

@@ -91,6 +91,9 @@ public class Constant {
 	}
 	/**permission*/
 
+	/**角色*/
+	public static final String ADMIN = "admin";
+
 	/**JWT*/
 	public static final String Bearer = "ITI";
 

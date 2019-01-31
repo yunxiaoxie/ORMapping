@@ -40,6 +40,7 @@ public class URLPermissionsFilter extends PermissionsAuthorizationFilter{
 				.contains(curUrl)	) {
 			return true;
 		}
+		//注意这里subject.getPrincipal()为user
 		List<Module> modules = aclService.searchModules(subject.getPrincipal().toString(), null);
 		List<String> urls = new ArrayList<>();
 		for (Module m : modules) {

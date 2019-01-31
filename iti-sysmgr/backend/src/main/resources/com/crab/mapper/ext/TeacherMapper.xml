@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.crab.mapper.StudentMapper">
-  <select id="selectAll" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_student s
-    order by s.id
-  </select>
+<mapper namespace="com.crab.mapper.TeacherMapper">
 
   <select id="findByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
+    select 
     <include refid="Base_Column_List" />
-    from t_student
+    from t_teacher
     where user_id = #{id,jdbcType=INTEGER}
   </select>
 

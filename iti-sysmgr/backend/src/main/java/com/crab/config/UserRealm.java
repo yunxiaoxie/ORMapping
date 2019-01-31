@@ -10,6 +10,7 @@ import com.crab.domain.User;
 import com.crab.service.IAcl;
 import com.crab.service.IRole;
 import com.crab.service.IUser;
+import com.crab.vo.LoginInfo;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -54,13 +55,18 @@ public class UserRealm extends AuthorizingRealm {
 	//权限资源角色
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		String username = (String) principals.getPrimaryPrincipal();
+		LoginInfo loginInfo = (LoginInfo) principals.getPrimaryPrincipal();
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		//add Permission Resources
-		Set<String> perms = getPermissionUrls(username);
+		//add Permission
+		Set<String> perms = getPermissionUrls(loginInfo.getUser().getAccount());
 		info.setStringPermissions(perms);
-		Set<String> roles = getRoles(username);
-		info.setRoles(roles);
+		//add roles
+		List<Role> roles = loginInfo.getRoles();
+		Set<String> set = new HashSet<>();
+		for (Role r : roles) {
+			set.add(r.getRoleName());
+		}
+		info.setRoles(set);
 		return info;
 	}
 	
@@ -74,7 +80,13 @@ public class UserRealm extends AuthorizingRealm {
 		if (user == null) {
 			throw new UnknownAccountException();
 		}
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(userName, user.getPassword(), getName());
+		//登录信息存储
+		LoginInfo loginInfo = new LoginInfo();
+		loginInfo.setUser(user);
+		List<Role> roles = roleService.searchRolesOfUser(user.getId());
+		loginInfo.setRoles(roles);
+
+		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(loginInfo, user.getPassword(), getName());
 		return info;
 	}
 	

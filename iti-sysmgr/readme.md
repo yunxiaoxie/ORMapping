@@ -7,14 +7,19 @@
   backend 后台管理，纯业务
   permission 权限模块
   common 通用模块
+##权限
+基于RBAC角色的权限管理，角色---模块(url)
+基于restful的重构，更加细化模块权限(增，删，改，查)
+针对条件查询权限细化，即只能查询属于自己的信息
+
 ##init sql
-sql中有中文，最好用工具导入
-用source导入会有中文问题
+* sql中有中文，最好用工具导入
+* 用source导入会有中文问题
+* 表设计增加user_id主业务线，贯穿所有业务表
 
 ##mybatis-generator
-在backend里执行：mvn mybatis-generator:generate
-or
-MavenProjects->backend->Plugins->mybatis-generator
+* 在backend里执行：mvn mybatis-generator:generate
+* MavenProjects->backend->Plugins->mybatis-generator
 
 **Generator配置文件**
  - 可以生成xml, entity, mapper
@@ -65,8 +70,12 @@ columnRenamingRule & domainObjectRenamingRule
  - 取消接口
 
 ##整合jwt+shiro+https
-因jwt默认是不加密的，所以不能存储涉密信息，最好使用Https传输
-在axios拦截器中配置header(authorization x-token)
+* 因jwt默认是不加密的，所以不能存储涉密信息，最好使用Https传输
+* 在axios拦截器中配置header(authorization x-token)
+* 登录成功后将当前user对象存入SimpleAuthenticationInfo, 将它作为principal
+* 读取user:User user = (User) principals.getPrimaryPrincipal()
+* 读取user:SecurityUtils.getSubject().getPrincipal()
+* principal代表访问数据，这个值必须是唯一的。也可以是邮箱、身份证等值
 
 ##完善jwtFilter
 只有login logout能通过，其它的要header

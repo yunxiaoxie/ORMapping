@@ -52,6 +52,7 @@ INSERT INTO `p_acl` VALUES ('10', 'ROLE', 1, 10, 15, 0, null);
 INSERT INTO `p_acl` VALUES ('11', 'ROLE', 1, 11, 15, 0, null);
 INSERT INTO `p_acl` VALUES ('12', 'ROLE', 1, 12, 15, 0, null);
 INSERT INTO `p_acl` VALUES ('13', 'ROLE', 2, 1, 9, 0, null);
+INSERT INTO `p_acl` VALUES ('16', 'ROLE', 2, 4, 15, 0, null);
 INSERT INTO `p_acl` VALUES ('14', 'ROLE', 3, 1, 5, 0, null);
 INSERT INTO `p_acl` VALUES ('15', 'USER', 4, 1, 1, 0, null);
 
@@ -134,6 +135,7 @@ INSERT INTO `p_role_module` VALUES ('12', '1', '12');
 INSERT INTO `p_role_module` VALUES ('13', '2', '1');
 INSERT INTO `p_role_module` VALUES ('14', '2', '2');
 INSERT INTO `p_role_module` VALUES ('15', '3', '1');
+INSERT INTO `p_role_module` VALUES ('16', '2', '4');
 
 -- ----------------------------
 -- Table structure for `p_user`
@@ -154,7 +156,7 @@ CREATE TABLE `p_user` (
 -- Records of p_user
 -- ----------------------------
 INSERT INTO `p_user` VALUES ('1', 'admin', 'admin@123', 'Admin', null, null, null);
-INSERT INTO `p_user` VALUES ('2', 'lance', 'admin', 'Lance', null, null, null);
+INSERT INTO `p_user` VALUES ('2', 'jack', 'jack@123', 'Lance', null, null, null);
 INSERT INTO `p_user` VALUES ('3', 'test', 'test', 'test', null, null, null);
 INSERT INTO `p_user` VALUES ('4', 'test4', 'test', 'noRole', null, null, null);
 
