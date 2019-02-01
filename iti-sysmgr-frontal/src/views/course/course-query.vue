@@ -3,13 +3,16 @@
     <el-form ref="postForm" :model="postForm" class="form-container">
       <el-row>
         <el-col :span="8">
-          <el-form-item prop="course" label-width="80px" label="课程名称:" class="postInfo-container-item">
-            <el-input v-model="postForm.course" placeholder="请输入内容"/>
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item prop="course" label-width="80px" label="课程期数:" class="postInfo-container-item">
-            <el-input v-model="postForm.course" placeholder="请输入内容"/>
+          <el-form-item prop="period" label-width="80px" label="课程:" class="postInfo-container-item">
+            <el-select
+              v-model="postForm.courseId"
+              placeholder="请选择">
+              <el-option
+                v-for="item in courseNames"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"/>
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -39,25 +42,25 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="视频地址">
+      <el-table-column align="center" label="视频地址">
         <template slot-scope="scope">
           <span>{{ scope.row.videoUrl }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="视频提取码">
+      <el-table-column align="center" label="视频提取码">
         <template slot-scope="scope">
           <span>{{ scope.row.videoCode }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="源码地址">
+      <el-table-column align="center" label="源码地址">
         <template slot-scope="scope">
           <span>{{ scope.row.sourcecodeUrl }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="源码提取码">
+      <el-table-column align="center" label="源码提取码">
         <template slot-scope="scope">
           <span>{{ scope.row.sourcecodeCode }}</span>
         </template>
@@ -84,32 +87,31 @@
         </template>
       </el-table-column> -->
 
-      <el-table-column align="center" label="Actions" width="120">
+      <!-- <el-table-column align="center" label="Actions" width="120">
         <template slot-scope="scope">
           <router-link :to="'/documentation/editchapter/'+scope.row.id">
             <el-button type="primary" size="small" icon="el-icon-edit">Edit</el-button>
           </router-link>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <!-- <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" /> -->
 
   </div>
 </template>
 
 <script>
-import { fetchChapterList } from '@/api/course'
-import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import { fetchChapterList, fetchNames, findCourseByStudent } from '@/api/course'
+// import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 const defaultForm = {
-  course: '', // 课程名称
-  period: '' // 课程章节
+  courseId: '' // 课程名称id
 }
 
 export default {
   name: 'CourseList',
-  components: { Pagination },
+  // components: { Pagination },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -123,9 +125,10 @@ export default {
   data() {
     return {
       postForm: Object.assign({}, defaultForm),
+      courseNames: null,
       list: null,
       total: 0,
-      listLoading: true,
+      listLoading: false,
       listQuery: {
         page: 1,
         limit: 2
@@ -133,7 +136,7 @@ export default {
     }
   },
   created() {
-    this.getList()
+    this.fetchNamesList()
   },
   methods: {
     getList() {
@@ -144,7 +147,18 @@ export default {
         this.listLoading = false
       })
     },
-    submitForm() {},
+    fetchNamesList() {
+      fetchNames().then(response => {
+        this.courseNames = response.content
+      })
+    },
+    submitForm() {
+      debugger
+      findCourseByStudent(this.postForm).then(response => {
+        this.list = response.content
+        this.listLoading = false
+      })
+    },
     handleSizeChange(val) {
       this.listQuery.limit = val
       this.getList()

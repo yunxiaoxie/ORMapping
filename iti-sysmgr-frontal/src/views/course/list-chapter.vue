@@ -21,25 +21,25 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="视频地址">
+      <el-table-column align="center" label="视频地址">
         <template slot-scope="scope">
           <span>{{ scope.row.videoUrl }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="视频提取码">
+      <el-table-column align="center" label="视频提取码">
         <template slot-scope="scope">
           <span>{{ scope.row.videoCode }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="源码地址">
+      <el-table-column align="center" label="源码地址">
         <template slot-scope="scope">
           <span>{{ scope.row.sourcecodeUrl }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="源码提取码">
+      <el-table-column align="center" label="源码提取码">
         <template slot-scope="scope">
           <span>{{ scope.row.sourcecodeCode }}</span>
         </template>

@@ -71,3 +71,11 @@ export function updateCourse(data) {
     data: qs.stringify(data)
   })
 }
+
+export function findCourseByStudent(data) {
+  return request({
+    url: '/student/course-chapter',
+    method: 'get',
+    params: data
+  })
+}

@@ -8,19 +8,19 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="课程">
+      <el-table-column align="center" label="课程">
         <template slot-scope="scope">
           <span>{{ scope.row.course }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="期数">
+      <el-table-column align="center" label="期数">
         <template slot-scope="scope">
           <span>{{ scope.row.period }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="180px" align="center" label="创建时间">
+      <el-table-column align="center" label="创建时间">
         <template slot-scope="scope">
           <span>{{ scope.row.createTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>

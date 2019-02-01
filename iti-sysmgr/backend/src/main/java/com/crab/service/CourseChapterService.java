@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import sun.rmi.runtime.Log;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -33,14 +35,17 @@ public class CourseChapterService {
             //管理员
             return coursechapterMapper.selectAll();
         } else {
-            //授权课
-            Teacher teacher = teacherMapper.findByUserId(loginInfo.getUser().getId());
-            Integer courseId = Integer.parseInt(teacher.getCourseId());
-            return coursechapterMapper.selectAllByCourseId(courseId);
+            //授权课，一个老师有多个课，一个学生也有多个课
+            List<Teacher> teacherList = teacherMapper.findByUserId(loginInfo.getUser().getId());
+            List<Integer> courseId = teacherList.stream().map(teacher ->
+                Integer.parseInt(teacher.getCourseId())
+            ).collect(Collectors.toList());
+            return coursechapterMapper.selectAllByCourseIds(courseId);
         }
     }
     public List<CourseChapterVo> selectAllByCourseId(Integer courseId) {
-        return coursechapterMapper.selectAllByCourseId(courseId);
+        List<Integer> ids = Arrays.asList(courseId);
+        return coursechapterMapper.selectAllByCourseIds(ids);
     }
 
     public void insertOrUpdate(Coursechapter course){

@@ -65,6 +65,8 @@ public class ShiroConfig {
 		chains.put("/course/list==Get", "authc");
 		chains.put("/course/chapter/**", "authc");
 		chains.put("/course/**", "authc,perms[Export]");
+		chains.put("/teacher/**", "authc");
+		chains.put("/student/**", "authc");
 		chains.put("/user/**", "authc");
 		chains.put("/logout", "logout");
 

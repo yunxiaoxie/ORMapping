@@ -10,5 +10,8 @@ import java.util.List;
 public interface TeacherMapper extends GenericMapper<Teacher, Integer> {
     List<Teacher> selectAll();
 
-    Teacher findByUserId(Integer userId);
+    /**
+     * 根据user_id查询老师所属课程
+     */
+    List<Teacher> findByUserId(Integer userId);
 }

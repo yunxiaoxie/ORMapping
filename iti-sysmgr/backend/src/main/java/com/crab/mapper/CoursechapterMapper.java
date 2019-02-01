@@ -11,5 +11,8 @@ public interface CoursechapterMapper extends GenericMapper<Coursechapter, Intege
 
     List<CourseChapterVo> selectAll();
 
-    List<CourseChapterVo> selectAllByCourseId(@Param("id") Integer courseId);
+    /**
+     * 查询所有课程内容
+     */
+    List<CourseChapterVo> selectAllByCourseIds(@Param("ids") List<Integer> courseIds);
 }
