@@ -1,5 +1,6 @@
 package com.crab.common.shiro.filter;
 
+import com.crab.common.ApiResult;
 import com.crab.common.utils.AjaxUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
@@ -79,15 +80,13 @@ public class RestFormAuthenticationFilter extends FormAuthenticationFilter {
                 log.trace("Attempting to access a path which requires authentication.  Forwarding to the " +
                         "Authentication url [" + getLoginUrl() + "]");
             }
-
+            // for ajax response.
             if (AjaxUtils.isAjaxRequest(WebUtils.toHttp(request))) {
                 if (log.isDebugEnabled()) {
                     log.debug("用户: [{}] 请求 restful url : {}, 无权限被拦截.", subject.getPrincipal(), this.getPathWithinApplication(request));
                 }
 
-                Map<String, Object> map = new HashMap<>();
-                map.put("code", -1);
-                AjaxUtils.writeJson(map, response);
+                AjaxUtils.writeJson(ApiResult.error("no permission"), response);
             } else {
                 saveRequestAndRedirectToLogin(request, response);
             }

@@ -7,8 +7,8 @@ import { getToken } from '@/utils/auth'
 axios.defaults.withCredentials = true
 // create an axios instance
 const service = axios.create({
-  // baseURL: process.env.BASE_API, // api 的 base_url
-  baseURL: 'http://localhost:8080',
+  baseURL: process.env.BASE_API, // api 的 base_url
+  // baseURL: 'http://localhost:8080',
   timeout: 5000000 // request timeout
 })
 

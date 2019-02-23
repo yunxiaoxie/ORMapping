@@ -24,7 +24,7 @@ public class AjaxUtils {
     /**
      * 输出JSON
      */
-    public static void writeJson(Map<String, Object> map, ServletResponse response) {
+    public static void writeJson(Object map, ServletResponse response) {
         PrintWriter out = null;
         try {
             response.setCharacterEncoding("UTF-8");

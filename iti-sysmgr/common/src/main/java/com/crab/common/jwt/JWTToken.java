@@ -2,13 +2,16 @@ package com.crab.common.jwt;
 
 import org.apache.shiro.authc.AuthenticationToken;
 
-public class JWTToken implements AuthenticationToken {
+public class JwtToken implements AuthenticationToken {
 
     // 密钥
     private String token;
 
-    public JWTToken(String token) {
+    private String ipHost;
+
+    public JwtToken(String token, String ipHost) {
         this.token = token;
+        this.ipHost = ipHost;
     }
 
     @Override

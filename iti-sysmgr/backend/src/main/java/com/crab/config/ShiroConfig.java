@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 
+import com.crab.common.jwt.JwtFilter;
+import com.crab.common.jwt.RestJwtFilter;
 import com.crab.common.shiro.RestShiroFilterFactoryBean;
 import com.crab.common.shiro.credential.RetryLimitHashedCredentialsMatcher;
 import com.crab.common.shiro.filter.RestFormAuthenticationFilter;
@@ -41,6 +43,7 @@ public class ShiroConfig {
 		bean.setUnauthorizedUrl("/401");
 		//config filter chain
 		Map<String, Filter> filters = bean.getFilters();
+		filters.put("jwt", new RestJwtFilter());
 		filters.put("user", new ShiroUserFilter());
 		filters.put("authc", new RestFormAuthenticationFilter());
 		filters.put("perms", new RestAuthorizationFilter());
