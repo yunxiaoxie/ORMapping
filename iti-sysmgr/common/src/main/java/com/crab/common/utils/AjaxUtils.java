@@ -1,6 +1,6 @@
 package com.crab.common.utils;
 
-import com.alibaba.druid.support.json.JSONUtils;
+import com.alibaba.fastjson.JSON;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.ServletRequest;
@@ -30,7 +30,7 @@ public class AjaxUtils {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
             out = response.getWriter();
-            out.write(JSONUtils.toJSONString(map));
+            out.write(JSON.toJSONString(map));
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -60,7 +60,7 @@ public class AjaxUtils {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
             out = response.getWriter();
-            out.write(JSONUtils.toJSONString(map));
+            out.write(JSON.toJSONString(map));
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

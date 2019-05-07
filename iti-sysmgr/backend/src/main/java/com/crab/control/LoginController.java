@@ -18,6 +18,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,9 +58,9 @@ public class LoginController {
     public ApiResult loginShiro(@ApiParam(value="账号", required=true) @RequestParam(value="account") String account,
                            @ApiParam(value="密码", required=true) @RequestParam(value="password") String password) {
         log.info("系统登录byShiro");
-        UsernamePasswordToken uptoken = new UsernamePasswordToken(account,password);
-        Subject subject = SecurityUtils.getSubject();
-        subject.login(uptoken);
+//        UsernamePasswordToken uptoken = new UsernamePasswordToken(account,password);
+//        Subject subject = SecurityUtils.getSubject();
+        //subject.login(uptoken);
 
         User u = user.findUser(account, password);
         u.setPassword(null);
@@ -67,7 +68,8 @@ public class LoginController {
         List<String> roles = list.stream().map(role -> role.getRoleName()).collect(Collectors.toList());
 
         // get accessToken
-        AccessToken token = JwtHelper.accessToken(account, null, null, audience);
+        JwtHelper.getInstance().setAudience(audience);
+        AccessToken token = JwtHelper.getInstance().accessToken(account, null, null);
 
         //set cache
         Map<String, Object> map = Maps.newHashMap();
@@ -77,6 +79,17 @@ public class LoginController {
         MapCache.getInstance().put(token.getToken(), map);
 
         return ApiResult.success(token);
+    }
+
+    @GetMapping(value = "/logout")
+    public ResponseEntity<Void> logout() {
+        Subject subject = SecurityUtils.getSubject();
+        if(subject.getPrincipals() != null) {
+            User user = (User)subject.getPrincipals().getPrimaryPrincipal();
+            //userService.deleteLoginInfo(user.getUsername());
+        }
+        SecurityUtils.getSubject().logout();
+        return ResponseEntity.ok().build();
     }
 
 }

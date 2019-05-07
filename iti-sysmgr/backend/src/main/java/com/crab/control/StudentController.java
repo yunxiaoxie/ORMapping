@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +29,7 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @RequiresRoles("student")
     @ApiOperation(value = "查询所有学生信息", notes = "查询所有学生信息")
     @RequestMapping(value = "all", method = RequestMethod.GET)
     public ApiResult findCourseAll() {

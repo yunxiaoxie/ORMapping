@@ -9,6 +9,10 @@ public class JwtToken implements AuthenticationToken {
 
     private String ipHost;
 
+    public JwtToken(String token) {
+        this.token = token;
+    }
+
     public JwtToken(String token, String ipHost) {
         this.token = token;
         this.ipHost = ipHost;

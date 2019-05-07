@@ -14,7 +14,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,8 +68,13 @@ public class CourseController {
         return ApiResult.success();
     }
 
+    //@RequiresRoles(value={"user","admin"},logical=Logical.OR)  //or
+    //@RequiresRoles({"user","admin"})   //and
     @ApiOperation(value = "通过id查询课程", notes = "通过id查询课程")
     @RequiresPermissions("Export")
+    @RequiresRoles("teacher")
+    @RequiresAuthentication
+    @RequiresUser
     @GetMapping("detail")
     public ApiResult getCourse(@ApiParam(value="id", required=true) @RequestParam(value="id") Integer id) {
         log.info("通过id查询课程,{}",id);

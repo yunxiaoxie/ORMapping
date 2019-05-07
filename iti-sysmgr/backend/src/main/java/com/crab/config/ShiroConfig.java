@@ -2,17 +2,10 @@ package com.crab.config;
 
 import java.util.Map;
 
-import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 
-import com.crab.common.jwt.JwtFilter;
-import com.crab.common.jwt.RestJwtFilter;
 import com.crab.common.shiro.RestShiroFilterFactoryBean;
-import com.crab.common.shiro.credential.RetryLimitHashedCredentialsMatcher;
-import com.crab.common.shiro.filter.RestFormAuthenticationFilter;
-import com.crab.common.shiro.filter.RestLogoutFilter;
-import com.crab.common.shiro.filter.ShiroUserFilter;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import com.crab.common.shiro.filter.*;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -21,11 +14,9 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.web.filter.DelegatingFilterProxy;
 
 import com.google.common.collect.Maps;
 
@@ -43,10 +34,11 @@ public class ShiroConfig {
 		bean.setUnauthorizedUrl("/401");
 		//config filter chain
 		Map<String, Filter> filters = bean.getFilters();
-		filters.put("jwt", new RestJwtFilter());
 		filters.put("user", new ShiroUserFilter());
-		filters.put("authc", new RestFormAuthenticationFilter());
+		filters.put("authc", new RestAuthenticationFilter());
+		filters.put("roles", new RestRoleFilter());
 		filters.put("perms", new RestAuthorizationFilter());
+		filters.put("login", new RestLoginFilter());
 		filters.put("logout", new RestLogoutFilter());
 		//配置filters
 //		Map<String, Filter> filters = Maps.newHashMap();
@@ -65,15 +57,19 @@ public class ShiroConfig {
 		chains.put("/v2/**","anon");
 
 		//添加url==method
+		//注：这里配置的role,perm会走Filter，但注解的不会走，可以单独配置注解
+		//直接在方法上配置注解更灵活
+		//这里的url可以尽量写的不同，如/course/add, /course/list, /course/del
+		//若url一定要相同，那就要加上method以区别对待，如/course===GET, /course===POST, /course===DELETE
 		chains.put("/course/list==Get", "authc");
 		chains.put("/course/chapter/**", "authc");
-		chains.put("/course/**", "authc,perms[Export]");
+		chains.put("/course/**", "authc,roles[teacher],perms[Export]");
 		chains.put("/teacher/**", "authc");
 		chains.put("/student/**", "authc");
 		chains.put("/user/**", "authc");
 		chains.put("/logout", "logout");
+		chains.put("/login/**", "login");
 
-		chains.put("/login/**", "anon");
 		chains.put("/css/**", "anon");
 		chains.put("/fonts/**", "anon");
 		chains.put("/layer/**", "anon");
@@ -92,7 +88,7 @@ public class ShiroConfig {
 		DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 		manager.setRealm(userRealm());
 		manager.setCacheManager(cacheManager());
-		manager.setSessionManager(defaultWebSessionManager());
+		manager.setSessionManager(defaultWebSessionManager()); //noSessionCreation
 		return manager;
 	}
 
