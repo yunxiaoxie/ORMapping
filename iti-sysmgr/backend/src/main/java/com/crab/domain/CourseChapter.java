@@ -3,7 +3,7 @@ package com.crab.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Coursechapter implements Serializable {
+public class CourseChapter implements Serializable {
     private Integer id;
 
     private Integer userId;
@@ -127,7 +127,7 @@ public class Coursechapter implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Coursechapter other = (Coursechapter) that;
+        CourseChapter other = (CourseChapter) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getCourseId() == null ? other.getCourseId() == null : this.getCourseId().equals(other.getCourseId()))

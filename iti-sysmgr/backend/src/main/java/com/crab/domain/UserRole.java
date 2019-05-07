@@ -2,12 +2,14 @@ package com.crab.domain;
 
 import java.io.Serializable;
 
-public class Rolemodule implements Serializable {
+public class UserRole implements Serializable {
     private Integer id;
+
+    private Integer userId;
 
     private Integer roleId;
 
-    private Integer moduleId;
+    private Integer orderNo;
 
     private static final long serialVersionUID = 1L;
 
@@ -19,6 +21,14 @@ public class Rolemodule implements Serializable {
         this.id = id;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     public Integer getRoleId() {
         return roleId;
     }
@@ -27,12 +37,12 @@ public class Rolemodule implements Serializable {
         this.roleId = roleId;
     }
 
-    public Integer getModuleId() {
-        return moduleId;
+    public Integer getOrderNo() {
+        return orderNo;
     }
 
-    public void setModuleId(Integer moduleId) {
-        this.moduleId = moduleId;
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
 
     @Override
@@ -46,10 +56,11 @@ public class Rolemodule implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Rolemodule other = (Rolemodule) that;
+        UserRole other = (UserRole) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()))
-            && (this.getModuleId() == null ? other.getModuleId() == null : this.getModuleId().equals(other.getModuleId()));
+            && (this.getOrderNo() == null ? other.getOrderNo() == null : this.getOrderNo().equals(other.getOrderNo()));
     }
 
     @Override
@@ -57,8 +68,9 @@ public class Rolemodule implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getRoleId() == null) ? 0 : getRoleId().hashCode());
-        result = prime * result + ((getModuleId() == null) ? 0 : getModuleId().hashCode());
+        result = prime * result + ((getOrderNo() == null) ? 0 : getOrderNo().hashCode());
         return result;
     }
 
@@ -69,8 +81,9 @@ public class Rolemodule implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
         sb.append(", roleId=").append(roleId);
-        sb.append(", moduleId=").append(moduleId);
+        sb.append(", orderNo=").append(orderNo);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

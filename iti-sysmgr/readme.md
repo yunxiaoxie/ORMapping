@@ -20,6 +20,7 @@
 ##mybatis-generator
 * 在backend里执行：mvn mybatis-generator:generate
 * MavenProjects->backend->Plugins->mybatis-generator
+* domainObjectRenamingRule在1.3.6中有效，在1.3.7有bug
 
 **Generator配置文件**
  - 可以生成xml, entity, mapper

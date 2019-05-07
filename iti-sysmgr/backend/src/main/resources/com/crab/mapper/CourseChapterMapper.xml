@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.crab.mapper.CoursechapterMapper">
-  <resultMap id="BaseResultMap" type="com.crab.domain.Coursechapter">
+<mapper namespace="com.crab.mapper.CourseChapterMapper">
+  <resultMap id="BaseResultMap" type="com.crab.domain.CourseChapter">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="course_id" jdbcType="INTEGER" property="courseId" />
@@ -28,7 +28,7 @@
     delete from t_course_chapter
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.crab.domain.Coursechapter">
+  <insert id="insert" parameterType="com.crab.domain.CourseChapter">
     insert into t_course_chapter (id, user_id, course_id, 
       chapter, video_url, video_code, 
       video_comm, sourcecode_url, sourcecode_code, 
@@ -38,7 +38,7 @@
       #{videoComm,jdbcType=VARCHAR}, #{sourcecodeUrl,jdbcType=VARCHAR}, #{sourcecodeCode,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.crab.domain.Coursechapter">
+  <insert id="insertSelective" parameterType="com.crab.domain.CourseChapter">
     insert into t_course_chapter
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -111,7 +111,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.crab.domain.Coursechapter">
+  <update id="updateByPrimaryKeySelective" parameterType="com.crab.domain.CourseChapter">
     update t_course_chapter
     <set>
       <if test="userId != null">
@@ -147,7 +147,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.crab.domain.Coursechapter">
+  <update id="updateByPrimaryKey" parameterType="com.crab.domain.CourseChapter">
     update t_course_chapter
     set user_id = #{userId,jdbcType=INTEGER},
       course_id = #{courseId,jdbcType=INTEGER},

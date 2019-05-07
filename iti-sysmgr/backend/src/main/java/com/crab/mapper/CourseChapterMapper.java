@@ -1,13 +1,13 @@
 package com.crab.mapper;
 
 import com.crab.common.GenericMapper;
-import com.crab.domain.Coursechapter;
+import com.crab.domain.CourseChapter;
 import com.crab.vo.CourseChapterVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface CoursechapterMapper extends GenericMapper<Coursechapter, Integer> {
+public interface CourseChapterMapper extends GenericMapper<CourseChapter, Integer> {
 
     List<CourseChapterVo> selectAll();
 

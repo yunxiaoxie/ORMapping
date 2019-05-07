@@ -1,7 +1,7 @@
 package com.crab.service;
 
 import com.crab.domain.Student;
-import com.crab.mapper.CoursechapterMapper;
+import com.crab.mapper.CourseChapterMapper;
 import com.crab.mapper.StudentMapper;
 import com.crab.vo.CourseChapterVo;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class StudentService {
     @Resource
     private StudentMapper studentMapper;
     @Resource
-    private CoursechapterMapper coursechapterMapper;
+    private CourseChapterMapper coursechapterMapper;
 
     public List<Student> getAll() {
         return studentMapper.selectAll();

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.crab.mapper.CoursechapterMapper">
+<mapper namespace="com.crab.mapper.CourseChapterMapper">
   <select id="selectAll" resultType="com.crab.vo.CourseChapterVo">
     select 
     cc.chapter, cc.video_url as videoUrl, cc.video_code as videoCode, cc.video_comm as videoComm,

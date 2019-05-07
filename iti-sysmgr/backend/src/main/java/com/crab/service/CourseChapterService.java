@@ -3,16 +3,13 @@ package com.crab.service;
 import com.crab.common.Constant;
 import com.crab.domain.Coursechapter;
 import com.crab.domain.Teacher;
-import com.crab.domain.User;
-import com.crab.mapper.CoursechapterMapper;
+import com.crab.mapper.CourseChapterMapper;
 import com.crab.mapper.TeacherMapper;
 import com.crab.vo.CourseChapterVo;
 import com.crab.vo.LoginInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
-import org.apache.tomcat.util.bcel.Const;
 import org.springframework.stereotype.Service;
-import sun.rmi.runtime.Log;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -25,7 +22,7 @@ public class CourseChapterService {
     @Resource
     private TeacherMapper teacherMapper;
     @Resource
-    private CoursechapterMapper coursechapterMapper;
+    private CourseChapterMapper coursechapterMapper;
 
     public List<CourseChapterVo> getAll() {
         LoginInfo loginInfo = (LoginInfo)SecurityUtils.getSubject().getPrincipal();
