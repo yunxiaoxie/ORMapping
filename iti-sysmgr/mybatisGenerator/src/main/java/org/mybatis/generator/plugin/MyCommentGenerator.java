@@ -29,7 +29,7 @@ import org.mybatis.generator.utils.PropUtil;
  * copy mybatis-generator-1.3.5.jar org.mybatis.generator.internal.DefaultCommentGenerator and modify addFieldComment method.
  * @author Jeff Butler
  */
-public class MyCommentGenerator implements CommentGenerator {
+public abstract class MyCommentGenerator implements CommentGenerator {
 
     /** The properties. */
     private Properties properties;

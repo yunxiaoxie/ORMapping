@@ -2,7 +2,7 @@ package com.crab.control;
 
 import com.crab.common.ApiResult;
 import com.crab.domain.Course;
-import com.crab.domain.Coursechapter;
+import com.crab.domain.CourseChapter;
 import com.crab.service.CourseChapterService;
 import com.crab.service.CourseService;
 import com.crab.vo.CourseChapterVo;
@@ -113,7 +113,7 @@ public class CourseController {
                                       @ApiParam(value="源码地址") @RequestParam(value="sourcecodeUrl",required = false) String sourcecodeUrl,
                                       @ApiParam(value="源码提取码") @RequestParam(value="sourcecodeCode", required = false) String sourcecodeCode) {
         log.info("addCourse: {} {} {} {} {} {}", chapter, id, videoUrl, videoCode, sourcecodeCode, sourcecodeUrl);
-        Coursechapter course = new Coursechapter();
+        CourseChapter course = new CourseChapter();
         course.setId(id);
         course.setChapter(chapter);
         course.setCourseId(courseId);
@@ -143,7 +143,7 @@ public class CourseController {
     @GetMapping("chapter/detail")
     public ApiResult getCourseChapter(@ApiParam(value="id", required=true) @RequestParam(value="id") Integer id) {
         log.info("通过id查询课程,{}",id);
-        Coursechapter course = courseChapterService.getChapterById(id);
+        CourseChapter course = courseChapterService.getChapterById(id);
         return ApiResult.success(course);
     }
 }

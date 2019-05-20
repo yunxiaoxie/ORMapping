@@ -1,7 +1,8 @@
 package com.crab.service;
 
 import com.crab.common.Constant;
-import com.crab.domain.Coursechapter;
+import com.crab.domain.CourseChapter;
+import com.crab.domain.CourseChapter;
 import com.crab.domain.Teacher;
 import com.crab.mapper.CourseChapterMapper;
 import com.crab.mapper.TeacherMapper;
@@ -45,7 +46,7 @@ public class CourseChapterService {
         return coursechapterMapper.selectAllByCourseIds(ids);
     }
 
-    public void insertOrUpdate(Coursechapter course){
+    public void insertOrUpdate(CourseChapter course){
         LoginInfo loginInfo = (LoginInfo)SecurityUtils.getSubject().getPrincipal();
         course.setUserId(loginInfo.getUser().getId());
         if (course.getId() == null) {
@@ -55,7 +56,7 @@ public class CourseChapterService {
         }
     }
 
-    public Coursechapter getChapterById(Integer id) {
+    public CourseChapter getChapterById(Integer id) {
         return coursechapterMapper.selectByPrimaryKey(id);
     }
 
