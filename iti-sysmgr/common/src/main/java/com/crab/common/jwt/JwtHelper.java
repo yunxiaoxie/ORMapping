@@ -10,10 +10,7 @@ import javax.xml.bind.DatatypeConverter;
 import com.crab.common.Constant;
 import com.crab.common.vo.AccessToken;
 import com.crab.common.vo.Audience;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 
 public class JwtHelper {
 
@@ -29,13 +26,14 @@ public class JwtHelper {
 		this.audience = audience;
 	}
 
-	public Claims parseJWT(String jsonWebToken, String base64Security) {
+	public Claims parseJWT(String jsonWebToken) {
 		try {
 			Claims claims = Jwts.parser()
-					.setSigningKey(DatatypeConverter.parseBase64Binary(base64Security))
+					.setSigningKey(DatatypeConverter.parseBase64Binary(audience.getBase64Secret()))
 					.parseClaimsJws(jsonWebToken).getBody();
 			return claims;
-		} catch (Exception ex) {
+		} catch (ExpiredJwtException ex) {
+			ex.printStackTrace();
 			return null;
 		}
 	}
@@ -96,8 +94,12 @@ public class JwtHelper {
 	public Boolean isTokenExpired(String token) {
 		try {
 			final Date expiration = getExpirationDateFromToken(token);
+			if (null == expiration) {
+				return true;
+			}
 			return expiration.before(new Date());
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -106,7 +108,10 @@ public class JwtHelper {
 	 * 获取jwt失效时间
 	 */
 	public Date getExpirationDateFromToken(String token) {
-		Claims claims = parseJWT(token, audience.getBase64Secret());
+		Claims claims = parseJWT(token);
+		if (null == claims) {
+			return null;
+		}
 		return claims.getExpiration();
 	}
 }

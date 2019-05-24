@@ -68,7 +68,8 @@ public class RestAuthenticationFilter extends BasicHttpAuthenticationFilter {
         // 判断是否为JWT认证请求
         if (isJwtRequest(servletRequest)) {
             try {
-                boolean bool = JwtHelper.getInstance().isTokenExpired(getAuthzHeader(servletRequest));
+                String jwt = getAuthzHeader(servletRequest);
+                boolean bool = JwtHelper.getInstance().isTokenExpired(jwt);
                 if (bool) {
                     AjaxUtils.writeJson(ApiResult.error("the token has expired"), servletResponse);
                     return false;

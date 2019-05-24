@@ -53,7 +53,7 @@ public class JwtFilter extends GenericFilterBean {
 			if (StringUtils.isNoneBlank(jwt)) {
 				String bearer = jwt.split(" ")[0];
 				if (Constant.Bearer.equals(bearer)) {
-			        String username = JwtHelper.getInstance().parseJWT(jwt.split(" ")[1], audienceEntity.getBase64Secret()).getSubject();
+			        String username = JwtHelper.getInstance().parseJWT(jwt.split(" ")[1]).getSubject();
 			        String subjectName = (String) SecurityUtils.getSubject().getPrincipal();
 					if (username != null && username.equals(subjectName)) {
 						chain.doFilter(request, response);
