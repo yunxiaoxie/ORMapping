@@ -160,7 +160,7 @@
                     <dependency>
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.39</version><!-- 版本太高会导致生成没有select,update,delete -->
+                        <version>8.0.16</version><!-- 版本太高会导致生成没有select,update,delete -->
                     </dependency>
                     <dependency>
                         <groupId>com.crab</groupId>
